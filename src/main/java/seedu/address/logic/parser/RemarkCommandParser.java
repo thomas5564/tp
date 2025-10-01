@@ -10,8 +10,16 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
 import seedu.address.model.person.Remark;
 
-
+/**
+ * parser for remark command
+ */
 public class RemarkCommandParser {
+    /**
+     * parses
+     * @param args arguments
+     * @return command that is parsed
+     * @throws ParseException when there is something wrong
+     */
     public RemarkCommand parse(String args) throws ParseException {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
@@ -31,3 +39,4 @@ public class RemarkCommandParser {
     }
 
 }
+
