@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents the list of lab sessions in a semester.
@@ -29,5 +30,8 @@ public class LabList {
     }
     public int size() {
         return labs.size();
+    }
+    public List<Lab> getLabs() {
+        return List.copyOf(labs);
     }
 }

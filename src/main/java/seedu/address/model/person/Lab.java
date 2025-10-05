@@ -3,7 +3,7 @@ package seedu.address.model.person;
 /**
  * Represents lab session
  */
-public class Lab {
+public class Lab extends Milestone {
     private int week;
     private TimeSlot timeSlot;
     private int labNumber;

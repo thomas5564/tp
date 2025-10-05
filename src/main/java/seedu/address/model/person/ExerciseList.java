@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * List of weekly exercises in a semester.
@@ -29,5 +30,8 @@ public class ExerciseList {
     }
     public int size() {
         return exercises.size();
+    }
+    public List<Exercise> getExercises() {
+        return List.copyOf(exercises);
     }
 }

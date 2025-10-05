@@ -1,9 +1,7 @@
 package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.person.Status.NOT_DONE;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -26,12 +24,11 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
-    private ArrayList<Status> labStatuses = new ArrayList<>(
-            Collections.nCopies(MilestoneLists.getExerciseList().size(), NOT_DONE)
-    );
-    private ArrayList<Status> exerciseStatuses = new ArrayList<>(
-            Collections.nCopies(MilestoneLists.getExerciseList().size(), NOT_DONE)
-    );
+    private MilestoneTracker<Exercise> exerciseTracker =
+            new MilestoneTracker<>(MilestoneLists.getExerciseList());
+
+    private MilestoneTracker<Lab> labTracker =
+            new MilestoneTracker<>(MilestoneLists.getLabList());
     /**
      * Every field must be present and not null.
      */
@@ -42,6 +39,32 @@ public class Person {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
+    }
+
+    /**
+        alternate constructor
+     */
+    public Person(Name modelName,
+                               Phone modelPhone,
+                               Email modelEmail,
+                               Address modelAddress,
+                               Set<Tag> modelTags,
+                               MilestoneTracker<Lab> modelLabTracker,
+                               MilestoneTracker<Exercise> modelExerciseTracker) {
+        requireAllNonNull(modelName,
+                 modelPhone,
+                 modelEmail,
+                 modelAddress,
+                 modelTags,
+                 modelLabTracker,
+                 modelExerciseTracker);
+        this.name = modelName;
+        this.phone = modelPhone;
+        this.email = modelEmail;
+        this.address = modelAddress;
+        this.tags.addAll(modelTags);
+        this.exerciseTracker = modelExerciseTracker;
+        this.labTracker = modelLabTracker;
     }
 
     public Name getName() {
@@ -120,10 +143,25 @@ public class Person {
                 .add("tags", tags)
                 .toString();
     }
-    public void setLabStatus(int index, Status status) {
-        labStatuses.set(index, status);
+    public void setLabAttendance(boolean isAttended, int index) {
+        if (isAttended) {
+            labTracker.mark(index);
+        } else {
+            labTracker.unmark(index);
+        }
     }
-    public void setExerciseStatuses(int index, Status status) {
-        exerciseStatuses.set(index, status);
+    public void setExerciseCompletion(boolean isDone, int index) {
+        if (isDone) {
+            exerciseTracker.mark(index);
+        } else {
+            exerciseTracker.unmark(index);
+        }
+    }
+
+    public MilestoneTracker<Exercise> getExerciseTracker() {
+        return exerciseTracker;
+    }
+    public MilestoneTracker<Lab> getLabTracker() {
+        return labTracker;
     }
 }

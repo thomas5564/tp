@@ -3,26 +3,35 @@ package seedu.address.model.person;
 import java.time.LocalDateTime;
 
 /**
- *
+ * Holds static milestone lists for labs and exercises across the semester.
  */
 public class MilestoneLists {
-    private static ExerciseList exerciseList;
-    private static LabList labList;
+    private static final MilestoneList<Exercise> exerciseList;
+    private static final MilestoneList<Lab> labList;
+    private MilestoneLists() {
+    }
     static {
-        exerciseList = new ExerciseList(
-                1,
-                10,
-                LocalDateTime.parse("2025-01-14T10:00"));
-        labList = new LabList(
-                1,
-                10,
-                LocalDateTime.parse("2025-01-14T10:00")
+        exerciseList = new MilestoneList<>(
+                1, // first week
+                10, // number of exercises
+                LocalDateTime.parse("2025-01-14T10:00"),
+                Exercise::new // (date, index) -> new Exercise(date, index)
+        );
+
+        labList = new MilestoneList<>(
+                1, // first week
+                10, // number of labs
+                LocalDateTime.parse("2025-01-14T10:00"),
+                (date, index) -> new Lab(
+                        new TimeSlot(date, date.plusHours(2)), index)
         );
     }
-    public static LabList getLabList() {
+
+    public static MilestoneList<Lab> getLabList() {
         return labList;
     }
-    public static ExerciseList getExerciseList() {
+
+    public static MilestoneList<Exercise> getExerciseList() {
         return exerciseList;
     }
 }
