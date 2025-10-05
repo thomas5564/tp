@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 /**
  * Class representing milestone
  */
-public class Exercise extends Milestone {
+public class Exercise implements Milestone {
     private int number;
     private LocalDateTime dueDate;
     /**

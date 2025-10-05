@@ -35,8 +35,10 @@ class JsonAdaptedPerson {
     private final String address;
 
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
-    private final List<String> labTracker = new ArrayList<>();
-    private final List<String> exerciseTracker = new ArrayList<>();
+    private final List<String> labTracker = MilestoneLists.getLabList()
+                    .getMilestones().stream().map(x -> "NOT_DONE").toList();
+    private final List<String> exerciseTracker = MilestoneLists.getExerciseList()
+            .getMilestones().stream().map(x -> "NOT_DONE").toList();
 
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name,
@@ -52,12 +54,26 @@ class JsonAdaptedPerson {
         this.address = address;
         if (tags != null) {
             this.tags.addAll(tags);
-        };
+        }
         if (labTracker != null) {
             this.labTracker.addAll(labTracker);
         }
         if (exerciseTracker != null) {
             this.exerciseTracker.addAll(exerciseTracker);
+        }
+    }
+    @JsonCreator
+    public JsonAdaptedPerson(@JsonProperty("name") String name,
+                             @JsonProperty("phone") String phone,
+                             @JsonProperty("email") String email,
+                             @JsonProperty("address") String address,
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        if (tags != null) {
+            this.tags.addAll(tags);
         }
     }
     /**
