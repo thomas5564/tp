@@ -5,13 +5,20 @@ import java.time.LocalDateTime;
 /**
  * Class representing milestone
  */
-public class Exercise extends Milestone {
+public class Exercise {
+    private int number;
+    private LocalDateTime dueDate;
     /**
      * Constructor for milestone
      *
-     * @param dateTime date and time on which milestone occurs
+     * @param dueDate date and time on which exercise is due
      */
-    public Exercise(LocalDateTime dateTime) {
-        super(dateTime);
+    public Exercise(LocalDateTime dueDate, int number) {
+        this.dueDate = dueDate;
+        this.number = number;
+    }
+    @Override
+    public String toString() {
+        return String.format("Exercise %d", number);
     }
 }

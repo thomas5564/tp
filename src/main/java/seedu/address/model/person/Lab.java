@@ -1,17 +1,23 @@
 package seedu.address.model.person;
 
-import java.time.LocalDateTime;
-
 /**
  * Represents lab session
  */
-public class Lab extends Milestone {
+public class Lab {
+    private int week;
+    private TimeSlot timeSlot;
+    private int labNumber;
     /**
      * Constructor for lab
      *
-     * @param dateTime date and time on which lab occurs
+     * @param timeSlot during which lab occurs
      */
-    public Lab(LocalDateTime dateTime) {
-        super(dateTime);
+    public Lab(TimeSlot timeSlot, int labNumber) {
+        this.timeSlot = timeSlot;
+        this.labNumber = labNumber;
+    }
+    @Override
+    public String toString() {
+        return String.format("Lab %d", labNumber);
     }
 }

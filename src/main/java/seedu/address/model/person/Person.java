@@ -1,7 +1,9 @@
 package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.person.Status.NOT_DONE;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -24,7 +26,12 @@ public class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
-
+    private ArrayList<Status> labStatuses = new ArrayList<>(
+            Collections.nCopies(MilestoneLists.getExerciseList().size(), NOT_DONE)
+    );
+    private ArrayList<Status> exerciseStatuses = new ArrayList<>(
+            Collections.nCopies(MilestoneLists.getExerciseList().size(), NOT_DONE)
+    );
     /**
      * Every field must be present and not null.
      */
@@ -113,5 +120,10 @@ public class Person {
                 .add("tags", tags)
                 .toString();
     }
-
+    public void setLabStatus(int index, Status status) {
+        labStatuses.set(index, status);
+    }
+    public void setExerciseStatuses(int index, Status status) {
+        exerciseStatuses.set(index, status);
+    }
 }
