@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GITHUB_USERNAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -23,9 +22,10 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.ExerciseTracker;
 import seedu.address.model.person.GithubUsername;
+import seedu.address.model.person.LabAttendanceList;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -47,7 +47,6 @@ public class EditCommand extends Command {
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_GITHUB_USERNAME + "GITHUB_USERNAME] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
@@ -105,13 +104,16 @@ public class EditCommand extends Command {
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         GithubUsername updatedGithubUsername = editPersonDescriptor.getGithubUsername()
-                                                                    .orElse(personToEdit.getGithubUsername());
+                .orElse(personToEdit.getGithubUsername());
+        ExerciseTracker updatedExerciseTracker = editPersonDescriptor.getExerciseTracker()
+                .orElse(personToEdit.getExerciseTracker());
+        LabAttendanceList updatedLabAttendanceList = editPersonDescriptor.getLabAttendanceList()
+                .orElse(personToEdit.getLabAttendanceList());
 
         return new Person(updatedStudentId, updatedName, updatedPhone, updatedEmail,
-                updatedAddress, updatedTags, updatedGithubUsername);
+                 updatedTags, updatedGithubUsername, updatedExerciseTracker, updatedLabAttendanceList);
     }
 
     @Override
@@ -147,9 +149,10 @@ public class EditCommand extends Command {
         private Name name;
         private Phone phone;
         private Email email;
-        private Address address;
         private Set<Tag> tags;
         private GithubUsername githubUsername;
+        private ExerciseTracker exerciseTracker;
+        private LabAttendanceList labAttendanceList;
 
         public EditPersonDescriptor() {}
 
@@ -162,16 +165,17 @@ public class EditCommand extends Command {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
-            setAddress(toCopy.address);
             setTags(toCopy.tags);
             setGithubUsername(toCopy.githubUsername);
+            setExerciseTracker(toCopy.exerciseTracker);
+            setLabAttendanceList(toCopy.labAttendanceList);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(studentId, name, phone, email, address, tags, githubUsername);
+            return CollectionUtil.isAnyNonNull(studentId, name, phone, email, tags, githubUsername);
         }
 
         public void setStudentId(StudentId studentId) {
@@ -206,12 +210,22 @@ public class EditCommand extends Command {
             return Optional.ofNullable(email);
         }
 
-        public void setAddress(Address address) {
-            this.address = address;
+
+
+        public void setExerciseTracker(ExerciseTracker exerciseTracker) {
+            this.exerciseTracker = exerciseTracker;
         }
 
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
+        public Optional<ExerciseTracker> getExerciseTracker() {
+            return Optional.ofNullable(exerciseTracker);
+        }
+
+        public void setLabAttendanceList(LabAttendanceList labAttendanceList) {
+            this.labAttendanceList = labAttendanceList;
+        }
+
+        public Optional<LabAttendanceList> getLabAttendanceList() {
+            return Optional.ofNullable(labAttendanceList);
         }
 
         /**
@@ -255,8 +269,10 @@ public class EditCommand extends Command {
                     && Objects.equals(name, otherEditPersonDescriptor.name)
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
-                    && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(tags, otherEditPersonDescriptor.tags)
+                    && Objects.equals(githubUsername, otherEditPersonDescriptor.githubUsername)
+                    && Objects.equals(exerciseTracker, otherEditPersonDescriptor.exerciseTracker)
+                    && Objects.equals(labAttendanceList, otherEditPersonDescriptor.labAttendanceList);
         }
 
         @Override
@@ -266,9 +282,10 @@ public class EditCommand extends Command {
                     .add("name", name)
                     .add("phone", phone)
                     .add("email", email)
-                    .add("address", address)
                     .add("tags", tags)
                     .add("githubUsername", githubUsername)
+                    .add("exerciseTracker", exerciseTracker)
+                    .add("labAttendanceList", labAttendanceList)
                     .toString();
         }
     }

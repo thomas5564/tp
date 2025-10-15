@@ -114,6 +114,19 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+### Marking Lab Attendance
+
+Marks the lab attendance of an existing person in the address book.
+
+Format: `marka INDEX l/LABNUMBER`
+
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* `LABNUMBER` represents the lab session to mark attendance for. It **must be between 1 and 10 (inclusive)**.
+* Attendance can only be **marked once per lab**.
+
+Example:
+* `marka 2 l/7` marks Lab 7 of the second person as attended.
+
 ### Locating persons by name: `find`
 
 Finds persons whose names contain any of the given keywords.
@@ -148,7 +161,12 @@ Examples:
 
 ### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears **all** entries from the address book, leaving it completely empty.
+<box type="warning" seamless>
+
+**Caution:**
+This command will **permanently** remove all entries from the address book.
+</box>
 
 Format: `clear`
 
@@ -204,3 +222,4 @@ Action     | Format, Examples
 **Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **List**   | `list`
 **Help**   | `help`
+**Mark Attendance** | `marka INDEX l/LABNUMBER` <br> e.g. `marka 2 l/7`

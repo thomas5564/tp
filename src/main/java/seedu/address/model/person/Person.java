@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -21,43 +22,41 @@ public class Person {
     private final Phone phone;
     private final Email email;
 
-    // Data fields
-    private final Address address;
     private final Set<Tag> tags = new HashSet<>();
     private final GithubUsername githubUsername;
-
+    private final LabAttendanceList labAttendanceList;
     private ExerciseTracker exerciseTracker;
 
     /**
      * Every field must be present and not null.
      */
     public Person(StudentId studentId, Name name, Phone phone, Email email,
-                  Address address, Set<Tag> tags, GithubUsername githubUsername) {
-        requireAllNonNull(studentId, name, phone, email, address, tags, githubUsername);
+                  Set<Tag> tags, GithubUsername githubUsername) {
+        requireAllNonNull(studentId, name, phone, email, tags, githubUsername);
         this.studentId = studentId;
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.address = address;
         this.tags.addAll(tags);
         this.exerciseTracker = new ExerciseTracker();
         this.githubUsername = githubUsername;
+        this.labAttendanceList = new LabList();
     }
 
     /**
      * Initialises a new person object, but with a specific list of exercise statuses
      */
-    public Person(StudentId studentId, Name name, Phone phone, Email email, Address address, Set<Tag> tags,
-                  GithubUsername githubUsername, ExerciseTracker exerciseTracker) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(StudentId studentId, Name name, Phone phone, Email email, Set<Tag> tags,
+                  GithubUsername githubUsername, ExerciseTracker exerciseTracker, LabAttendanceList labAttendanceList) {
+        requireAllNonNull(name, phone, email, tags, githubUsername, exerciseTracker, labAttendanceList);
         this.studentId = studentId;
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.address = address;
         this.tags.addAll(tags);
         this.exerciseTracker = exerciseTracker;
         this.githubUsername = githubUsername;
+        this.labAttendanceList = labAttendanceList;
     }
 
     public StudentId getStudentId() {
@@ -76,10 +75,6 @@ public class Person {
         return email;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
@@ -90,6 +85,14 @@ public class Person {
 
     public GithubUsername getGithubUsername() {
         return githubUsername;
+    }
+
+    public LabAttendanceList getLabAttendanceList() {
+        return labAttendanceList;
+    }
+
+    public ExerciseTracker getExerciseTracker() {
+        return exerciseTracker;
     }
 
     /**
@@ -125,36 +128,30 @@ public class Person {
                 && name.equals(otherPerson.name)
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
-                && address.equals(otherPerson.address)
                 && exerciseTracker.equals(otherPerson.exerciseTracker)
                 && tags.equals(otherPerson.tags)
-                && githubUsername.equals(otherPerson.githubUsername);
+                && githubUsername.equals(otherPerson.githubUsername)
+                && labAttendanceList.equals(otherPerson.labAttendanceList);
     }
-
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(studentId, name, phone, email, address, tags, githubUsername, exerciseTracker);
+        return Objects.hash(studentId, name, phone, email, tags,
+                githubUsername, exerciseTracker, labAttendanceList);
     }
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append(getClass().getCanonicalName())
-                .append("{studentId=").append(studentId)
-                .append(", name=").append(name)
-                .append(", phone=").append(phone)
-                .append(", email=").append(email)
-                .append(", address=").append(address)
-                .append(", tags=").append(tags)
-                .append(", github username=").append(githubUsername)
-                .append(", exerciseStatuses=").append(exerciseTracker)
-                .append("}");
-        return builder.toString();
-    }
-
-    public ExerciseTracker getExerciseTracker() {
-        return exerciseTracker;
+        return new ToStringBuilder(this)
+                .add("studentId", studentId)
+                .add("name", name)
+                .add("phone", phone)
+                .add("email", email)
+                .add("tags", tags)
+                .add("github username", githubUsername)
+                .add("exerciseStatuses", exerciseTracker)
+                .add("lab attendance list", labAttendanceList)
+                .toString();
     }
 }

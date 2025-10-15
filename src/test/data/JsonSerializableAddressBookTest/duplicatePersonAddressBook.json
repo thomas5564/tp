@@ -6,13 +6,15 @@
     "email": "alice@example.com",
     "address": "123, Jurong West Ave 6, #08-111",
     "tags": [ "friends" ],
-    "githubUsername":"Alice"
+    "githubUsername":"Alice",
+    "labAttendanceList": "L1: N L2: N L3: N L4: N L5: N L6: N L7: N L8: N L9: N L10: N"
   }, {
     "studentId": "A1234567X",
     "name": "Alice Pauline",
     "phone": "94351253",
     "email": "pauline@example.com",
     "address": "4th street",
-    "githubUsername":"Alice"
+    "githubUsername":"Alice",
+    "labAttendanceList": "L1: N L2: N L3: N L4: N L5: N L6: N L7: N L8: N L9: N L10: N"
   } ]
 }

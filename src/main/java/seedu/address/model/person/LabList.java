@@ -5,6 +5,8 @@ package seedu.address.model.person;
  */
 public class LabList implements LabAttendanceList {
     public static final int NUMBER_OF_LABS = 10;
+    public static final String MESSAGE_CONSTRAINTS =
+            "Lab attendance list should be in the format 'L1: Y/N ... L10: Y/N'";
     private final LabAttendance[] labs;
 
     /**
@@ -63,6 +65,24 @@ public class LabList implements LabAttendanceList {
         return true;
     }
 
+    /**
+     * Creates and returns a copy of this LabList with all the same attendance states.
+     *
+     * @return a new LabList with copied attendance records
+     */
+    public LabList copy() {
+        LabAttendance[] copiedLabs = new LabAttendance[NUMBER_OF_LABS];
+        for (int i = 0; i < NUMBER_OF_LABS; i++) {
+            Lab originalLab = (Lab) this.labs[i];
+            Lab newLab = new Lab(i + 1);
+            if (originalLab.isAttended()) {
+                newLab.markAsAttended();
+            }
+            copiedLabs[i] = newLab;
+        }
+        return new LabList(copiedLabs);
+    }
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
@@ -70,5 +90,36 @@ public class LabList implements LabAttendanceList {
             result.append(labs[i].toString()).append(" ");
         }
         return result.toString();
+    }
+
+    /**
+     * Returns true if a given string is a valid lab attendance list format.
+     */
+    public static boolean isValidLabList(String labListString) {
+        if (labListString == null) {
+            return false;
+        }
+
+        String trimmed = labListString.trim();
+        String[] parts = trimmed.split("\\s+");
+
+        // Each lab would have two parts (eg L1, Y)
+        if (parts.length != NUMBER_OF_LABS * 2) {
+            return false;
+        }
+
+        for (int i = 0; i < NUMBER_OF_LABS; i++) {
+            String labLabel = parts[i * 2];
+            String status = parts[i * 2 + 1];
+
+            if (!labLabel.equals("L" + (i + 1) + ":")) {
+                return false;
+            }
+
+            if (!status.equals("Y") && !status.equals("N")) {
+                return false;
+            }
+        }
+        return true;
     }
 }
