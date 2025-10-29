@@ -573,10 +573,10 @@ testers are expected to do more *exploratory* testing.
 
 1. Editing a student with valid data
 
-    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+    1. Prerequisites: List all students using the `list` command. Multiple students in the list.
 
     2. Test case: `edit 2 p/91234567 e/newmail@gmail.com` <br>
-       Expected: In the displayed student list, the second person's data is updated to new details.
+       Expected: In the displayed student list, the second student's data is updated to new details.
 
     3. Test case: `edit 1:3 t/outstanding` <br>
        Expected: In the displayed student list, the first 3 students' tags are replaced with a new tag.
@@ -601,12 +601,12 @@ testers are expected to do more *exploratory* testing.
 
 1. Deleting student(s)
 
-    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+    1. Prerequisites: List all student using the `list` command. Multiple students in the list.
 
     2. Test case: `delete 1`<br>
-       Expected: First student is deleted from the list. Details of the deleted contact shown in the status message.
+       Expected: First student is deleted from the list. Details of the deleted student shown in the status message.
     3. Test case: `delete 1:3`<br>
-       Expected: First three students are deleted from the list. Details of the deleted contact shown in the status message. 
+       Expected: First three students are deleted from the list. Details of the deleted student shown in the status message. 
 
 2. Deleting with invalid index
 
@@ -698,7 +698,7 @@ testers are expected to do more *exploratory* testing.
     1. Prerequisites: Student 1's lab 1 already marked as attended.
 
     2. Test case: `marka 1 l/1 s/y`<br>
-       Expected: Message indicating lab already marked as attended.
+       Expected: Error message indicating lab already marked as attended.
 
 ### Marking exercises
 1. Marking an exercise for a single student
@@ -740,7 +740,7 @@ testers are expected to do more *exploratory* testing.
     1. Prerequisites: Student 1's exercise 0 already marked as done.
 
     2. Test case: `marke 1 ei/0 s/y`<br>
-       Expected: Message indicating exercise already marked as done.
+       Expected: Error message indicating exercise already marked as done.
 
 ### Recording grades
 
