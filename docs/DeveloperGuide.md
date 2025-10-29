@@ -656,6 +656,49 @@ testers are expected to do more *exploratory* testing.
 
 ### Marking lab attendance
 
+1. Marking attendance for student(s))
+
+      1. Prerequisites: List all students. Multiple persons in the list.
+
+      2. Test case: `marka 1 l/1 s/y`<br>
+         Expected: Lab 1 marked as attended (green) for student 1. Success message shows student name and lab number.
+
+      3. Test case: `marka 1 l/1 s/n`<br>
+         Expected: Lab 1 marked as not attended (grey/red depending on the week number) for student 2.
+   
+      4. Test case: `marka 3:5 l/2 s/y`<br>
+         Expected: Lab 2 marked as attended (green) for students 3, 4, and 5. 
+   
+2. Invalid lab numbers
+
+    1. Test case: `marka 1 l/0 s/y`<br>
+       Expected: Error message indicating invalid `lab index`.
+
+    2. Test case: `marka 1 l/11 s/y`<br>
+       Expected: Error message indicating invalid `lab index`.
+
+3. Invalid attendance status
+
+    1. Test case: `marka 1 l/1 s/x`<br>
+       Expected: Error message indicating invalid `status`.
+
+    2. Test case: `marka 1 l/1 s/`<br>
+       Expected: Error message indicating invalid `status`.
+
+4. Missing required fields
+
+    1. Test case: `marka 1 l/1`<br>
+       Expected: Error message indicating invalid command format.
+
+    2. Test case: `marka 1 s/y`<br>
+       Expected: Error message indicating invalid command format.
+
+5. Already marked attendance
+
+    1. Prerequisites: Student 1's lab 1 already marked as attended.
+
+    2. Test case: `marka 1 l/1 s/y`<br>
+       Expected: Message indicating lab already marked as attended.
 
 ### Marking exercises
 
