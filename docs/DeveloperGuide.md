@@ -533,7 +533,8 @@ testers are expected to do more *exploratory* testing.
 
     1. Download the jar file and copy into an empty folder
 
-    2. Open the application using `java -jar LambdaLab.jar`. Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+    2. Open the application using `java -jar LambdaLab.jar`. <br>
+       Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
 2. Saving window preferences
 
@@ -542,7 +543,31 @@ testers are expected to do more *exploratory* testing.
     2. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-3. _{ more test cases …​ }_
+### Adding a student
+
+1. Adding a student with valid data
+
+   1. Test case: `add i/A0309024L n/Shawn Lee p/98765432 e/shawn@gmail.com g/shawnlee2 t/modelStudent` <br>
+      Expected: Shawn lee is added to the end of the student list with the specified details.
+   
+   2. Test case: `add n/Kai Hong i/A0309024L p/99983721 e/kh@gmail.com g/kaihong551 t/consultation t/struggling` <br>
+      Expected: Kai Hong is added with multiple tags.
+
+2. Adding a student with missing required fields
+
+   1. Test Case:`add n/Shawn Lee p/98765432 e/shawn@gmail.com g/shawnlee2 t/modelStudent` - Student Id missing. <br>
+      Expected: Error message indicating invalid command format.
+   
+   2. Test Case:`add i/A0309024L n/Shawn Lee e/shawn@gmail.com g/shawnlee2 t/modelStudent` - Phone number missing. <br>
+      Expected: Error message indicating invalid command format.
+   
+3. Adding a student with invalid data
+
+    1. Test Case:`i/A0309021 add n/Shawn Lee p/98765432 e/shawn@gmail.com g/shawnlee2 t/modelStudent` <br>
+       Expected: Error message indicating invalid `Student Id`.
+
+    2. Test Case:`add i/A0309024L n/Shawn Lee p/98765432 e/shawngmail.com g/shawnlee2 t/modelStudent` <br>
+       Expected: Error message indicating invalid `Email`.
 
 ### Deleting a person
 
@@ -550,13 +575,13 @@ testers are expected to do more *exploratory* testing.
 
     1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
-    1. Test case: `delete 1`<br>
+    2. Test case: `delete 1`<br>
        Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
-    1. Test case: `delete 0`<br>
+    3. Test case: `delete 0`<br>
        Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+    4. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
        Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
