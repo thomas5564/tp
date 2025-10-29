@@ -348,6 +348,20 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ### Set Week Feature
 
+The `set-week` command allows teaching assistants to set the current week of the semester (0-13). This is a crucial command as it determines which labs are considered "past" and affects the behavior of lab attendance marking
+and exercise tracking throughout the application.
+
+**How it works:**
+
+1. The user executes `set-week <WEEK_NUMBER>` where `WEEK_NUMBER` is between 0 and 13
+2. The `SetWeekCommandParser` parses the input string and creates a `Week` object
+3. The `SetWeekCommand` is executed, which:
+    - Saves the current state to enable undo functionality
+    - Updates the current week in the `Model`
+    - Updates the static current week in `LabList` and `ExerciseTracker` classes
+    - Updates all existing students' lab and exercise tracking data to reflect the new week
+4. The system displays a success message showing the new week number and how many students were updated
+<br>
 <puml src="diagrams/set-week/SetWeekSequenceDiagram.puml" width="550" />
 
 --------------------------------------------------------------------------------------------------------------------
