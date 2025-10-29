@@ -569,6 +569,13 @@ testers are expected to do more *exploratory* testing.
     2. Test case:`add i/A0309024L n/Shawn Lee p/98765432 e/shawngmail.com g/shawnlee2 t/modelStudent` <br>
        Expected: Error message indicating invalid `Email`.
 
+4. Add a duplicate person
+
+    1. Prerequisite: Student named Alex Yeoh with Student Id: A1231234B is already added.
+   
+    2. Test case:`add i/A1231234B n/Alex Yeoh p/98765432 e/alexyeoh@example.com g/AlexYeoh` <br>
+       Expected: Error message indicating that this student already exists.
+
 ### Editing a student
 
 1. Editing a student with valid data
