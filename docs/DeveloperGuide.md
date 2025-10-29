@@ -624,6 +624,44 @@ testers are expected to do more *exploratory* testing.
     1. Test case: `delete`<br>
        Expected: Error message indicating invalid command format.
 
+### Setting the current week
+1. Setting a valid week number
+
+    1. Prerequisites: App is running with default or any current week.
+
+    2. Test case: `set-week 5`<br>
+       Expected: Status bar footer updates to display "Week 5". Lab attendance and Exercises will be updated accordingly. (labs 1-2 show red for absent/green for attended and exercises 0-2 show red for overdue/green for done)
+   
+    3. Test case: `set-week 0`<br>
+       Expected: Status bar shows "Week 0". Lab attendance and Exercises updated.
+   
+2. Setting an invalid week number
+
+    1. Test case: `set-week -1`<br>
+       Expected: Error message indicating week number must be between 0 and 13.
+
+    2. Test case: `set-week 14`<br>
+       Expected: Error message indicating week number must be between 0 and 13.
+   
+3. Setting week with invalid format
+
+    1. Test case: `set-week abc`<br>
+       Expected: Error message indicating invalid command format.
+
+    2. Test case: `set-week`<br>
+       Expected: Error message indicating invalid command format.
+
+    3. Test case: `set-week 5.5`<br>
+       Expected: Error message indicating invalid command format.
+
+### Marking lab attendance
+
+
+### Marking exercises
+
+
+### Recording grades
+
 ### Saving data
 
 1. Dealing with missing/corrupted data files
