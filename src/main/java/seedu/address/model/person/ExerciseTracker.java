@@ -1,5 +1,7 @@
 package seedu.address.model.person;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -10,46 +12,154 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 
 /**
- * Represents a Person's address in the address book.
+ * Represents a Person's exercise tracker in the address book.
+ * Tracks completion status for a fixed number of exercises.
  */
 public class ExerciseTracker implements Comparable<ExerciseTracker> {
 
     public static final String MESSAGE_CONSTRAINTS = "Exercise tracker takes in statuses";
     public static final int NUMBER_OF_EXERCISES = 10;
+
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
-    private static final String INDEX_OUT_OF_FOUNDS_FORMAT = "Index should be between 0 and %s";
+    private static final String INDEX_OUT_OF_BOUNDS_FORMAT = "Index should be between 0 and %s";
+
     private static int currentWeekNumber;
-    private ArrayList<Exercise> exercises = new ArrayList<>();
+    private final ArrayList<Exercise> exercises;
+
+    // ===========================
+    // Constructors
+    // ===========================
 
     /**
-     * Initialises statuses to all be not done
+     * Initializes all exercises as not done.
      */
     public ExerciseTracker() {
-        for (int i = 0; i < NUMBER_OF_EXERCISES; i++) {
-            exercises.add(new Exercise(i, false, currentWeekNumber));
-        }
+        this.exercises = initializeExercises(new ArrayList<>());
         assert exercises.size() == NUMBER_OF_EXERCISES : "Exercise tracker must have exactly 10 exercises";
     }
+
     /**
-     * Initializes exercises using a list of statuses.
+     * Initializes exercises using a provided list of completion statuses.
      * Each index corresponds to an exercise number.
      */
     public ExerciseTracker(ArrayList<Boolean> isDoneList) {
-        assert isDoneList != null : "Statuses list must not be null";
+        requireNonNull(isDoneList);
         if (isDoneList.size() > NUMBER_OF_EXERCISES) {
             throw new IllegalArgumentException("Too many statuses! Expected at most " + NUMBER_OF_EXERCISES);
         }
-        this.exercises = new ArrayList<>();
-        for (int i = 0; i < isDoneList.size(); i++) {
-            exercises.add(new Exercise(i, isDoneList.get(i), currentWeekNumber));
-        }
-        for (int i = isDoneList.size(); i < NUMBER_OF_EXERCISES; i++) {
-            exercises.add(new Exercise(i, false, currentWeekNumber));
-        }
+        this.exercises = initializeExercises(isDoneList);
     }
+
+    private ArrayList<Exercise> initializeExercises(List<Boolean> isDoneList) {
+        ArrayList<Exercise> list = new ArrayList<>();
+        for (int i = 0; i < NUMBER_OF_EXERCISES; i++) {
+            boolean done = (i < isDoneList.size()) && isDoneList.get(i);
+            list.add(new Exercise(i, done, currentWeekNumber));
+        }
+        return list;
+    }
+
+    // ===========================
+    // Setters and Getters
+    // ===========================
 
     public static void setCurrentWeek(int week) {
         currentWeekNumber = week;
+    }
+
+    public ArrayList<Boolean> getIsDoneList() {
+        assert exercises != null && !exercises.isEmpty() : "Exercises must be initialized";
+        return exercises.stream()
+                .map(Exercise::isDone)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public List<Status> getStatuses() {
+        return exercises.stream().map(Exercise::getStatus).toList();
+    }
+
+    /**
+     * Marks the exercise at the given index with the specified status.
+     */
+    public void markExercise(Index index, boolean isDone) {
+        requireNonNull(index);
+        logger.info(String.format("Marking exercise %d as %s", index.getOneBased(), isDone));
+        validateIndex(index);
+        updateExerciseStatus(index, isDone);
+    }
+
+    private void validateIndex(Index index) {
+        if (index.getZeroBased() < 0 || index.getZeroBased() >= NUMBER_OF_EXERCISES) {
+            throw new IndexOutOfBoundsException(
+                    String.format(INDEX_OUT_OF_BOUNDS_FORMAT, NUMBER_OF_EXERCISES - 1)
+            );
+        }
+    }
+
+    private void updateExerciseStatus(Index index, boolean isDone) {
+        exercises.get(index.getZeroBased()).markStatus(isDone);
+    }
+
+    /**
+     * Calculates a student's exercise progress as a percentage (0.0–100.0).
+     */
+    public double calculateProgress() {
+        long completedCount = exercises.stream()
+                .filter(ex -> ex.getStatus() == Status.DONE)
+                .count();
+        return (completedCount / (double) NUMBER_OF_EXERCISES) * 100.0;
+    }
+
+    /**
+     * Returns a deep copy of this ExerciseTracker.
+     */
+    public ExerciseTracker copy() {
+        ArrayList<Boolean> copiedStatuses = new ArrayList<>(this.getIsDoneList());
+        return new ExerciseTracker(copiedStatuses);
+    }
+
+    /**
+     * Returns true if a given string is a valid exercise tracker format.
+     */
+    public static boolean isValidExerciseTracker(String exerciseTrackerString) {
+        //Prevents NullPointerException and ensures we only process real strings.
+        if (exerciseTrackerString == null) {
+            return false;
+        }
+        // Split the string into parts separated by one or more whitespace characters.
+        //Example:
+        //"ex 0: D ex 1: N"  →  ["ex", "0:", "D", "ex", "1:", "N"]
+        String[] parts = exerciseTrackerString.trim().split("\\s+");
+        //check if the total number of exercise entries (e.g. ex : D) is valid
+        if (parts.length != NUMBER_OF_EXERCISES * 3) {
+            return false;
+        }
+        //checks each exercise entry individually
+        for (int i = 0; i < NUMBER_OF_EXERCISES; i++) {
+            if (!isValidExerciseEntry(parts, i)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean isValidExerciseEntry(String[] parts, int index) {
+        return isValidKeyword(parts[index * 3])
+                && isValidIndexFormat(parts[index * 3 + 1], index)
+                && isValidStatus(parts[index * 3 + 2]);
+    }
+
+    private static boolean isValidKeyword(String keyword) {
+        return keyword.equals("ex");
+    }
+
+    private static boolean isValidIndexFormat(String token, int index) {
+        return token.equals(index + ":");
+    }
+
+    private static boolean isValidStatus(String status) {
+        return status.equals("N") || status.equals("D")
+                || status.equals("I") || status.equals("O");
     }
 
     @Override
@@ -75,100 +185,9 @@ public class ExerciseTracker implements Comparable<ExerciseTracker> {
     public int hashCode() {
         return exercises.hashCode();
     }
-    public ArrayList<Boolean> getIsDoneList() {
-        assert exercises != null && !exercises.isEmpty() : "Exercises must be initialized";
-        return exercises.stream()
-                .map(Exercise::isDone)
-                .collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    /**
-     * Marks the exercise at the given index with the status
-     * @param index of the exercise
-     * @param isDone to mark the exercise with
-     */
-    public void markExercise(Index index, boolean isDone) {
-        logger.info(String.format("Marking ex %d with %s", index.getOneBased(), isDone));
-        if (index.getZeroBased() < 0 || index.getZeroBased() >= NUMBER_OF_EXERCISES) {
-            throw new IndexOutOfBoundsException(
-                    String.format(INDEX_OUT_OF_FOUNDS_FORMAT,
-                            NUMBER_OF_EXERCISES - 1)
-            );
-        }
-        exercises.get(index.getZeroBased()).markStatus(isDone);
-    }
-
-    /**
-     * Calculates a student's exercise progress as percentage
-     * @return the progress between 0.0 and 100.0.
-     */
-    public double calculateProgress() {
-        double count = 0;
-        for (int i = 0; i < NUMBER_OF_EXERCISES; i++) {
-            Status status = exercises.get(i).getStatus();
-            if (status == Status.DONE) {
-                count++;
-            }
-        }
-        return count / NUMBER_OF_EXERCISES * 100.0;
-    }
 
     @Override
     public int compareTo(ExerciseTracker other) {
         return Double.compare(this.calculateProgress(), other.calculateProgress());
     }
-
-    /**
-     * Returns true if a given string is a valid exercise tracker format.
-     */
-    public static boolean isValidExerciseTracker(String exerciseTrackerString) {
-        if (exerciseTrackerString == null) {
-            return false;
-        }
-        String trimmed = exerciseTrackerString.trim();
-        String[] parts = trimmed.split("\\s+");
-
-        // Each exercise entry has 3 parts (ex, <index>:, <status>)
-        if (parts.length != NUMBER_OF_EXERCISES * 3) {
-            return false;
-        }
-
-        for (int i = 0; i < NUMBER_OF_EXERCISES; i++) {
-            String exKeyword = parts[i * 3];
-            String indexWithColon = parts[i * 3 + 1];
-            String status = parts[i * 3 + 2];
-
-            // Must start with "ex"
-            if (!exKeyword.equals("ex")) {
-                return false;
-            }
-
-            // Must match index with colon, e.g. "0:", "1:", ...
-            if (!indexWithColon.equals(i + ":")) {
-                return false;
-            }
-
-            // Valid statuses only
-            if (!status.equals("N") && !status.equals("D")
-                    && !status.equals("I") && !status.equals("O")) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * Returns a deep copy of this ExerciseTracker.
-     * @return a new ExerciseTracker with copied data
-     */
-    public ExerciseTracker copy() {
-        ArrayList<Boolean> copiedStatuses = new ArrayList<>(this.getIsDoneList());
-        return new ExerciseTracker(copiedStatuses);
-    }
-
-    public List<Status> getStatuses() {
-        return exercises.stream().map(Exercise::getStatus).toList();
-    }
 }
-
