@@ -542,6 +542,10 @@ testers are expected to do more *exploratory* testing.
 
     2. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
+   
+3. Shutdown
+    1. `exit` <br> 
+       Expected: Closes the application orderly. Users are advised to exit via this command to ensure all views are properly shut down.
 
 ### Adding a student
 
