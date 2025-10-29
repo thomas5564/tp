@@ -1067,3 +1067,15 @@ testers are expected to do more *exploratory* testing.
     1. Test case: Remove some lines from `addressbook.json` in `/data` folder. Launch the app.
        Expected: The app initializes with no data, showing error messages about corrupted data in the terminal.
 
+### Extra Testing
+Testers are encouraged to create their own test scenarios by combining the commands covered in previous sections. Here are some examples of workflows to explore:
+
+- **Filter + Mark Attendance**: Filter students by a criteria, then mark their attendance. Verify the filter updates correctly.
+- **Set Week + Mark Attendance**: Set different week numbers and observe how lab colors change (grey for future, red for absent past labs, green for attended).
+- **Add + Filter + Sort**: Add new students, filter by tags or status, then sort the results by different criteria.
+- **Multi-Index Operations**: Use range indices (e.g., `1:5`) with edit (for tagging), delete, marka, marke, and grade commands, then verify results.
+- **Scheduling Workflows**: Block timeslots, add consultations, unblock portions, and use `get-timeslots`/`get-consultations` to verify.
+- **Undo After Operations**: Perform various data-modifying commands, then use `undo` to verify state restoration.
+- **Filter Persistence**: Apply filters, execute commands like marka or marke, verify filters remain active and update correctly.
+
+
