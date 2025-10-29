@@ -779,6 +779,29 @@ testers are expected to do more *exploratory* testing.
 
 ### Finding students
 
+1. Finding students with valid keywords
+
+    1. Test case: `find Alex`<br>
+       Expected: All students with "Alex" (case-insensitive) in any field (`name, ID, email, etc.`) are displayed.
+
+    2. Test case: `find A123 i/`<br>
+       Expected: All students with "A123" (case-insensitive) in `Student Id` field are displayed.
+
+    3. Test case: `find alex irfan`<br>
+       Expected: Students with "alex" OR "irfan" in any field are displayed.
+
+    4. Test case: `find irf g/ n/`<br>
+       Expected: All students with "irf" in `Github Username` or `Name`field are displayed.
+
+2. Finding with no results
+
+    1. Test case: `find nonexistentname`<br>
+       Expected: No students displayed. Message indicates 0 students listed.
+
+3. Invalid find command format
+
+    1. Test case: `find`<br>
+       Expected: Error message indicating invalid command format.
 
 ### Filtering students
 
