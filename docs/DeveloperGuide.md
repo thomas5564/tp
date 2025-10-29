@@ -341,10 +341,14 @@ a student project with limited development time.
 
 _{Explain here how the data archiving feature will be implemented}_
 
-### Find Feature:
+### Find Feature
 
 <puml src="diagrams/findCommand/find.puml" width="250" />
 
+
+### Set Week Feature
+
+<puml src="diagrams/set-week/SetWeekSequenceDiagram.puml" width="550" />
 
 --------------------------------------------------------------------------------------------------------------------
 

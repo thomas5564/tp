@@ -71,8 +71,6 @@ public class SetWeekCommand extends Command {
             updatedCount++;
         }
 
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-
         return new CommandResult(String.format(MESSAGE_SUCCESS, currentWeekNumber, updatedCount));
     }
 
