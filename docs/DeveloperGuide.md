@@ -638,10 +638,10 @@ testers are expected to do more *exploratory* testing.
 2. Setting an invalid week number
 
     1. Test case: `set-week -1`<br>
-       Expected: Error message indicating week number must be between 0 and 13.
+       Expected: Error message indicating `Week number`.
 
     2. Test case: `set-week 14`<br>
-       Expected: Error message indicating week number must be between 0 and 13.
+       Expected: Error message indicating `Week number`.
    
 3. Setting week with invalid format
 
@@ -672,18 +672,18 @@ testers are expected to do more *exploratory* testing.
 2. Invalid lab numbers
 
     1. Test case: `marka 1 l/0 s/y`<br>
-       Expected: Error message indicating invalid `lab index`.
+       Expected: Error message indicating invalid `Lab index`.
 
     2. Test case: `marka 1 l/11 s/y`<br>
-       Expected: Error message indicating invalid `lab index`.
+       Expected: Error message indicating invalid `Lab index`.
 
 3. Invalid attendance status
 
     1. Test case: `marka 1 l/1 s/x`<br>
-       Expected: Error message indicating invalid `status`.
+       Expected: Error message indicating invalid `Status`.
 
     2. Test case: `marka 1 l/1 s/`<br>
-       Expected: Error message indicating invalid `status`.
+       Expected: Error message indicating invalid `Status`.
 
 4. Missing required fields
 
@@ -701,7 +701,46 @@ testers are expected to do more *exploratory* testing.
        Expected: Message indicating lab already marked as attended.
 
 ### Marking exercises
+1. Marking an exercise for a single student
 
+    1. Prerequisites: List all students. Multiple persons in the list.
+
+    2. Test case: `marke 1 ei/0 s/y`<br>
+       Expected: Exercise 0 marked as done (green) for student 1. Success message shows student name and exercise number.
+
+    3. Test case: `marke 1 ei/0 s/n`<br>
+       Expected: Exercise 3 marked as not done for student 2.
+
+    4. Test case: `marke 3:5 ei/1 s/y`<br>
+       Expected: Exercise 1 marked as done for students 3, 4, and 5.
+
+2. Invalid exercise numbers
+
+    1. Test case: `marke 1 ei/-1 s/y`<br>
+       Expected: Error message indicating invalid `Exercise index`.
+
+    2. Test case: `marke 1 ei/13 s/y`<br>
+       Expected: Error message indicating invalid `Exercise index`.
+
+3. Invalid exercise status
+
+    1. Test case: `marke 1 ei/0 s/x`<br>
+       Expected: Error message indicating invalid `Status`.
+   
+4. Missing required fields
+
+    1. Test case: `marke 1 ei/0`<br>
+       Expected: Error message indicating invalid command format.
+
+    2. Test case: `marke 1 s/y`<br>
+       Expected: Error message indicating invalid command format.
+
+5. Already marked exercise
+
+    1. Prerequisites: Student 1's exercise 0 already marked as done.
+
+    2. Test case: `marke 1 ei/0 s/y`<br>
+       Expected: Message indicating exercise already marked as done.
 
 ### Recording grades
 
