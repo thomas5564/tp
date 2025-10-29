@@ -10,71 +10,99 @@ import java.util.stream.Collectors;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.exceptions.InvalidExamNameException;
-import seedu.address.model.person.exceptions.InvalidScoreException;
 
 /**
- * Wraps a HashMap with String keys and Gradeable values.
+ * Wraps a HashMap with String keys and Examination values.
  */
 public class GradeMap {
     public static final String[] VALID_EXAM_NAMES = {"pe1", "midterm", "pe2", "final"};
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
-    private final HashMap<String, Gradeable> gradeableHashMap;
+    private final HashMap<String, Examination> examMap;
+
     /**
-     * Fills the hashmap with the keys
+     * Fills the hashmap with the valid exam names.
      */
     public GradeMap() {
-        gradeableHashMap = new HashMap<>();
-        for (String assessment : VALID_EXAM_NAMES) {
-            gradeableHashMap.put(
-                    assessment,
-                    new Examination(assessment)
-            );
+        examMap = new HashMap<>();
+
+        for (String examName : VALID_EXAM_NAMES) {
+            examMap.put(examName, new Examination(examName));
         }
     }
+
     @Override
     public String toString() {
         return Arrays.stream(VALID_EXAM_NAMES)
-                .map(a -> gradeableHashMap.get(a).toString())
+                .map(name -> examMap.get(name).toString())
                 .collect(Collectors.joining(", "));
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
-            return true; // same reference
+            return true;
         }
+
         if (!(obj instanceof GradeMap)) {
-            return false; // different type
+            return false;
         }
+
         GradeMap other = (GradeMap) obj;
-        return this.gradeableHashMap.equals(other.gradeableHashMap);
+        return this.examMap.equals(other.examMap);
     }
 
-    public HashMap<String, Gradeable> getGradeableHashMap() {
-        return gradeableHashMap;
+    public HashMap<String, Examination> getExamMap() {
+        return examMap;
     }
 
     public void putExam(String key, Examination exam) {
-        gradeableHashMap.put(key, exam);
+        examMap.put(key, exam);
     }
 
     /**
-     * Grades an exam with a score
-     * @param name of the exam to be graded
-     * @param score to grade the exam with
-     * @throws InvalidExamNameException if the exam name is not in the list of valid exam names
+     * Marks an exam as passed.
+     * @param name of the exam to mark as passed
+     * @throws InvalidExamNameException if the exam name is invalid
      */
-    public void gradeExam(String name, double score) throws InvalidExamNameException {
-        logger.info(String.format("Grading %s with %.2f", name, score));
-        Gradeable exam = gradeableHashMap.get(name);
+    public void markExamPassed(String name) throws InvalidExamNameException {
+        logger.info(String.format("Marking %s as Passed", name));
+
+        Examination exam = examMap.get(name);
+
         if (exam == null) {
             throw new InvalidExamNameException(
-                    String.format(MESSAGE_INVALID_EXAM_NAME_FORMAT,
-                        name,
-                        Arrays.toString(VALID_EXAM_NAMES)
+                    String.format(
+                            MESSAGE_INVALID_EXAM_NAME_FORMAT,
+                            name,
+                            Arrays.toString(VALID_EXAM_NAMES)
                     )
             );
         }
-        exam.setScore(score);
+
+        exam.markPassed();
+    }
+
+    /**
+     * Marks an exam as failed.
+     * @param name of the exam to mark as failed
+     * @throws InvalidExamNameException if the exam name is invalid
+     */
+    public void markExamFailed(String name) throws InvalidExamNameException {
+        logger.info(String.format("Marking %s as Failed", name));
+
+        Examination exam = examMap.get(name);
+
+        if (exam == null) {
+            throw new InvalidExamNameException(
+                    String.format(
+                            MESSAGE_INVALID_EXAM_NAME_FORMAT,
+                            name,
+                            Arrays.toString(VALID_EXAM_NAMES)
+                    )
+            );
+        }
+
+        exam.markFailed();
     }
 
     /**
@@ -85,20 +113,18 @@ public class GradeMap {
         GradeMap newGradeMap = new GradeMap();
 
         for (String examName : VALID_EXAM_NAMES) {
-            Gradeable original = this.gradeableHashMap.get(examName);
-            Gradeable copied = newGradeMap.gradeableHashMap.get(examName);
-            if (original instanceof Examination) {
-                Examination originalExam = (Examination) original;
-                if (originalExam.getScore() != -1.0) {
-                    try {
-                        copied.setPercentageScore(originalExam.getScore());
-                    } catch (InvalidScoreException e) {
-                        throw new RuntimeException("Unexpected error copying valid score", e);
-                    }
+            Examination original = this.examMap.get(examName);
+            Examination copied = newGradeMap.examMap.get(examName);
+
+            if (original.isPassed().isPresent()) {
+                if (original.isPassed().get()) {
+                    copied.markPassed();
+                } else {
+                    copied.markFailed();
                 }
             }
         }
+
         return newGradeMap;
     }
 }
-

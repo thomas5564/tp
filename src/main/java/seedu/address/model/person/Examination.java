@@ -1,87 +1,78 @@
 package seedu.address.model.person;
+
 import java.util.Optional;
 
-import seedu.address.model.person.exceptions.InvalidScoreException;
-
 /**
- * Represents a graded examination.
+ * Represents a graded examination that stores only pass/fail.
  */
-public class Examination implements Gradeable {
-    public static final double MAX_PE1_SCORE = 40.0;
-    public static final double MAX_MIDTERM_SCORE = 60.0;
-    public static final double MAX_PE2_SCORE = 40.0;
-    public static final double MAX_FINAL_SCORE = 100.0;
-    private static final String INVALID_SCORE_FORMAT =
-            "%.1f is invalid as a score. Input a number from 0 to %.1f";
+public class Examination {
     private final String name;
-    private final double maxScore;
-    private Optional<Double> score;
+    private Optional<Boolean> passed;
 
     /**
-     * Sets the fields accordingly.
+     * Creates an Examination with the given name and no result yet.
      *
      * @param name the name of the examination
      */
     public Examination(String name) {
         this.name = name;
-        this.maxScore = getMaxScoreFor(name);
-        this.score = Optional.empty();
+        this.passed = Optional.empty(); // initially no result
     }
 
-    @Override
-    public double getScore() {
-        return score.orElse(-1.0);
+    /**
+     * Marks the exam as passed.
+     */
+    public void markPassed() {
+        this.passed = Optional.of(true);
     }
 
-    @Override
-    public void setScore(double inputScore) throws InvalidScoreException {
-        if (inputScore < 0 || inputScore > maxScore) {
-            throw new InvalidScoreException(
-                    String.format(INVALID_SCORE_FORMAT, inputScore, maxScore),
-                    maxScore
-            );
-        }
-        this.score = Optional.of(inputScore / maxScore * 100.0);
+    /**
+     * Marks the exam as failed.
+     */
+    public void markFailed() {
+        this.passed = Optional.of(false);
     }
 
-    @Override
-    public void setPercentageScore(double score) {
-        if (score < 0 || score > 100.0) {
-            throw new InvalidScoreException(
-                    String.format(INVALID_SCORE_FORMAT, score, 100.0),
-                    100.0
-            );
-        }
-        this.score = Optional.of(score);
+    /**
+     * Returns whether the exam was passed (Optional.empty() if not graded yet).
+     */
+    public Optional<Boolean> isPassed() {
+        return passed;
     }
 
+    /**
+     * Returns a string representation, e.g. "PE1: Passed", "Final: Failed", or "Midterm: NA".
+     */
     @Override
     public String toString() {
-        return String.format("%s: %s",
-                name, score.map(Object::toString).orElse("NA"));
+        return String.format("%s: %s", name, passed.map(p -> {
+            if (p) {
+                return "Passed";
+            } else {
+                return "Failed";
+            }
+        }).orElse("NA"));
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }
+
         if (!(obj instanceof Examination)) {
             return false;
         }
+
         Examination other = (Examination) obj;
-        return this.name.equals(other.name)
-                && Double.compare(this.maxScore, other.maxScore) == 0
-                && this.score.equals(other.score);
+
+        if (!this.name.equals(other.name)) {
+            return false;
+        }
+
+        return this.passed.equals(other.passed);
     }
-    public static double getMaxScoreFor(String name) {
-        return switch (name.toLowerCase()) {
-        case "pe1" -> MAX_PE1_SCORE;
-        case "midterm" -> MAX_MIDTERM_SCORE;
-        case "pe2" -> MAX_PE2_SCORE;
-        case "final" -> MAX_FINAL_SCORE;
-        default -> throw new IllegalArgumentException("Unknown exam: " + name);
-        };
-    }
+
     public String getName() {
         return name;
     }

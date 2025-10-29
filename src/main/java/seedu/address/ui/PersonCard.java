@@ -9,8 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.person.Examination;
 import seedu.address.model.person.GradeMap;
-import seedu.address.model.person.Gradeable;
 import seedu.address.model.person.LabAttendance;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Status;
@@ -95,21 +95,24 @@ public class PersonCard extends UiPart<Region> {
             labAttendance.getChildren().add(labLabel);
         }
 
-        HashMap<String, Gradeable> gradeableMap = person.getGradeMap().getGradeableHashMap();
+        HashMap<String, Examination> examMap = person.getGradeMap().getExamMap();
+
         for (String examName : GradeMap.VALID_EXAM_NAMES) {
-            Gradeable exam = gradeableMap.get(examName);
+            Examination exam = examMap.get(examName);
             Label gradeLabel = new Label(examName.toUpperCase());
 
-            double score = exam.getScore();
-            if (score == -1.0) {
+            if (exam.isPassed().isEmpty()) {
                 gradeLabel.getStyleClass().addAll("status-label", "exam-not-graded");
-            } else if (score >= 50.0) {
-                gradeLabel.getStyleClass().addAll("status-label", "exam-pass");
             } else {
-                gradeLabel.getStyleClass().addAll("status-label", "exam-fail");
+                if (exam.isPassed().get()) {
+                    gradeLabel.getStyleClass().addAll("status-label", "exam-pass");
+                } else {
+                    gradeLabel.getStyleClass().addAll("status-label", "exam-fail");
+                }
             }
 
             grades.getChildren().add(gradeLabel);
         }
+
     }
 }

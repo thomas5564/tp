@@ -3,18 +3,17 @@ package seedu.address.model.person;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.HashMap;
+import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import seedu.address.model.person.exceptions.InvalidExamNameException;
 
+/**
+ * Unit tests for the GradeMap class.
+ */
 public class GradeMapTest {
 
     private GradeMap gradeMap;
@@ -25,116 +24,100 @@ public class GradeMapTest {
     }
 
     @Test
-    public void constructor_initializesAllValidExamNames() {
-        HashMap<String, Gradeable> map = gradeMap.getGradeableHashMap();
-        assertEquals(GradeMap.VALID_EXAM_NAMES.length, map.size());
-        for (String name : GradeMap.VALID_EXAM_NAMES) {
-            assertTrue(map.containsKey(name));
-            assertNotNull(map.get(name));
+    public void constructor_initializesAllValidExams() {
+        for (String examName : GradeMap.VALID_EXAM_NAMES) {
+            assertTrue(gradeMap.getExamMap().containsKey(examName));
         }
     }
 
     @Test
-    public void gradeExam_validExamName_setsScoreSuccessfully() throws InvalidExamNameException {
-        gradeMap.gradeExam("midterm", 30.0);
-        Gradeable exam = gradeMap.getGradeableHashMap().get("midterm");
-        assertEquals(30.0 / Examination.MAX_MIDTERM_SCORE * 100.0 , exam.getScore());
+    public void markExamPassed_validExam_marksAsPassed() throws InvalidExamNameException {
+        gradeMap.markExamPassed("pe1");
+
+        Examination exam = gradeMap.getExamMap().get("pe1");
+
+        assertTrue(exam.isPassed().isPresent());
+        assertTrue(exam.isPassed().get());
     }
 
     @Test
-    public void gradeExam_invalidExamName_throwsException() {
-        InvalidExamNameException exception = assertThrows(InvalidExamNameException.class, ()
-                -> gradeMap.gradeExam("quiz", 50));
-        assertTrue(exception.getMessage().contains("quiz"));
-        assertTrue(exception.getMessage().contains("pe1"));
+    public void markExamFailed_validExam_marksAsFailed() throws InvalidExamNameException {
+        gradeMap.markExamFailed("midterm");
+
+        Examination exam = gradeMap.getExamMap().get("midterm");
+
+        assertTrue(exam.isPassed().isPresent());
+        assertFalse(exam.isPassed().get());
     }
 
     @Test
-    public void equals_sameObject_returnsTrue() {
-        assertTrue(gradeMap.equals(gradeMap));
+    public void markExamPassed_invalidExam_throwsException() {
+        assertThrows(
+                InvalidExamNameException.class, () -> gradeMap.markExamPassed("quiz1")
+        );
     }
 
     @Test
-    public void equals_differentType_returnsFalse() {
-        assertFalse(gradeMap.equals("not a grade map"));
+    public void markExamFailed_invalidExam_throwsException() {
+        assertThrows(
+                InvalidExamNameException.class, () -> gradeMap.markExamFailed("unknown")
+        );
     }
 
     @Test
-    public void equals_sameContent_returnsTrue() {
-        GradeMap other = new GradeMap();
-        assertEquals(gradeMap, other);
+    public void toString_reflectsPassFailStatus() throws InvalidExamNameException {
+        gradeMap.markExamPassed("pe1");
+        gradeMap.markExamFailed("pe2");
+
+        String result = gradeMap.toString();
+
+        assertTrue(result.contains("pe1: Passed"));
+        assertTrue(result.contains("pe2: Failed"));
+    }
+
+    @Test
+    public void copy_createsDeepCopyWithSameStatus() throws InvalidExamNameException {
+        gradeMap.markExamPassed("pe1");
+        gradeMap.markExamFailed("final");
+
+        GradeMap copied = gradeMap.copy();
+
+        for (String examName : GradeMap.VALID_EXAM_NAMES) {
+            Examination original = gradeMap.getExamMap().get(examName);
+            Examination clone = copied.getExamMap().get(examName);
+
+            if (original.isPassed().isPresent()) {
+                assertEquals(original.isPassed().get(), clone.isPassed().get());
+            } else {
+                assertTrue(clone.isPassed().isEmpty());
+            }
+        }
+
+        // Ensure modifying the copy doesn't affect the original
+        copied.markExamPassed("midterm");
+        assertNotEquals(
+                gradeMap.getExamMap().get("midterm").isPassed(),
+                copied.getExamMap().get("midterm").isPassed()
+        );
+    }
+
+    @Test
+    public void equals_sameContent_returnsTrue() throws InvalidExamNameException {
+        GradeMap another = new GradeMap();
+
+        gradeMap.markExamPassed("pe1");
+        another.markExamPassed("pe1");
+
+        assertEquals(gradeMap, another);
     }
 
     @Test
     public void equals_differentContent_returnsFalse() throws InvalidExamNameException {
-        GradeMap other = new GradeMap();
-        other.gradeExam("pe1", 20);
-        assertNotEquals(gradeMap, other);
-    }
+        GradeMap another = new GradeMap();
 
-    @Test
-    public void toString_containsAllExamNames() {
-        String output = gradeMap.toString();
-        for (String exam : GradeMap.VALID_EXAM_NAMES) {
-            assertTrue(output.contains(exam));
-        }
-    }
-    @Test
-    public void copy_validGrades_createsDeepCopy() throws InvalidExamNameException {
-        gradeMap.gradeExam("midterm", 40.0);
-        gradeMap.gradeExam("final", 90.0);
+        gradeMap.markExamPassed("pe1");
+        another.markExamFailed("pe1");
 
-        GradeMap copied = gradeMap.copy();
-
-        assertNotNull(copied, "Copy should not be null");
-        assertNotSame(gradeMap, copied, "Copy should be a different object");
-        assertEquals(gradeMap, copied, "Copy should have the same content initially");
-
-        // Verify all exam entries exist
-        for (String examName : GradeMap.VALID_EXAM_NAMES) {
-            assertTrue(copied.getGradeableHashMap().containsKey(examName),
-                    "Copied GradeMap should contain " + examName);
-            assertNotNull(copied.getGradeableHashMap().get(examName),
-                    "Copied exam entry should not be null");
-        }
-
-        // Verify scores were copied correctly
-        assertEquals(
-                gradeMap.getGradeableHashMap().get("midterm").getScore(),
-                copied.getGradeableHashMap().get("midterm").getScore(),
-                1e-9,
-                "Midterm score should match after copy"
-        );
-        assertEquals(
-                gradeMap.getGradeableHashMap().get("final").getScore(),
-                copied.getGradeableHashMap().get("final").getScore(),
-                1e-9,
-                "Final score should match after copy"
-        );
-
-        // Deep copy check — modifying copy shouldn’t affect original
-        copied.gradeExam("midterm", 60.0);
-        double originalMidterm = gradeMap.getGradeableHashMap().get("midterm").getScore();
-        double copiedMidterm = copied.getGradeableHashMap().get("midterm").getScore();
-
-        assertNotEquals(
-                originalMidterm,
-                copiedMidterm,
-                "Changing copy's midterm score should not affect the original GradeMap"
-        );
-    }
-
-    @Test
-    public void copy_ungradedExams_preserveDefaultState() {
-        GradeMap copied = gradeMap.copy();
-
-        for (String examName : GradeMap.VALID_EXAM_NAMES) {
-            assertTrue(copied.getGradeableHashMap().containsKey(examName),
-                    "Copied GradeMap should contain " + examName);
-            Gradeable exam = copied.getGradeableHashMap().get(examName);
-            assertTrue(exam instanceof Examination, "Exam should be an instance of Examination");
-            double score = ((Examination) exam).getScore();
-            assertEquals(-1.0, score, "Ungraded exam should have score -1.0");
-        }
+        assertNotEquals(gradeMap, another);
     }
 }

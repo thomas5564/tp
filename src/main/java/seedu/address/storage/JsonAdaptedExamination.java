@@ -4,48 +4,60 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.model.person.Examination;
-import seedu.address.model.person.exceptions.InvalidScoreException;
-
 
 /**
  * Jackson-friendly version of {@link Examination}.
  */
 public class JsonAdaptedExamination {
-    private String name;
-    private Double score;
+
+    private final String name;
+    private final String result; // "passed", "failed", or "na"
+
     /**
-     * Constructs a {@code JsonAdaptedExamination} with the given person details.
+     * Constructs JsonAdaptedExamination from the following
+     * @param name of the examination
+     * @param result whether the examination is passed or failed
      */
     @JsonCreator
-    public JsonAdaptedExamination(
-            @JsonProperty("name") String name,
-            @JsonProperty("score") String score
-    ) {
+    public JsonAdaptedExamination(@JsonProperty("name") String name,
+                                  @JsonProperty("result") String result) {
         this.name = name;
-        this.score = Double.parseDouble(score);
+        this.result = result;
     }
 
     /**
-     * Constructs a JSON adapted examination from the source
-     * @param source from which exam is created
+     * Constructs JsonAdaptedExamination from an examination
+     * @param source the examination to model after
      */
     public JsonAdaptedExamination(Examination source) {
         this.name = source.getName();
-        this.score = source.getScore();
+        this.result = source.isPassed()
+                .map(p -> p ? "passed" : "failed")
+                .orElse("na");
     }
 
     /**
-     * @return an examination from the JsonAdaptedExamination
+     * Converts this JSON-friendly exam back into a model {@code Examination}.
      */
     public Examination toModelType() {
         Examination exam = new Examination(name);
-        if (score != null && score >= 0) {
-            try {
-                exam.setPercentageScore(score);
-            } catch (InvalidScoreException e) {
-                throw new IllegalArgumentException(e);
+
+        if (result != null) {
+            if (result.equalsIgnoreCase("passed")) {
+                exam.markPassed();
+            } else if (result.equalsIgnoreCase("failed")) {
+                exam.markFailed();
             }
         }
+
         return exam;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getResult() {
+        return result;
     }
 }

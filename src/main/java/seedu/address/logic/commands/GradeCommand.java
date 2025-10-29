@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXAM_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_SCORE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.model.person.GradeMap.VALID_EXAM_NAMES;
 
 import java.util.Arrays;
@@ -15,42 +15,42 @@ import seedu.address.model.Model;
 import seedu.address.model.person.GradeMap;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.InvalidExamNameException;
-import seedu.address.model.person.exceptions.InvalidScoreException;
 
 /**
- * Grades the specified exam for one or more students in the address book.
+ * Marks the specified exam as passed or failed
+ * for one or more students in the address book.
  */
 public class GradeCommand extends MultiIndexCommand {
 
     public static final String COMMAND_WORD = "grade";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Grades the specified exam for one or more students "
-            + "identified by their index numbers in the displayed student list.\n"
-            + "Parameters: INDEX... (must be positive integers) "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks the specified exam as passed or failed "
+            + "for one or more students identified by their index numbers in the displayed student list.\n"
+            + "Parameters: INDEX (must be a positive integer or range X:Y) "
             + PREFIX_EXAM_NAME + "EXAM_NAME "
-            + PREFIX_SCORE + "SCORE\n"
-            + "Example:" + COMMAND_WORD + " 1:2 " + PREFIX_EXAM_NAME + "midterm " + PREFIX_SCORE + "30.5 \n"
-            + "Example:" + COMMAND_WORD + " 1 " + PREFIX_EXAM_NAME + "pe1 " + PREFIX_SCORE + "30.5 \n";
+            + PREFIX_STATUS + "STATUS (y/n)\n"
+            + "Example: " + COMMAND_WORD + " 1:3 " + PREFIX_EXAM_NAME + "midterm " + PREFIX_STATUS + "y\n"
+            + "Example: " + COMMAND_WORD + " 2 " + PREFIX_EXAM_NAME + "pe1 " + PREFIX_STATUS + "n\n";
 
-    public static final String MESSAGE_GRADE_SUCCESS = "%s graded with score %.1f for: %s";
-    private static final String MESSAGE_FAILURE_INVALID_SCORE =
-            "%.1f is invalid! Grade %s with a number in between 0 and %.1f (inclusive)";
-    private static final String MESSAGE_FAILURE_INVALID_NAME =
-            "%s is invalid! Here are the valid exam names %s";
+    public static final String MESSAGE_GRADE_SUCCESS = "%s marked as %s for: %s";
+    public static final String MESSAGE_FAILURE_INVALID_NAME =
+            "%s is invalid! Here are the valid exam names: %s";
 
     private final String examName;
-    private final double score;
+    private final boolean isPassed;
 
     /**
-     * @param multiIndex list of students to grade
-     * @param examName name of exam to grade
-     * @param score score to assign
+     * Constructs a GradeCommand.
+     *
+     * @param multiIndex List of students to update.
+     * @param examName   Name of the exam to mark.
+     * @param isPassed   True if passed, false if failed.
      */
-    public GradeCommand(MultiIndex multiIndex, String examName, double score) {
+    public GradeCommand(MultiIndex multiIndex, String examName, boolean isPassed) {
         super(multiIndex);
-        requireAllNonNull(multiIndex, examName, score);
-        this.examName = examName;
-        this.score = score;
+        requireAllNonNull(multiIndex, examName);
+        this.examName = examName.toLowerCase();
+        this.isPassed = isPassed;
     }
 
     @Override
@@ -58,25 +58,23 @@ public class GradeCommand extends MultiIndexCommand {
         GradeMap updatedGradeMap = personToGrade.getGradeMap().copy();
 
         try {
-            updatedGradeMap.gradeExam(examName, score);
-            assert updatedGradeMap.getGradeableHashMap().get(examName) != null
-                    : "Updated GradeMap should contain the graded exam";
-        } catch (InvalidExamNameException iene) {
+            if (isPassed) {
+                updatedGradeMap.markExamPassed(examName);
+            } else {
+                updatedGradeMap.markExamFailed(examName);
+            }
+
+            if (updatedGradeMap.getExamMap().get(examName) == null) {
+                throw new AssertionError("Updated GradeMap should contain the graded exam");
+            }
+        } catch (InvalidExamNameException e) {
             throw new CommandException(String.format(
                     MESSAGE_FAILURE_INVALID_NAME,
                     examName,
                     Arrays.toString(VALID_EXAM_NAMES)
             ));
-        } catch (InvalidScoreException ise) {
-            throw new CommandException(String.format(
-                    MESSAGE_FAILURE_INVALID_SCORE,
-                    score,
-                    examName,
-                    ise.getMaxScore()
-            ));
         }
 
-        // Create a new Person with the updated GradeMap
         Person gradedPerson = new Person(
                 personToGrade.getStudentId(),
                 personToGrade.getName(),
@@ -95,14 +93,23 @@ public class GradeCommand extends MultiIndexCommand {
 
     @Override
     protected CommandResult buildResult(List<Person> updatedPersons) {
-        String result = updatedPersons.stream()
+        String affectedStudents = updatedPersons.stream()
                 .map(Person::getNameAndID)
                 .collect(Collectors.joining(", "));
+
+        String resultString;
+
+        if (isPassed) {
+            resultString = "passed";
+        } else {
+            resultString = "failed";
+        }
+
         return new CommandResult(String.format(
                 MESSAGE_GRADE_SUCCESS,
                 examName,
-                score,
-                result
+                resultString,
+                affectedStudents
         ));
     }
 
@@ -117,8 +124,15 @@ public class GradeCommand extends MultiIndexCommand {
         }
 
         GradeCommand otherCommand = (GradeCommand) other;
-        return multiIndex.equals(otherCommand.multiIndex)
-                && score == otherCommand.score
-                && examName.equals(otherCommand.examName);
+
+        if (!multiIndex.equals(otherCommand.multiIndex)) {
+            return false;
+        }
+
+        if (isPassed != otherCommand.isPassed) {
+            return false;
+        }
+
+        return examName.equals(otherCommand.examName);
     }
 }

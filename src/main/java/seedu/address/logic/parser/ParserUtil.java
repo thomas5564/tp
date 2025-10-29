@@ -29,7 +29,6 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Status;
 import seedu.address.model.person.StudentId;
-import seedu.address.model.person.exceptions.InvalidScoreException;
 import seedu.address.model.person.sortcriterion.ExerciseSortCriterion;
 import seedu.address.model.person.sortcriterion.LabSortCriterion;
 import seedu.address.model.person.sortcriterion.NameSortCriterion;
@@ -314,34 +313,47 @@ public class ParserUtil {
 
         return new ExerciseTracker(new ArrayList<>(Arrays.asList(statuses)));
     }
-
     /**
-     * parses a {@code gradeMapString} into a {@code gradeMap}
-     * @throws ParseException if the given {@code exerciseTrackerString} is invalid
+     * Parses a {@code gradeMapString} into a {@code GradeMap}.
+     * Expected format: "pe1: Passed, midterm: Failed, pe2: NA"
+     *
+     * @throws ParseException if the given {@code gradeMapString} is invalid.
      */
     public static GradeMap parseGradeMap(String input) throws ParseException {
+        requireNonNull(input);
         GradeMap gradeMap = new GradeMap();
 
         for (String entry : input.split(",")) {
             String[] parts = entry.trim().split(":");
+
             if (parts.length != 2) {
                 continue;
             }
+
             String name = parts[0].trim().toLowerCase();
-            String scoreStr = parts[1].trim();
+            String resultStr = parts[1].trim().toLowerCase();
+
             Examination exam = new Examination(name);
-            if (!scoreStr.equalsIgnoreCase("NA")) {
-                try {
-                    exam.setPercentageScore(Double.parseDouble(scoreStr));
-                } catch (InvalidScoreException e) {
-                    throw new ParseException(e.getMessage());
+
+            if (!resultStr.equals("na")) {
+                if (resultStr.equals("passed")) {
+                    exam.markPassed();
+                } else if (resultStr.equals("failed")) {
+                    exam.markFailed();
+                } else {
+                    throw new ParseException(
+                            String.format("Invalid exam result '%s' for '%s'. Must be 'Passed', 'Failed', or 'NA'.",
+                                    resultStr, name)
+                    );
                 }
             }
+
             gradeMap.putExam(name, exam);
         }
 
         return gradeMap;
     }
+
 
     /**
      * Parses a {@code String criterionString} into a {@code SortCriterion}.

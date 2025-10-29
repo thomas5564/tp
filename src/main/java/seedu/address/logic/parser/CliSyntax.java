@@ -16,7 +16,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_GITHUB_USERNAME = new Prefix("g/");
     public static final Prefix PREFIX_LAB_NUMBER = new Prefix("l/");
     public static final Prefix PREFIX_EXAM_NAME = new Prefix("en/");
-    public static final Prefix PREFIX_SCORE = new Prefix("sc/");
     public static final Prefix PREFIX_SORT_CRITERION = new Prefix("c/");
 
     // Timeslot prefixes

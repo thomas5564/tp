@@ -103,14 +103,18 @@ class JsonAdaptedPerson {
         labAttendanceList = source.getLabAttendanceList().toString();
         gradeMap.putAll(
                 source.getGradeMap()
-                        .getGradeableHashMap()
+                        .getExamMap()
                         .entrySet()
                         .stream()
                         .collect(Collectors.toMap(
                                 Map.Entry::getKey,
-                                entry -> new JsonAdaptedExamination((Examination) entry.getValue())
+                                entry -> {
+                                    Examination exam = entry.getValue();
+                                    return new JsonAdaptedExamination(exam);
+                                }
                         ))
         );
+
     }
 
     /**

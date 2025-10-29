@@ -13,32 +13,36 @@ import seedu.address.model.person.GradeMap;
  * Jackson-friendly version of {@link GradeMap}.
  */
 public class JsonAdaptedGradeMap {
+
     private Map<String, JsonAdaptedExamination> assessments = new HashMap<>();
 
     @JsonCreator
     public JsonAdaptedGradeMap() {
 
     }
+
     /**
      * Constructs a {@code JsonAdaptedGradeMap} from the given source {@code GradeMap}.
      */
     public JsonAdaptedGradeMap(GradeMap source) {
-        this.assessments = source.getGradeableHashMap().entrySet().stream()
-                .filter(entry -> entry.getValue() instanceof Examination)
+        this.assessments = source.getExamMap().entrySet().stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
-                        entry -> new JsonAdaptedExamination((Examination) entry.getValue())
+                        entry -> new JsonAdaptedExamination(entry.getValue())
                 ));
     }
+
     /**
      * Converts this JSON-adapted grade map into the model's {@code GradeMap} object.
      */
     public GradeMap toModelType() {
         GradeMap modelMap = new GradeMap();
+
         assessments.forEach((key, adaptedExam) -> {
             Examination exam = adaptedExam.toModelType();
             modelMap.putExam(key, exam);
         });
+
         return modelMap;
     }
 

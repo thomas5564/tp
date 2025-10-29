@@ -43,7 +43,7 @@ public class EditCommand extends MultiIndexCommand {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of one or more students "
             + "identified by their index numbers in the displayed student list. "
             + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX... (must be positive integers) "
+            + "Parameters: (must be a positive integer or range X:Y) "
             + "[" + PREFIX_STUDENTID + "STUDENTID] "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
