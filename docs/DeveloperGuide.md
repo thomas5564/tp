@@ -1054,9 +1054,16 @@ testers are expected to do more *exploratory* testing.
 
 ### Saving data
 
-1. Dealing with missing/corrupted data files
+1. Data persistence
 
-    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+    1. Test case: Perform various `add` / `edit` / `delete` / `marka` commands. Then close and then reopen the app.
+       Expected: Data should save automatically and persist after closing and reopening the app.
 
-1. _{ more test cases …​ }_
+2. Simulate a missing data file:
+    1. Test case: Remove `addressbook.json` in `/data` folder. Launch the app
+       Expected: The app initializes with default data, showing error or warning messages about missing or corrupted data.
+
+3. Simulate a corrupted data file:
+    1. Test case: Remove some lines from `addressbook.json` in `/data` folder. Launch the app.
+       Expected: The app initializes with no data, showing error messages about corrupted data in the terminal.
 
