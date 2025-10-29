@@ -743,7 +743,39 @@ testers are expected to do more *exploratory* testing.
        Expected: Error message indicating exercise already marked as done.
 
 ### Recording grades
+1. Grading an exam with valid data
 
+    1. Prerequisites: List all students. At least 3 students in the list.
+
+    2. Test case: `grade 1 en/midterm s/y`<br>
+       Expected: Midterm exam marked as passed (green) for student 1.
+
+    3. Test case: `grade 2 en/pe1 s/n`<br>
+       Expected: PE1 marked as failed (red) for student 2.
+
+    4. Test case: `grade 1:3 en/final s/y`<br>
+       Expected: Final exam marked as passed (green) for students 1, 2, and 3.
+
+2. Invalid exam names
+
+    1. Test case: `grade 1 en/quiz s/y`<br>
+       Expected: Error message indicating invalid `Exam name`.
+
+    2. Test case: `grade 1 en/ s/y`<br>
+       Expected: Error message indicating invalid `Exam name`.
+
+3. Invalid status
+
+    1. Test case: `grade 1 en/midterm s/x`<br>
+       Expected: Error message indicating invalid `Status`.
+
+4. Missing required fields
+
+    1. Test case: `grade 1 en/midterm`<br>
+       Expected: Error message indicating invalid `Status`.
+
+    2. Test case: `grade 1 s/y`<br>
+       Expected: Error message indicating invalid command format.
 
 ### Finding students
 
