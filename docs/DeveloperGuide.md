@@ -336,6 +336,88 @@ a student project with limited development time.
 * **Undo command confirmation:** For destructive commands like `clear`, prompt the user to confirm before executing,
   reducing the need for undo in the first place.
 
+### **Feature: Multi-Index Inputs**
+
+#### Overview
+
+LambdaLab supports commands that can target **multiple students at once** through the use of **multi-index inputs**.  
+This feature is powered by the `MultiIndex` and `MultiIndexCommand` classes, which together allow users to specify **a single index** (e.g., `2`) or **a contiguous range** (e.g., `1:5`) when executing commands.
+
+This enables bulk operations such as grading, marking attendance, or updating exercises — all in one concise command.
+
+---
+
+#### Motivation
+
+Before introducing this feature, commands like `marka`, `marke`, and `grade` could only operate on **one student** at a time.  
+This was inefficient for Teaching Assistants managing large classes, as they frequently needed to update the same record (e.g., lab attendance or exam results) for an entire group.
+
+By introducing **multi-index inputs**, LambdaLab allows a single command to efficiently modify multiple students’ data, improving usability and productivity during busy grading or lab sessions.
+
+---
+
+#### Implementation
+
+The `MultiIndex` class represents either:
+- A **single index** (e.g., `1` → only the first student), or
+- A **range of indices** (e.g., `1:5` → students 1 through 5, inclusive).
+
+It exposes methods such as:
+- `isSingle()` — checks if the command applies to one student only.
+- `toIndexList()` — returns a list of all `Index` objects represented by the multi-index input.
+
+Commands that use this feature extend the abstract class `MultiIndexCommand`, which defines a **template for bulk updates**.
+
+Each subclass:
+1. Implements `applyActionToPerson(Model model, Person person)` — defining how each student is modified.
+2. Optionally overrides `buildResult(List<Person> updatedPersons)` to customize the final success message.
+
+**Example subclasses:**
+- `MarkAttendanceCommand` (`marka`) — marks lab attendance.
+- `MarkExerciseCommand` (`marke`) — marks exercise completion.
+- `GradeCommand` (`grade`) — marks exams as passed or failed.
+
+---
+
+#### Example Usage
+
+**Example 1: Single Index**
+grade 1 en/midterm s/y
+Marks the *Midterm* exam as *passed* for student 1.
+
+<puml src="diagrams/GradeSequenceDiagram.puml" width="550" />
+
+**Example 2: Range of Indices**
+marka 1:5 l/3 s/n
+Marks Lab 3 as *absent* for students 1 through 5.
+
+**Example 3: Mixed Command Type**
+marke 2:4 ei/5 s/y
+Marks Exercise 5 as *done* for students 2 to 4.
+
+---
+
+#### Design Considerations
+
+**Aspect: Code Reuse**  
+The iteration and validation logic for applying an action to multiple students is centralized within `MultiIndexCommand`.  
+This ensures consistent behavior across all commands that support bulk modification.
+
+**Aspect: Robustness**  
+If any index in the provided range is invalid (e.g., out of bounds), the command throws a `CommandException` before making any modifications — ensuring **atomicity** (all-or-nothing updates).
+
+**Aspect: Extensibility**  
+Future commands that require multi-student operations (e.g., adding group tags or resetting student progress) can easily extend `MultiIndexCommand` without duplicating logic.
+
+---
+
+#### Future Enhancements
+
+* **Partial Execution Reports:**  
+  Allow commands to apply valid operations even if some indices fail, returning a summary report of successes and failures.
+
+* **Parallel Execution:**  
+  For large datasets, multi-index operations could be processed concurrently for improved performance.
 
 ### \[Proposed\] Data archiving
 
