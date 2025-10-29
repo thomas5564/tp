@@ -573,23 +573,29 @@ testers are expected to do more *exploratory* testing.
 
 1. Editing a student with valid data
 
-    1. Prequisites: List all persons using the `list` command. Multiple persons in the list.
+    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
     2. Test case: `edit 2 p/91234567 e/newmail@gmail.com` <br>
        Expected: In the displayed student list, the second person's data is updated to new details.
 
-    2. Test case: `edit 1:3 t/outstanding` <br>
-       Expected: In the displayed student list, the first 3 students are added with a new tag.
+    3. Test case: `edit 1:3 t/outstanding` <br>
+       Expected: In the displayed student list, the first 3 students' tags are replaced with a new tag.
 
-1. Editing a student with invalid fields
+2. Editing a student with invalid fields
 
-    1. Prequisites: List all persons using the `list` command. Multiple persons in the list.
+    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
     2. Test case: `edit 2 g/-shawner` <br>
        Expected: Error message indicating invalid `Github Username`.
 
-    2. Test case: `edit 0 p/98123456` <br>
+    3. Test case: `edit 0 p/98123456` <br>
        Expected: Error message indicating invalid `Student Index`.
+   
+3. Editing with no fields specified
+
+    1. Test case: `edit 1`<br>
+       Expected: Error message indicating invalid command format.
+
 
 ### Deleting a person
 
