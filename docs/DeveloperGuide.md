@@ -1034,6 +1034,36 @@ testers are expected to do more *exploratory* testing.
     2. Test case: `get-consultations`<br>
        Expected: Existing schedule window comes to focus, no duplicate window created.
 
+### Undo Command
+
+1. Undo after data-modifying commands
+
+    1. Prerequisites: Execute any data-modifying command. These consists of `add`, `delete`, `edit`, `clear`, `marka`, `marke`, `grade`, `set-week`, `block-timeslot`, `unblock-timeslot`, `add-consultation`.
+
+    2. Test case: `undo`<br>
+       Expected: Previous data-modifying command is reverted. Success message confirms undo action. Data returns to state before the command.
+
+2. Undo after non-data-modifying commands
+
+    1. Prerequisites: Execute any data-modifying command. Execute non-modifying commands These consists of `list`, `find`, `filter`, `sort`, `help`, `get-timeslots`, `get-consultations`.
+
+    2. Test case: `undo`<br>
+       Expected: The last data-modifying command is reverted. Non-modifying commands do not affect undo.
+
+3. Undo multiple times
+
+    1. Prerequisites: Execute two or more data-modifying commands sequentially.
+
+    2. Test case: `undo` followed by `undo` again<br>
+       Expected: First undo reverts the most recent command. Second undo does not happen. Error message will be provided.
+
+4. Undo with no previous command
+
+    1. Prerequisites: Fresh app launch or after undoing all available commands.
+
+    2. Test case: `undo`<br>
+       Expected: Error message indicating no command to undo.
+
 
 ### Getting help
 
