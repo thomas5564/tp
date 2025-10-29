@@ -555,19 +555,41 @@ testers are expected to do more *exploratory* testing.
 
 2. Adding a student with missing required fields
 
-   1. Test Case:`add n/Shawn Lee p/98765432 e/shawn@gmail.com g/shawnlee2 t/modelStudent` - Student Id missing. <br>
+   1. Test case:`add n/Shawn Lee p/98765432 e/shawn@gmail.com g/shawnlee2 t/modelStudent` - Student Id missing. <br>
       Expected: Error message indicating invalid command format.
    
-   2. Test Case:`add i/A0309024L n/Shawn Lee e/shawn@gmail.com g/shawnlee2 t/modelStudent` - Phone number missing. <br>
+   2. Test case:`add i/A0309024L n/Shawn Lee e/shawn@gmail.com g/shawnlee2 t/modelStudent` - Phone number missing. <br>
       Expected: Error message indicating invalid command format.
    
-3. Adding a student with invalid data
+3. Adding a student with invalid data fields
 
-    1. Test Case:`i/A0309021 add n/Shawn Lee p/98765432 e/shawn@gmail.com g/shawnlee2 t/modelStudent` <br>
+    1. Test case:`add i/A0309021 n/Shawn Lee p/98765432 e/shawn@gmail.com g/shawnlee2 t/modelStudent` <br>
        Expected: Error message indicating invalid `Student Id`.
 
-    2. Test Case:`add i/A0309024L n/Shawn Lee p/98765432 e/shawngmail.com g/shawnlee2 t/modelStudent` <br>
+    2. Test case:`add i/A0309024L n/Shawn Lee p/98765432 e/shawngmail.com g/shawnlee2 t/modelStudent` <br>
        Expected: Error message indicating invalid `Email`.
+
+### Editing a student
+
+1. Editing a student with valid data
+
+    1. Prequisites: List all persons using the `list` command. Multiple persons in the list.
+
+    2. Test case: `edit 2 p/91234567 e/newmail@gmail.com` <br>
+       Expected: In the displayed student list, the second person's data is updated to new details.
+
+    2. Test case: `edit 1:3 t/outstanding` <br>
+       Expected: In the displayed student list, the first 3 students are added with a new tag.
+
+1. Editing a student with invalid fields
+
+    1. Prequisites: List all persons using the `list` command. Multiple persons in the list.
+
+    2. Test case: `edit 2 g/-shawner` <br>
+       Expected: Error message indicating invalid `Github Username`.
+
+    2. Test case: `edit 0 p/98123456` <br>
+       Expected: Error message indicating invalid `Student Index`.
 
 ### Deleting a person
 
