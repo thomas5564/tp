@@ -744,6 +744,52 @@ testers are expected to do more *exploratory* testing.
 
 ### Recording grades
 
+
+### Finding students
+
+
+### Filtering students
+
+
+### Sorting students
+
+
+### Blocking a timeslot
+
+
+### Unblocking a timeslot
+
+
+### Adding a consultation
+
+
+### Getting timeslots
+
+
+### Getting consultations
+
+
+### Getting help
+
+1. Opening the help window
+
+    1. Test case: `help`<br>
+       Expected: Help window opens.
+
+    2. Test case: Press `F1` key<br>
+       Expected: Help window opens.
+   
+    3. Test case: `help x`<br>
+       Expected: Help window opens.
+
+2. Help window behavior
+
+    1. Prerequisites: Help window should already be opened
+
+    2. Test case: `help` <br>
+       Expected: Existing help window comes to focus, no duplicate window created.
+   
+
 ### Saving data
 
 1. Dealing with missing/corrupted data files
