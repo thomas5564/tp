@@ -623,7 +623,7 @@ testers are expected to do more *exploratory* testing.
     2. Test case: `delete 0:3`<br>
        Expected: Error message indicating invalid `Student Index`.
 
-    2. Test case: `delete x`<br>
+    3. Test case: `delete x`<br>
        Expected: Error message indicating invalid `Student Index`.
    
 3. Deleting with no index specified
@@ -812,23 +812,223 @@ testers are expected to do more *exploratory* testing.
 
 ### Filtering students
 
+1. Filtering by exercise status
+
+    1. Prerequisites: List all students. Multiple students in the list with various exercise statuses.
+
+    2. Test case: `filter ei/1 s/Y`<br>
+       Expected: All students with exercise 1 marked as done are displayed. Message shows number of students listed.
+
+    3. Test case: `filter ei/0 s/N`<br>
+       Expected: All students with exercise 0 marked as not done are displayed.
+
+    4. Test case: `filter ei/2 s/O`<br>
+       Expected: All students with exercise 2 marked as overdue are displayed.
+
+2. Filtering by lab attendance
+
+    1. Test case: `filter l/1 s/Y`<br>
+       Expected: All students who attended lab 1 are displayed.
+
+    2. Test case: `filter l/2 s/N`<br>
+       Expected: All students who did not attend lab 2 are displayed.
+
+3. Filtering with multiple criteria
+
+    1. Test case: `filter ei/1 s/Y l/2 s/Y`<br>
+       Expected: All students who completed exercise 1 AND attended lab 2 are displayed.
+
+4. Invalid filter commands
+
+    1. Test case: `filter`<br>
+       Expected: Error message indicating invalid command format.
+
+    2. Test case: `filter ei/1`<br>
+       Expected: Error message indicating exercise index must be followed by status.
+
+    3. Test case: `filter s/Y`<br>
+       Expected: Error message indicating invalid command format.
 
 ### Sorting students
 
+1. Sorting by valid criteria
+
+    1. Prerequisites: Multiple students in the address book.
+
+    2. Test case: `sort c/name`<br>
+       Expected: Students sorted alphabetically by name. Success messages shows the specified sort criterion.
+
+    3. Test case: `sort c/id`<br>
+       Expected: Students sorted by student ID. 
+
+    4. Test case: `sort c/lab`<br>
+       Expected: Students sorted by lab attendance.
+
+    5. Test case: `sort c/ex`<br>
+       Expected: Students sorted by exercise completion.
+
+2. Invalid sort commands
+
+    1. Test case: `sort`<br>
+       Expected: Error message indicating invalid command format.
+
+    2. Test case: `sort c/strength`<br>
+       Expected: Error message indicating invalid command format.
+
+    3. Test case: `sort name`<br>
+       Expected: Error message indicating invalid command format.
 
 ### Blocking a timeslot
 
+1. Blocking a valid timeslot
+
+    1. Prerequisites: No existing timeslots or no overlapping timeslots for the time range.
+
+    2. Test case: `block-timeslot ts/1 Jan 2025, 10:00 te/1 Jan 2025, 11:00`<br>
+       Expected: Timeslot blocked successfully. Success message shows the blocked timeslot details.
+
+    3. Test case: `block-timeslot ts/2025-10-04T10:00:00 te/2025-10-04T13:00:00`<br>
+       Expected: Timeslot blocked using ISO format. Success message displayed.
+
+2. Blocking overlapping timeslots
+
+    1. Prerequisites: A timeslot already exists from 10:00 to 11:00 on 1 Jan 2025.
+
+    2. Test case: `block-timeslot ts/1 Jan 2025, 10:30 te/1 Jan 2025, 11:30`<br>
+       Expected: Error message indicating timeslot already exists.
+
+3. Invalid timeslot commands
+
+    1. Test case: `block-timeslot ts/1 Jan 2025, 11:00 te/1 Jan 2025, 10:00`<br>
+       Expected: Error message indicating invalid `timeslot range`.
+
+    2. Test case: `block-timeslot ts/1 Jan 2025, 10:00`<br>
+       Expected: Error message indicating invalid command format.
+
+    3. Test case: `block-timeslot ts/invalid te/1 Jan 2025, 11:00`<br>
+       Expected: Error message indicating invalid `timeslot datetime`.
 
 ### Unblocking a timeslot
 
+1. Unblocking an existing timeslot
+
+    1. Prerequisites: A timeslot exists from 10:00 to 13:00 on 4 Oct 2025.
+
+    2. Test case: `unblock-timeslot ts/2025-10-04T10:00:00 te/2025-10-04T13:00:00`<br>
+       Expected: Entire timeslot removed. Success message shows the changes (in words).
+
+    3. Test case: `unblock-timeslot ts/4 Oct 2025, 11:00 te/4 Oct 2025, 12:00`<br>
+       Expected: Middle portion removed, timeslot split into two parts.
+
+2. Unblocking partial overlap
+
+    1. Prerequisites: A timeslot exists from 10:00 to 13:00 on 4 Oct 2025.
+
+    2. Test case: `unblock-timeslot ts/4 Oct 2025, 12:00 te/4 Oct 2025, 14:00`<br>
+       Expected: Right portion removed.
+
+3. Unblocking non-existent timeslot
+
+    1. Test case: `unblock-timeslot ts/1 Jan 2026, 10:00 te/1 Jan 2026, 11:00`<br>
+       Expected: Error message indicating no stored timeslot overlaps the given range.
+
+4. Invalid unblock commands
+
+    1. Test case: `unblock-timeslot ts/4 Oct 2025, 13:00 te/4 Oct 2025, 10:00`<br>
+       Expected: Error message indicating invalid timeslot range (end must be after start).
 
 ### Adding a consultation
 
+1. Adding a valid consultation
+
+    1. Prerequisites: No existing timeslots or consultations at the specified time.
+
+    2. Test case: `add-consultation ts/2025-10-04T10:00:00 te/2025-10-04T11:00:00 n/John Doe`<br>
+       Expected: Consultation added successfully. Success message shows timeslot and student name.
+
+    3. Test case: `add-consultation ts/5 Oct 2025, 14:00 te/5 Oct 2025, 15:00 n/Alice Tan`<br>
+       Expected: Consultation added using human-friendly format. Success message displayed.
+
+2. Adding duplicate or overlapping consultation
+
+    1. Prerequisites: A consultation exists with John Doe from 10:00 to 11:00 on 4 Oct 2025.
+
+    2. Test case: `add-consultation ts/2025-10-04T10:00:00 te/2025-10-04T11:00:00 n/John Doe`<br>
+       Expected: Error message indicating consultation already exists.
+
+    3. Test case: `add-consultation ts/2025-10-04T10:30:00 te/2025-10-04T11:30:00 n/Alice Tan`<br>
+       Expected: Error message indicating timeslot already exists.
+
+3. Invalid consultation commands
+
+    1. Test case: `add-consultation ts/2025-10-04T10:00:00 te/2025-10-04T11:00:00`<br>
+       Expected: Error message indicating invalid command format.
+
+    2. Test case: `add-consultation ts/2025-10-04T11:00:00 te/2025-10-04T10:00:00 n/John Doe`<br>
+       Expected: Error message indicating end datetime must be after start datetime.
+
+    3. Test case: `add-consultation n/John Doe`<br>
+       Expected: Error message indicating invalid command format.
 
 ### Getting timeslots
 
+1. Retrieving blocked timeslots
+
+    1. Prerequisites: Several blocked timeslots exist in the system.
+
+    2. Test case: `get-timeslots`<br>
+       Expected: All blocked timeslots displayed in a new window as merged ranges in chronological order. Success message shows "Blocked Timeslots:" followed by the list.
+
+2. Getting timeslots when none exist
+
+    1. Prerequisites: No blocked timeslots in the system.
+
+    2. Test case: `get-timeslots`<br>
+       Expected: Message shows "No timeslots found."
+
+3. Getting timeslots with overlapping ranges
+
+    1. Prerequisites: Multiple overlapping blocked timeslots exist.
+
+    2. Test case: `get-timeslots`<br>
+       Expected: Overlapping timeslots are merged and displayed as continuous ranges.
+
+4. Schedule window behaviour
+
+    1. Prerequisites: Schedule window should already be opened
+
+    2. Test case: `get-timeslots`<br>
+       Expected: Existing schedule window comes to focus, no duplicate window created.
 
 ### Getting consultations
+
+1. Retrieving consultations
+
+    1. Prerequisites: Several consultations exist in the system.
+
+    2. Test case: `get-consultations`<br>
+       Expected: All consultation timeslots displayed as merged ranges in chronological order. Message shows "Consultations:" followed by the list.
+
+2. Getting consultations when none exist
+
+    1. Prerequisites: No consultations scheduled in the system.
+
+    2. Test case: `get-consultations`<br>
+       Expected: Error message shows "No consultations found."
+
+3. Getting consultations with mixed timeslots
+
+    1. Prerequisites: Both blocked timeslots and consultations exist.
+
+    2. Test case: `get-consultations`<br>
+       Expected: Only consultation timeslots are displayed, blocked timeslots are excluded.
+
+4. Schedule window behaviour
+
+    1. Prerequisites: Schedule window should already be opened
+
+    2. Test case: `get-consultations`<br>
+       Expected: Existing schedule window comes to focus, no duplicate window created.
 
 
 ### Getting help
