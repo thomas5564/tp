@@ -1,7 +1,6 @@
 package seedu.address.model.person.predicates;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 import seedu.address.model.person.Person;
 
@@ -62,6 +61,7 @@ public class FilterCombinedPredicate implements FilterPredicate {
         return true;
     }
 
+    @Override
     public String successMessage() {
         StringBuilder success = new StringBuilder();
         for (int i = 0; i < predicates.size() - 1; i++) {

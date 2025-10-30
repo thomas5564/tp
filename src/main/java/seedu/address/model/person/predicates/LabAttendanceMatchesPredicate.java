@@ -1,7 +1,5 @@
 package seedu.address.model.person.predicates;
 
-import java.util.function.Predicate;
-
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.helpers.Comparison;
 import seedu.address.model.person.LabAttendanceList;
@@ -72,9 +70,14 @@ public class LabAttendanceMatchesPredicate implements FilterPredicate {
 
     @Override
     public String successMessage() {
-        return "have attended " + statusToMessage() + value + " percent of labs";
+        return "have attended " + statusToMessage() + (int) value + " percent of labs";
     }
 
+    /**
+     * Helper method that maps operators to their message phrase.
+     *
+     * @return The phrase corresponding to the operator
+     */
     public String statusToMessage() {
         switch(comparison) {
         case EQ:

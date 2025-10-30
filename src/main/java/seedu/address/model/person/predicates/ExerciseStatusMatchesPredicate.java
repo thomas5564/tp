@@ -1,7 +1,6 @@
 package seedu.address.model.person.predicates;
 
 import java.util.List;
-import java.util.function.Predicate;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -66,6 +65,11 @@ public class ExerciseStatusMatchesPredicate implements FilterPredicate {
         return statusToMessage() + " exercise " + index.getZeroBased();
     }
 
+    /**
+     * Helper method that maps statuses to their message phrase.
+     *
+     * @return The phrase corresponding to the status
+     */
     public String statusToMessage() {
         switch(status) {
         case DONE:
