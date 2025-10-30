@@ -1024,6 +1024,14 @@ testers are expected to do more *exploratory* testing.
     2. Test case: `filter l/2 s/N`<br>
        Expected: All students who did not attend lab 2 are displayed.
 
+3. Filtering by lab attendance percentage
+
+    1. Test case: `filter la/>10`<br>
+       Expected: All students who attended more than 10 percent of labs are displayed.
+
+    2. Test case: `filter la/<=70`<br>
+       Expected: All students who attended less than or equal to 70 percent of labs are displayed.
+
 3. Filtering with multiple criteria
 
     1. Test case: `filter ei/1 s/Y l/2 s/Y`<br>
@@ -1039,6 +1047,12 @@ testers are expected to do more *exploratory* testing.
 
     3. Test case: `filter s/Y`<br>
        Expected: Error message indicating invalid command format.
+
+    4. Test case: `filter la/50`<br>
+       Expected: Error message indicating an operator is missing.
+
+    5. Test case: `filter la/==101`<br>
+       Expected: Error message indicating invalid percentage value.
 
 ### Sorting students
 
