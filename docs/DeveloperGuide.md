@@ -631,7 +631,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* *`    | TA                                        | sort students by exercise progress                     | better visualise the class's progress on exercises            |
 | `* *`    | TA                                        | sort based on students' attendance rate                | see who is missing the most classes                           |
 | `* *`    | TA                                        | add a tag to signal I need to follow up with a student | ensure all students are well taught                           |
-| `* *`    | TA                                        | filter based on specific assignment submissions        | check who did which assignment                                |
+| `* *`    | TA                                        | filter based on specific exercise submissions          | check who did which exercise                                  |
 | `* *`    | TA accepting consultations                | get my available time slots                            | schedule consultations easily                                 |
 | `* *`    | TA accepting consultations                | get my current consultation time slots                 | schedule consultations easily                                 |
 | `* *`    | TA accepting consultations                | block out timeslots by inputting manually              | use the scheduling feature                                    |
@@ -735,10 +735,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-* **Assignment**: Weekly coding homework that is submitted through GitHub
-* **Auto-link**: Automatically add a link to the students GitHub repo
-* **Consultation**: Scheduled meeting between a TA and student
 * **Exercise**: Weekly coding homework that is submitted through GitHub
+* **Consultation**: Scheduled meeting between a TA and student
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Students' performance**: Grades that students receive for their weekly exercises and labs
 * **TA**: Teaching Assistant
