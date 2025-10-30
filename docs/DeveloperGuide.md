@@ -183,7 +183,7 @@ Typical lifecycle for a timeslot command:
 2. Parser validates prefixes/arguments and constructs a Command instance (e.g., BlockTimeslotCommand).
 3. LogicManager executes the Command (command.execute(model)).
 4. Command manipulates the Model (reads or mutates Timeslots) and returns a CommandResult.
-5. LogicManager persists changes (see Persistence & UI) and returns the CommandResult to the caller/UI.
+5. LogicManager persists changes (see [Persistence & UI](#persistence--ui)) and returns the CommandResult to the caller/UI.
 
 Sequence diagrams:
 - Block timeslot: <puml src="diagrams/BlockTimeslotSequenceDiagram.puml" width="574" />
@@ -614,39 +614,28 @@ that matches when **any** keyword is a case-insensitive **substring** of **any**
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                   | I want to …​                                                                              | So that I can…​                                                                                        |
-|----------|-------------------------------------------|-------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
-| `* * *`  | CS2030S TA                                | add a GitHub username to the student                                                      | track their exercises easily (auto-link)                                                               |
-| `* * *`  | Grader                                    | mark student's exercise as graded after grading it                                        | know which students' exercises are graded / not graded yet                                             |
-| `* * *`  | New user                                  | receive help from the app                                                                 | learn how to use it quickly                                                                            |
-| `* * *`  | TA                                        | search for students based on their name                                                   | easily find the student im looking for                                                                 |
-| `* * *`  | TA                                        | delete student's information                                                              | remove false information                                                                               |
-| `* * *`  | TA conducting labs                        | mark students attendance                                                                  | know which students attended the lab and which students didnt                                          |
-| `* * *`  | TA with many students                     | add, update students data                                                                 | have their accurate information in LambdaLabs                                                          |
-| `* *`    | Grader                                    | tag my student based on their exercise performance                                        | know how much effort I would need to help each student                                                 |
-| `* *`    | New user                                  | input student data quickly                                                                | focus on teaching                                                                                      |
-| `* *`    | New user                                  | undo my mistakes                                                                          | recover from them quickly                                                                              |
-| `* *`    | TA                                        | review statistics regarding performance                                                   | see if the class has room for improvement                                                              |
-| `* *`    | TA                                        | search for students based on their student ID                                             | easily find the student im looking for                                                                 |
-| `* *`    | TA                                        | I can visualise the students' performance through charts and graph                        | see which part students are doing well/lacking at and put a sufficient amount of effort for that topic |
-| `* *`    | TA                                        | sort based on alphabetical order                                                          | easily look for a student and his/her data by his/her name                                             |
-| `* *`    | TA                                        | I can sort based on students grades                                                       | see who is underperforming and needs help                                                              |
-| `* *`    | TA                                        | sort students based on assignment submitted/ graded/ not submitted                        | better visualise the class's progress on current assignment                                            |
-| `* *`    | TA                                        | I can sort based on students attendance rate                                              | see who is missing the most classes                                                                    |
-| `* *`    | TA                                        | I can add a tag to signal I need to follow up with a student                              | ensure all students are well taught                                                                    |
-| `* *`    | TA                                        | I can filter based on specific assignment submissions                                     | check who did which assignment                                                                         |
-| `* *`    | TA accepting consultations                | get my available time slots                                                               | schedule consultations easily by allowing students to choose from all my free time                     |
-| `* *`    | TA accepting consultations                | block out timeslots by inputting manually                                                 | use the scheduling feature                                                                             |
-| `* *`    | TA marking for attendance                 | filter students based on attendance                                                       | accurately grade my students' attendance                                                               |
-| `*`      | Experienced user                          | quickly access my students data                                                           | save time                                                                                              |
-| `*`      | Experienced user                          | add aliases to commonly used commands                                                     | easily call frequently used commands                                                                   |
-| `*`      | Grader                                    | be notified if any new students have submitted the assignment since I last opened the app | grade their exercises promptly                                                                         |
-| `*`      | TA                                        | receive notifications if I have class/consultations the next day                          | not miss any classes/consultations                                                                     |
-| `*`      | TA who is making my own slides            | add my slides as a link or filepath                                                       | easily retrieve my slides                                                                              |
-| `*`      | TA accepting consultations                | block out timeslots by importing the .ics file from NUSMods                               | use the scheduling feature wiithout much setup                                                         |
-| `*`      | TA who is teaching for multiple semesters | archive my student data from previous semesters                                           | focus on the current students                                                                          |
-| `*`      | TA who is teaching for multiple semesters | unarchive my past student data                                                            | find something that happened in previous semester if I need that                                       |
-| `*`      | TA who is teaching multiple semesters     | I can archive my timetable data                                                           | schedule consultations based on current semester's timetable                                           |
+| Priority | As a …​                                   | I want to …​                                           | So that I can…​                                               |
+|----------|-------------------------------------------|--------------------------------------------------------|---------------------------------------------------------------|
+| `* * *`  | CS2030S TA                                | add a GitHub username to the student                   | track their exercises easily (auto-link)                      |
+| `* * *`  | Grader                                    | mark student's exercise as graded after grading it     | know which students' exercises are graded / not graded yet    |
+| `* * *`  | New user                                  | receive help from the app                              | learn how to use it quickly                                   |
+| `* * *`  | TA                                        | search for students based on their name                | easily find the student im looking for                        |
+| `* * *`  | TA                                        | delete student's information                           | remove false information                                      |
+| `* * *`  | TA conducting labs                        | mark students attendance                               | know which students attended the lab and which students didnt |
+| `* * *`  | TA with many students                     | add, update students data                              | have their accurate information in LambdaLabs                 |
+| `* *`    | Grader                                    | tag my student based on their exercise performance     | know how much effort I would need to help each student        |
+| `* *`    | New user                                  | undo my mistakes                                       | recover from them quickly                                     |
+| `* *`    | TA                                        | search for students based on their student ID          | easily find the student im looking for                        |
+| `* *`    | TA                                        | sort based on alphabetical order                       | easily look for a student and his/her data by his/her name    |
+| `* *`    | TA                                        | sort based on student's grades                         | see who is underperforming and needs help                     |
+| `* *`    | TA                                        | sort students by exercise progress                     | better visualise the class's progress on exercises            |
+| `* *`    | TA                                        | sort based on students' attendance rate                | see who is missing the most classes                           |
+| `* *`    | TA                                        | add a tag to signal I need to follow up with a student | ensure all students are well taught                           |
+| `* *`    | TA                                        | filter based on specific assignment submissions        | check who did which assignment                                |
+| `* *`    | TA accepting consultations                | get my available time slots                            | schedule consultations easily                                 |
+| `* *`    | TA accepting consultations                | get my current consultation time slots                 | schedule consultations easily                                 |
+| `* *`    | TA accepting consultations                | block out timeslots by inputting manually              | use the scheduling feature                                    |
+| `* *`    | TA marking for attendance                 | filter students based on lab attendance                | accurately grade my students' attendance                      |
 
 
 ### Use cases
@@ -682,45 +671,50 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1.  User wants to mark attendance, enters student name and lab number using the command format
-2.  LambdaLab validates the student name and lab number
+2.  LambdaLab validates the student index and lab number
 3.  LambdaLab marks the student’s attendance for the specified lab
-4.  LambdaLab confirms: “Attendance for <studentName> marked for lab number <labNumber>”
+4.  LambdaLab confirms that attendance for <studentName> is marked for lab number <labNumber>
     Use case ends.
 
 **Extensions**
 
-* 1a. User provides an empty name or a name with invalid characters
-    * 1a1. LambdaLab displays error message: “Invalid name”
-    * 1a2. User re-enters a valid name
+* 1a. User provides an an invalid index
+    * 1a1. LambdaLab displays error message
+    * 1a2. User re-enters a valid index
+
       Use case resumes at Step 2
 * 1b. User provides an invalid lab number (non-numeric, zero, negative, or out-of-range)
-    * 1b1. System displays error message: “Invalid lab number”
+    * 1b1. Lambdalab displays error message
     * 1b2. User re-enters a valid lab number
+
       Use case resumes at Step 2
 * 3a. Attendance for the student in that lab number has already been marked
-    * 3a1. LambdaLab displays: “Attendance already marked for <studentName> in lab number <labNumber>”
+    * 3a1. LambdaLab displays message to indicate that attendance is already marked for <studentName> in lab number <labNumber>
+
       Use case ends.
 
 
 **Use case: Schedule a consultation**
 
-**Precondition: User has uploaded his schedule**
+**Precondition: User has blocked out timeslots corresponding to his/her schedule**
 
 **Actor:User**
 
 **MSS**
 1. User views all the periods of available time he has
-2. User inputs a desired consultation time slot
+2. User adds a desired consultation time slot
 3. Time slot is saved into his schedule
-4. A day before the consultation, the user will be reminded of it
 
 **Extensions**
-* 2a. User inputs an invalid consultation slot
-    * 1a1. User is prompted to enter a valid consultation slot
-      Use case resumes at step 2.
+* 2a. User inputs an invalid consultation slot (e.g. start time before end time)
+    * 2a1. LambdaLab displays error message
+    * 2a2. User re-enters a valid timeslot
+
+      Use case resumes at Step 3
 * 3a.
     * 3a1. User requests to reschedule or delete the consultation.
-    * 3a2. System allows modification or cancellation.
+    * 3a2. System allows modification or cancellation
+
       Use case ends.
 
 *{More to be added}*
