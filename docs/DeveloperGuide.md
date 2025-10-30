@@ -136,7 +136,6 @@ The `Model` component,
 
 </box>
 
-
 ### Storage component
 
 **API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
@@ -165,7 +164,8 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 ## **Noteworthy details on features**
 
 This section describes some noteworthy details on how certain features are implemented.
-## Timeslots features
+
+## Feature: Storing, Adding And Managing Timeslots
 
 ### Implementation overview
 The Timeslots feature is implemented as a set of commands that parse user input into command objects, interact with the Model to read or mutate the stored timeslots, and return a CommandResult. Commands are implemented following the existing Command/Parser pattern used across the codebase (AddressBookParser -> XCommandParser -> XCommand). Some commands are read-only (e.g. get-timeslots) while others modify state (e.g. block-timeslot, unblock-timeslot, add-consultation, clear-timeslots).
@@ -203,10 +203,9 @@ Sequence diagrams:
 - Command execution: Commands validate business rules (e.g., no overlapping timeslots, consultations with duplicate student/time). On violation a CommandException is thrown with a clear message.
 - Persistence errors: LogicManager translates IO or permission errors (IOException, AccessDeniedException) from Storage into CommandException so callers can surface the error to users.
 
-### Undo feature
+### Feature: Undo Command
 
 #### Implementation
-
 The undo mechanism is facilitated by `ModelManager`. It stores a single previous state of the address book and
 timeslots, stored internally as `previousAddressBookState` and `previousTimeslotsState`. Additionally, it implements
 the following operations:
@@ -296,7 +295,6 @@ The following activity diagram summarises what happens when a user executes a ne
 <puml src="diagrams/UndoCommand/SaveActivityDiagram.puml" with="574" />
 
 #### Commands that support undo
-
 The following commands call `Model#saveAddressBook()` and thus support undo:
 - `add` - Adds a student
 - `delete` - Deletes a student
@@ -322,7 +320,6 @@ The following commands do NOT support undo (read-only commands):
 - `exit` - Exits the application
 
 #### Design considerations
-
 **Aspect: How undo executes:**
 
 * **Alternative 1 (current choice):** Saves only one previous state (address book + timeslots).
@@ -361,7 +358,6 @@ benefits of a full undo/redo stack. The minimal memory overhead and straightforw
 a student project with limited development time.
 
 #### Future enhancements
-
 * **Multiple undo levels:** Implement a full history stack (Alternative 2) to support undoing multiple commands in
   sequence. This would involve storing a list of states and maintaining a current state pointer.
 
@@ -374,24 +370,18 @@ a student project with limited development time.
 * **Undo command confirmation:** For destructive commands like `clear`, prompt the user to confirm before executing,
   reducing the need for undo in the first place.
 
-### **Feature: Multi-Index Inputs**
+### Feature: Multi-Index Input Support
 
 #### Overview
-
 LambdaLab supports commands that can target **multiple students at once** through the use of **multi-index inputs**.  
 This feature is powered by the `MultiIndex` and `MultiIndexCommand` classes, which together allow users to specify **a single index** (e.g., `2`) or **a contiguous range** (e.g., `1:5`) when executing commands.
 
 This enables bulk operations such as grading, marking attendance, or updating exercises — all in one concise command.
 
----
-
 #### Implementation
-
 **MultiIndex**
 
 The `MultiIndex` class represents a list of one or more indices that can be written using the following syntax:
-
-**MultiIndex Syntax**
 - A **single index** (e.g., `1` → only the first student)
 - A **range of indices** (e.g., `1:5` → students 1 through 5, inclusive)
 
@@ -418,10 +408,7 @@ Each subclass:
 | `DeleteCommand`          | `delete`      | Deletes students from LambdaLab.         |
 | `EditCommand`            | `edit`        | Edits students in LambdaLab.             |
 
----
-
 #### Example Usage
-
 **Example 1: Single Index**
 ```
 marka 5 l/3 s/n
@@ -429,47 +416,18 @@ marka 5 l/3 s/n
 Marks Lab 3 as *absent* for the student at index `5` of the student list.
 
 **Example 2: Range of Indices**
-
 ```
 grade 1:3 en/midterm s/y
 ```
-
 Marks the *Midterm* exam as *passed* for students 1 through 3.
 
 A sequence diagram for this command is shown below:
 
 <puml src="diagrams/GradeCommand/GradeSequenceDiagram.puml" width="820" />
 
----
-
-### **Design Considerations**
-
-**Aspect: Code Reuse**  
-The iteration and validation logic for applying an action to multiple students is centralized within `MultiIndexCommand`.  
-This ensures consistent behavior across all commands that support bulk modification.
-
-**Aspect: Robustness**  
-If any index in the provided range is invalid (e.g., out of bounds), the command throws a `CommandException` before making any modifications.
-
-**Aspect: Extensibility**  
-Future commands that require multi-student operations (e.g., adding group tags or resetting student progress) can easily extend `MultiIndexCommand` without duplicating logic.
-
----
-
-### **Future Enhancements**
-
-- **Partial Execution Reports:**  
-  Allow commands to apply valid operations even if some indices fail, returning a summary report of successes and failures.
-
-- **Parallel Execution:**  
-  For large datasets, multi-index operations could be processed concurrently for improved performance.
-
----
-
-### **Feature: Displaying Trackable Data**
+### Feature: Displaying Trackable Data
 
 #### Overview
-
 LambdaLab displays each student’s academic progress using **trackable components**, which visually represent data such as **exercise completion**, **lab attendance**, and **exam performance**.  
 This feature leverages the `Trackable` interface and its implementing classes to unify how progress information is retrieved and displayed within the UI.
 
@@ -477,10 +435,7 @@ Each trackable component defines both:
 - The **status colours** (e.g., green, red, grey) that indicate the current state.
 - The **labels** (e.g., EX1, L5, MIDTERM) used to identify individual tracked items.
 
----
-
 #### Implementation
-
 The **Trackable Display** feature enables LambdaLab to visually represent a student’s **exercises**, **lab attendance**, and **exam results** in a consistent and colour-coded format.
 
 This is achieved through the `Trackable` interface, which standardizes how trackable data is exposed to the UI.  
@@ -504,23 +459,7 @@ This design cleanly separates **model data** from **UI rendering**, ensuring tha
 
 <puml src="diagrams/Trackable/TrackableClassDiagram.puml" width="800" />
 
----
-
-### **Design Considerations**
-
-**Aspect: Reusability**  
-The abstraction of the `Trackable` interface allows all progress-tracking components to share the same rendering logic, reducing code duplication and simplifying maintenance.
-
-**Aspect: Extensibility**  
-Future features such as project submissions or participation tracking can easily be integrated by implementing the same interface.
-
-**Aspect: Visual Consistency**  
-Colours and font styles are centrally managed through CSS, ensuring that every type of status indicator follows the same visual pattern.
-
----
-
 ### **Example**
-
 Each student card displays their current progress in three areas:
 
 | Category | Green Meaning | Grey Meaning | Red Meaning |
@@ -531,13 +470,7 @@ Each student card displays their current progress in three areas:
 
 This provides a concise and visual summary of each student’s standing in the course.
 
----
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
-### Find Feature
+### Feature: Find Command
 
 #### Current Implementation
 The `find` mechanism performs a multi-keyword search over student records with **presence-only selectors** to restrict which fields are searched.
@@ -562,9 +495,7 @@ that matches when **any** keyword is a case-insensitive **substring** of **any**
 - `FindCommand#execute(Model)` calls `model.updateFilteredPersonList(predicate)` once.
 - The UI observes the filtered list and refreshes automatically.
 
-
-
-### Set Week Feature
+### Feature: Set Week Command
 
 The `set-week` command allows teaching assistants to set the current week of the semester (0-13). This is a crucial command as it determines which labs are considered "past" and affects the behavior of lab attendance marking
 and exercise tracking throughout the application.
