@@ -2,13 +2,10 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.function.Predicate;
-
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
-
+import seedu.address.model.person.predicates.filterpredicates.FilterPredicate;
 
 
 /**
@@ -35,9 +32,9 @@ public class FilterCommand extends Command {
             + "Example: " + COMMAND_WORD + " ei/1 s/Y \n";
 
 
-    private final Predicate<Person> predicate;
+    private final FilterPredicate predicate;
 
-    public FilterCommand(Predicate<Person> predicate) {
+    public FilterCommand(FilterPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -46,7 +43,9 @@ public class FilterCommand extends Command {
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
         return new CommandResult(
-                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
+                String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW
+                        + "\nFiltering for students who "
+                        + predicate.successMessage(), model.getFilteredPersonList().size()));
     }
 
     @Override
