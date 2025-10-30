@@ -9,7 +9,7 @@ public class Exercise {
     public static final int EXERCISE_WEEK_DIFFERENCE = 2;
     private boolean isDone;
     private final int exerciseNumber;
-    private boolean isPastWeek;
+    private final boolean isPastWeek;
     /**
      * Creates an exercise object with the following parameters.
      * @param exerciseNumber the exercise number
@@ -57,10 +57,9 @@ public class Exercise {
         if (this == other) {
             return true;
         }
-        if (!(other instanceof Exercise)) {
+        if (!(other instanceof Exercise otherExercise)) {
             return false;
         }
-        Exercise otherExercise = (Exercise) other;
         return exerciseNumber == otherExercise.exerciseNumber && isDone == otherExercise.isDone;
     }
 
