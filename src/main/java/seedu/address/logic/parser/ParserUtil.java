@@ -29,6 +29,7 @@ import seedu.address.model.person.ExerciseList;
 import seedu.address.model.person.ExerciseTracker;
 import seedu.address.model.person.GithubUsername;
 import seedu.address.model.person.GradeMap;
+import seedu.address.model.person.GradeTracker;
 import seedu.address.model.person.Lab;
 import seedu.address.model.person.LabAttendance;
 import seedu.address.model.person.LabAttendanceList;
@@ -327,15 +328,14 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code gradeMapString} into a {@code GradeMap}.
+     * Parses a {@code GradeTrackerString} into a {@code GradeTracker}.
      * Expected format: "pe1: Passed, midterm: Failed, pe2: NA"
      *
-     * @throws ParseException if the given {@code gradeMapString} is invalid.
+     * @throws ParseException if the given {@code GradeTrackerString} is invalid.
      */
-    public static GradeMap parseGradeMap(String input) throws ParseException {
+    public static GradeTracker parseGradeTracker(String input) throws ParseException {
         requireNonNull(input);
-        GradeMap gradeMap = new GradeMap();
-
+        GradeTracker gradeTracker = new GradeMap();
         for (String entry : input.split(",")) {
             String[] parts = entry.trim().split(":");
 
@@ -346,25 +346,30 @@ public class ParserUtil {
             String name = parts[0].trim().toLowerCase();
             String resultStr = parts[1].trim().toLowerCase();
 
-            Examination exam = new Examination(name);
+            Examination exam = getExamination(name, resultStr);
 
-            if (!resultStr.equals("na")) {
-                if (resultStr.equals("passed")) {
-                    exam.markPassed();
-                } else if (resultStr.equals("failed")) {
-                    exam.markFailed();
-                } else {
-                    throw new ParseException(
-                            String.format("Invalid exam result '%s' for '%s'. Must be 'Passed', 'Failed', or 'NA'.",
-                                    resultStr, name)
-                    );
-                }
-            }
-
-            gradeMap.putExam(name, exam);
+            gradeTracker.putExam(name, exam);
         }
 
-        return gradeMap;
+        return gradeTracker;
+    }
+
+    private static Examination getExamination(String name, String resultStr) throws ParseException {
+        Examination exam = new Examination(name);
+
+        if (!resultStr.equals("na")) {
+            if (resultStr.equals("passed")) {
+                exam.markPassed();
+            } else if (resultStr.equals("failed")) {
+                exam.markFailed();
+            } else {
+                throw new ParseException(
+                        String.format("Invalid exam result '%s' for '%s'. Must be 'Passed', 'Failed', or 'NA'.",
+                                resultStr, name)
+                );
+            }
+        }
+        return exam;
     }
 
 

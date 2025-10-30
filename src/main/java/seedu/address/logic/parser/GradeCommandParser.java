@@ -31,11 +31,14 @@ public class GradeCommandParser implements Parser<GradeCommand> {
         MultiIndex studentIndex;
         String examName;
         boolean isPassed;
+        //ensure all the prefixes are present
         validateFields(argumentMultimap, GradeCommand.MESSAGE_USAGE, PREFIX_EXAM_NAME, PREFIX_STATUS);
+        // Parse the "status" field (s/)
         isPassed = ParserUtil.parseStatus(argumentMultimap.getValue(PREFIX_STATUS).orElseThrow(()
                 -> new ParseException(
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, GradeCommand.MESSAGE_USAGE)
         )));
+        // Parse the "exam name" field (n/)
         try {
             examName = argumentMultimap.getValue(PREFIX_EXAM_NAME).orElseThrow(()
                     -> new ParseException(String.format(EMPTY_PREFIX_FORMAT, PREFIX_EXAM_NAME)));
@@ -45,6 +48,7 @@ public class GradeCommandParser implements Parser<GradeCommand> {
                     ive
             );
         }
+        // Parse the index or range of indices (e.g., "1" or "1:3") found before the prefixes
         try {
             studentIndex = ParserUtil.parseMultiIndex(argumentMultimap.getPreamble());
         } catch (InvalidIndexException iie) {
@@ -55,6 +59,7 @@ public class GradeCommandParser implements Parser<GradeCommand> {
                     pe
             );
         }
+        // Construct and return the GradeCommand with parsed values
         return new GradeCommand(studentIndex, examName, isPassed);
     }
 }

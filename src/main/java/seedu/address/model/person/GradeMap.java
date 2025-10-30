@@ -15,7 +15,7 @@ import seedu.address.model.person.exceptions.InvalidExamNameException;
 /**
  * Wraps a HashMap with String keys and Examination values.
  */
-public class GradeMap implements Trackable {
+public class GradeMap implements GradeTracker {
     public static final String[] VALID_EXAM_NAMES = {"pe1", "midterm", "pe2", "final"};
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
     private final HashMap<String, Examination> examMap;
@@ -69,12 +69,10 @@ public class GradeMap implements Trackable {
         logger.info(String.format("Marking %s as Passed", name));
 
         Examination exam = examMap.get(name);
-
         if (exam == null) {
             throw new InvalidExamNameException(
                     String.format(
                             MESSAGE_INVALID_EXAM_NAME_FORMAT,
-                            name,
                             Arrays.toString(VALID_EXAM_NAMES)
                     )
             );
@@ -111,22 +109,24 @@ public class GradeMap implements Trackable {
      */
     public GradeMap copy() {
         GradeMap newGradeMap = new GradeMap();
-
         for (String examName : VALID_EXAM_NAMES) {
             Examination original = this.examMap.get(examName);
             Examination copied = newGradeMap.examMap.get(examName);
-
-            if (original.isPassed().isPresent()) {
-                if (original.isPassed().get()) {
-                    copied.markPassed();
-                } else {
-                    copied.markFailed();
-                }
+            // Skip exams that have no pass/fail status
+            if (original.isPassed().isEmpty()) {
+                continue;
+            }
+            // Copy pass/fail state directly
+            boolean isPassed = original.isPassed().get();
+            if (isPassed) {
+                copied.markPassed();
+            } else {
+                copied.markFailed();
             }
         }
-
         return newGradeMap;
     }
+
 
     @Override
     public List<TrackerColour> getTrackerColours() {

@@ -79,7 +79,7 @@ public class MarkAttendanceCommand extends MultiIndexCommand {
                 personToEdit.getStudentId(), personToEdit.getName(), personToEdit.getPhone(),
                 personToEdit.getEmail(), personToEdit.getTags(),
                 personToEdit.getGithubUsername(), personToEdit.getExerciseTracker(),
-                labAttendanceList, personToEdit.getGradeMap());
+                labAttendanceList, personToEdit.getGradeTracker());
 
         model.setPerson(personToEdit, editedPerson);
         return editedPerson;

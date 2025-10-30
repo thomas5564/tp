@@ -10,6 +10,7 @@ import seedu.address.model.person.ExerciseList;
 import seedu.address.model.person.ExerciseTracker;
 import seedu.address.model.person.GithubUsername;
 import seedu.address.model.person.GradeMap;
+import seedu.address.model.person.GradeTracker;
 import seedu.address.model.person.LabAttendanceList;
 import seedu.address.model.person.LabList;
 import seedu.address.model.person.Name;
@@ -42,7 +43,7 @@ public class PersonBuilder {
     private ExerciseTracker exerciseList;
     private GithubUsername githubUsername;
     private LabAttendanceList labAttendanceList;
-    private GradeMap gradeMap;
+    private GradeTracker gradeMap;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -71,7 +72,7 @@ public class PersonBuilder {
         exerciseList = personToCopy.getExerciseTracker();
         githubUsername = personToCopy.getGithubUsername();
         labAttendanceList = personToCopy.getLabAttendanceList();
-        gradeMap = personToCopy.getGradeMap();
+        gradeMap = personToCopy.getGradeTracker();
     }
 
     /**
@@ -151,7 +152,7 @@ public class PersonBuilder {
      */
     public PersonBuilder withGradeMap(String gradeMapString) {
         try {
-            gradeMap = ParserUtil.parseGradeMap(gradeMapString);
+            gradeMap = ParserUtil.parseGradeTracker(gradeMapString);
         } catch (ParseException e) {
             throw new IllegalArgumentException("Invalid Exercise Tracker List format"); // For developers
         }
