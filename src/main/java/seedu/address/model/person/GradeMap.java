@@ -69,12 +69,10 @@ public class GradeMap implements Trackable {
         logger.info(String.format("Marking %s as Passed", name));
 
         Examination exam = examMap.get(name);
-
         if (exam == null) {
             throw new InvalidExamNameException(
                     String.format(
                             MESSAGE_INVALID_EXAM_NAME_FORMAT,
-                            name,
                             Arrays.toString(VALID_EXAM_NAMES)
                     )
             );
