@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXERCISE_INDEX;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LAB_ATTENDANCE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LAB_NUMBER;
@@ -70,7 +71,7 @@ public class FilterCommandParser implements Parser<FilterCommand> {
         }
 
         if (predicates.isEmpty()) {
-            throw new ParseException(FilterCommand.MESSAGE_USAGE);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         }
         return predicates;
     }
@@ -107,7 +108,7 @@ public class FilterCommandParser implements Parser<FilterCommand> {
 
     private void checkNoKeywords(ArgumentMultimap argMultimap) throws ParseException {
         if (!argMultimap.getPreamble().isBlank()) {
-            throw new ParseException(FilterCommand.MESSAGE_USAGE);
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         }
     }
 
