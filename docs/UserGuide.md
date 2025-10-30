@@ -114,7 +114,6 @@ spreadsheets or GUI apps.
 4. Open a command terminal, `cd` into the folder you put the `.jar` file in, and use the `java -jar addressbook.jar` command to run the application.<br>
    A GUI should appear in a few seconds, as shown by the image below. Note that the app contains some sample data and the layout
    is explained in coloured boxes.<br>
-   ![Ui](images/Ui.png)
 
 5. Type your command in the command box and press Enter to execute it. <br>
    Some example commands you can try:
@@ -127,6 +126,27 @@ spreadsheets or GUI apps.
 
 6. Refer to the [Features](#features) below for details of each command.
 
+---
+
+# User Interface
+
+![Ui](images/Ui.png)
+## Trackers.  
+These trackers provide a visual overview of each student’s progress in terms of **lab attendance**,
+**exercise completion**, and **examination performance (on a pass/fail basis)**.
+
+Each tracker uses colour indicators to represent a student’s current status in a clear and intuitive way:
+
+| **Category** | **Green** | **Grey**          | **Red** |
+|:--------------|:-----------|:------------------|:-----------|
+| **Lab** | Attended | Not conducted yet | Absent |
+| **Exercise** | Completed | Not completed     | Overdue |
+| **Exam** | Passed | Not graded        | Failed |
+
+This system allows Teaching Assistants to quickly assess how students are performing at a glance.  
+For example, a green tracker indicates satisfactory progress, while a red one highlights areas needing attention — such as missed labs, overdue exercises, or failed exams.
+
+Now let's get started with the commands!
 ---
 
 # Features
@@ -262,25 +282,6 @@ clear
 
 ### On Labs, Exercises, and Examinations
 
-Before learning about the specific commands, let’s first familiarise ourselves with the **Trackers** feature.  
-These trackers provide a visual overview of each student’s progress in terms of **lab attendance**,
-**exercise completion**, and **examination performance (on a pass/fail basis)**.
-
-![Trackers.png](images/Trackers.png)
-
-Each tracker uses colour indicators to represent a student’s current status in a clear and intuitive way:
-
-| **Category** | **Green** | **Grey** | **Red** |
-|:--------------|:-----------|:-----------|:-----------|
-| **Lab** | Attended | Not conducted yet | Absent |
-| **Exercise** | Completed | Not conducted | Overdue |
-| **Exam** | Passed | Not graded | Failed |
-
-This system allows Teaching Assistants to quickly assess how students are performing at a glance.  
-For example, a green tracker indicates satisfactory progress, while a red one highlights areas needing attention — such as missed labs, overdue exercises, or failed exams.
-
-Now let's get started with the commands!
-
 #### Mark a student's lab attendance: `marka`
 
 You can use this command to record whether selected students attended or were absent for a particular lab.
@@ -310,7 +311,7 @@ You can use this command to record or update whether selected students have comp
 ```
 marke INDEX ei/EXERCISE_INDEX s/STATUS
 ```
-Here, `STATUS` is "y" for completed and "n" for not completed.
+Here, `STATUS` is `y` for completed and `n` for not completed.
 
 **Examples:**
 - Marks Exercise 1 as done for the 1st student: `marke 1 ei/1 s/y`.
