@@ -642,54 +642,30 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `LambdaLab` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Grade an exercise**
-
-**Precondition: A student has submitted their programming exercise**
-
-**MSS**
-
-1.  User receives notification that a student has submitted the exercise
-2.  User navigates to student's submission on GitHub via notification
-3.  User returns after grading student's submission on GitHub
-4.  User marks exercise as graded in LambdaLab
-5.  LambdaLab updates statistics
-    Use case ends.
-
-**Extensions**
-
-* 1a. User doesn't want to grade student's exercise now
-    * 1a1. User dismisses the notification
-      Use case ends.
-* 1b. User accidentally dismisses notification
-    * 1b1. User goes to student's profile
-    * 1b2. User navigates to student's submission on GitHub via link in student's profile
-      Use case resumes at Step 3
-
-
 **Use case: Mark student attendance**
 
 **MSS**
 
 1.  User wants to mark attendance, enters student name and lab number using the command format
-2.  LambdaLab validates the student index and lab number
-3.  LambdaLab marks the student’s attendance for the specified lab
-4.  LambdaLab confirms that attendance for <studentName> is marked for lab number <labNumber>
+2.  System validates the student index and lab number
+3.  System marks the student’s attendance for the specified lab
+4.  System confirms that attendance for <studentName> is marked for lab number <labNumber>
     Use case ends.
 
 **Extensions**
 
 * 1a. User provides an an invalid index
-    * 1a1. LambdaLab displays error message
+    * 1a1. System displays error message
     * 1a2. User re-enters a valid index
 
       Use case resumes at Step 2
 * 1b. User provides an invalid lab number (non-numeric, zero, negative, or out-of-range)
-    * 1b1. Lambdalab displays error message
+    * 1b1. System displays error message
     * 1b2. User re-enters a valid lab number
 
       Use case resumes at Step 2
 * 3a. Attendance for the student in that lab number has already been marked
-    * 3a1. LambdaLab displays message to indicate that attendance is already marked for <studentName> in lab number <labNumber>
+    * 3a1. System displays message to indicate that attendance is already marked for <studentName> in lab number <labNumber>
 
       Use case ends.
 
@@ -703,11 +679,11 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 1. User views all the periods of available time he has
 2. User adds a desired consultation time slot
-3. Time slot is saved into his schedule
+3. Timeslot is saved into his schedule
 
 **Extensions**
 * 2a. User inputs an invalid consultation slot (e.g. start time before end time)
-    * 2a1. LambdaLab displays error message
+    * 2a1. System displays error message
     * 2a2. User re-enters a valid timeslot
 
       Use case resumes at Step 3
