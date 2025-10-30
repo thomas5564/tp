@@ -489,8 +489,6 @@ This allows Teaching Assistants to instantly gauge student performance and ident
 
 #### Implementation
 
-#### Implementation
-
 The **Trackable Display** feature enables LambdaLab to visually represent a student’s **exercises**, **lab attendance**, and **exam results** in a consistent and colour-coded format.
 
 This is achieved through the `Trackable` interface, which standardizes how trackable data is exposed to the UI.  
@@ -530,11 +528,11 @@ Colours and font styles are centrally managed through CSS, ensuring that every t
 
 Each student card displays their current progress in three areas:
 
-| Category | Green Meaning | Grey Meaning | Red Meaning |
-|:----------|:---------------|:--------------|:-------------|
+| Category | Green Meaning | Grey Meaning      | Red Meaning |
+|:----------|:---------------|:------------------|:-------------|
 | **Lab** | Attended | Not conducted yet | Absent |
-| **Exercise** | Completed | Not conducted | Overdue |
-| **Exam** | Passed | Not graded | Failed |
+| **Exercise** | Completed | Not completed     | Overdue |
+| **Exam** | Passed | Not graded        | Failed |
 
 This provides a concise and visual summary of each student’s standing in the course.
 
@@ -555,7 +553,7 @@ This provides a concise and visual summary of each student’s standing in the c
 
 _{Explain here how the data archiving feature will be implemented}_
 
-### Find Feature:
+### Find Feature
 
 #### Current Implementation
 The `find` mechanism performs a multi-keyword search over student records with **presence-only selectors** to restrict which fields are searched.
@@ -581,6 +579,24 @@ that matches when **any** keyword is a case-insensitive **substring** of **any**
 - The UI observes the filtered list and refreshes automatically.
 
 
+
+### Set Week Feature
+
+The `set-week` command allows teaching assistants to set the current week of the semester (0-13). This is a crucial command as it determines which labs are considered "past" and affects the behavior of lab attendance marking
+and exercise tracking throughout the application.
+
+**How it works:**
+
+1. The user executes `set-week <WEEK_NUMBER>` where `WEEK_NUMBER` is between 0 and 13
+2. The `SetWeekCommandParser` parses the input string and creates a `Week` object
+3. The `SetWeekCommand` is executed, which:
+    - Saves the current state to enable undo functionality
+    - Updates the current week in the `Model`
+    - Updates the static current week in `LabList` and `ExerciseTracker` classes
+    - Updates all existing students' lab and exercise tracking data to reflect the new week
+4. The system displays a success message showing the new week number and how many students were updated
+<br>
+<puml src="diagrams/set-week/SetWeekSequenceDiagram.puml" width="550" />
 
 --------------------------------------------------------------------------------------------------------------------
 
