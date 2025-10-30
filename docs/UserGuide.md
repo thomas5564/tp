@@ -30,12 +30,10 @@ spreadsheets or GUI apps.
 - [Delete](#deleting-a-student-delete)
 - [Clear](#clearing-all-entries-clear)
 
-2.1.2. [On lab/exercise/grade](#on-labexercisegrade)
-- [Marka](#mark-a-students-lab-attendance-marka)
-- [Marke](#mark-a-students-exercise-for-completion-marke)
-- [Grade](#mark-a-students-exam-as-passed-or-failed-grade)
-
-
+2.1.2. [On labs, exercises, and examinations](#on-labs-exercises-and-examinations)
+- [Marka](#marking-a-students-lab-attendance-marka)
+- [Marke](#marking-a-students-exercise-for-completion-marke)
+- [Grade](#marking-a-students-exam-as-passed-or-failed-grade)
 
 2.1.3. [On timeslot/consultation](#on-timeslotconsultation)
 - [Block-timeslot](#blocking-a-timeslot-block-timeslot)
@@ -49,22 +47,22 @@ spreadsheets or GUI apps.
 
 <div style="margin-left: 20px; line-height: 1.2;">
 
-2.2.1. [On student data](#on-student-data-1)
+2.2.1. [Of student data](#of-student-data)
 - [List](#listing-students-list)
 - [Find](#finding-students-find)
 - [Filter](#filtering-students-filter)
 - [Sort](#sorting-students-sort)
 
-2.2.2. [On timeslot/consultation](#on-timeslotconsultation-1)
-- [Get-timeslots](#retrieving-merged-timeslot-ranges-get-timeslots)
+2.2.2. [Of timeslot/consultation](#of-timeslotconsultation)
+- [Get-timeslots](#retrieving-timeslot-ranges-get-timeslots)
 - [Get-consultations](#retrieving-consultations-only-get-consultations)
 
 </div>
 
 2.3. [Miscellaneous commands](#miscellaneous-commands)
 - [Help](#opening-the-help-window-help)
-- [Undo](#undo)
-- [Set-week](#set-week)
+- [Undo](#undoing-the-last-command-undo)
+- [Set-week](#setting-current-week-set-week)
 - [Exit](#exiting-the-application-exit)
 
 </div>
@@ -75,7 +73,7 @@ spreadsheets or GUI apps.
 
 3.1. [Frequently asked questions](#frequently-asked-questions)
 
-3.2. [Known Issues](#known-issues)
+3.2. [Known issues](#known-issues)
 
 </div>
 
@@ -102,9 +100,9 @@ spreadsheets or GUI apps.
 >
 > **If Java is not installed or the version is below 17:**
 > * Download and install Java 17 by following the guide:
-    >   * [for Windows users](https://se-education.org/guides/tutorials/javaInstallationWindows.html)
->   * [for Mac users](https://se-education.org/guides/tutorials/javaInstallationMac.html)
->   * [for Linux users](https://se-education.org/guides/tutorials/javaInstallationLinux.html)
+> * [for Windows users](https://se-education.org/guides/tutorials/javaInstallationWindows.html)
+> * [for Mac users](https://se-education.org/guides/tutorials/javaInstallationMac.html)
+> * [for Linux users](https://se-education.org/guides/tutorials/javaInstallationLinux.html)
 > * After installation, restart your terminal and verify the version again
 
 2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-T09-3/tp/releases).
@@ -114,6 +112,7 @@ spreadsheets or GUI apps.
 4. Open a command terminal, `cd` into the folder you put the `.jar` file in, and use the `java -jar addressbook.jar` command to run the application.<br>
    A GUI should appear in a few seconds, as shown by the image below. Note that the app contains some sample data and the layout
    is explained in coloured boxes.<br>
+   ![Ui](images/Ui.png)
 
 5. Type your command in the command box and press Enter to execute it. <br>
    Some example commands you can try:
@@ -126,27 +125,6 @@ spreadsheets or GUI apps.
 
 6. Refer to the [Features](#features) below for details of each command.
 
----
-
-# User Interface
-
-![Ui](images/Ui.png)
-## Trackers.  
-These trackers provide a visual overview of each student’s progress in terms of **lab attendance**,
-**exercise completion**, and **examination performance (on a pass/fail basis)**.
-
-Each tracker uses colour indicators to represent a student’s current status in a clear and intuitive way:
-
-| **Category** | **Green** | **Grey**          | **Red** |
-|:--------------|:-----------|:------------------|:-----------|
-| **Lab** | Attended | Not conducted yet | Absent |
-| **Exercise** | Completed | Not completed     | Overdue |
-| **Exam** | Passed | Not graded        | Failed |
-
-This system allows Teaching Assistants to quickly assess how students are performing at a glance.  
-For example, a green tracker indicates satisfactory progress, while a red one highlights areas needing attention — such as missed labs, overdue exercises, or failed exams.
-
-Now let's get started with the commands!
 ---
 
 # Features
@@ -280,9 +258,28 @@ clear
 
 ---
 
-### On Labs, Exercises, and Examinations
+### On labs, exercises, and examinations
 
-#### Mark a student's lab attendance: `marka`
+Before learning about the specific commands, let’s first familiarise ourselves with the **Trackers** feature.  
+These trackers provide a visual overview of each student’s progress in terms of **lab attendance**,
+**exercise completion**, and **examination performance (on a pass/fail basis)**.
+
+![Trackers.png](images/Trackers.png)
+
+Each tracker uses colour indicators to represent a student’s current status in a clear and intuitive way:
+
+| **Category** | **Green** | **Grey** | **Red** |
+|:--------------|:-----------|:-----------|:-----------|
+| **Lab** | Attended | Not conducted yet | Absent |
+| **Exercise** | Completed | Not conducted | Overdue |
+| **Exam** | Passed | Not graded | Failed |
+
+This system allows Teaching Assistants to quickly assess how students are performing at a glance.  
+For example, a green tracker indicates satisfactory progress, while a red one highlights areas needing attention — such as missed labs, overdue exercises, or failed exams.
+
+Now let's get started with the commands!
+
+#### Marking a student's lab attendance: `marka`
 
 You can use this command to record whether selected students attended or were absent for a particular lab.
 
@@ -303,7 +300,7 @@ Here `STATUS` is "y" for attended and "n" for not attended
 
 <br>
 
-#### Mark a student's exercise for completion: `marke`
+#### Marking a student's exercise for completion: `marke`
 
 You can use this command to record or update whether selected students have completed a particular exercise.
 
@@ -311,7 +308,7 @@ You can use this command to record or update whether selected students have comp
 ```
 marke INDEX ei/EXERCISE_INDEX s/STATUS
 ```
-Here, `STATUS` is `y` for completed and `n` for not completed.
+Here, `STATUS` is "y" for completed and "n" for not completed.
 
 **Examples:**
 - Marks Exercise 1 as done for the 1st student: `marke 1 ei/1 s/y`.
@@ -324,7 +321,7 @@ Here, `STATUS` is `y` for completed and `n` for not completed.
 
 <br>
 
-#### Mark a Student’s Exam as Passed or Failed: `grade`
+#### Marking a Student’s Exam as Passed or Failed: `grade`
 The `grade` command allows you to mark one or more students as **passed** or **failed** for a specific exam.  
 It supports **multi-index input**, letting you update multiple students’ grades in a single command.
 
@@ -360,7 +357,7 @@ Here, `STATUS` is "y" for passed and "n" for failed.
 ### On timeslot/consultation
 
 <br><br>
-### Blocking a timeslot: `block-timeslot`
+#### Blocking a timeslot: `block-timeslot`
 
 You can use this command to add a timeslot to the application's timeslot store. 
 Timeslots can be used to mark regular events (e.g. classes)
@@ -526,7 +523,6 @@ number of labs. Multiple conditions can be filtered at once.
 ```
 filter [l/LAB_NUMBER s/ATTENDANCE_STATUS]... [ei/EXERCISE_INDEX s/EXERCISE_STATUS]... [la/COMPARISON]
 ```
-
 **Examples:**
 - Shows students who attended Lab 7: `filter l/7 s/y`.
 - Shows students who completed Exercise 5: `filter ei/5 s/y`.
@@ -658,7 +654,7 @@ commands or skip back to earlier changes.
 
 <br>
 
-### Set-week
+### Setting current week: `set-week`
 
 The `set-week` command allows you to update the **current teaching week** in LambdaLab.  
 This helps the system automatically manage time-sensitive features such as **exercise due dates** and **lab attendances**.
@@ -691,7 +687,7 @@ Similarly, lab attendance is tracked relative to the current week, allowing TAs 
 **Caution:**
 - The week number must be within the valid semester range (e.g., 1–13).
 - Setting the wrong week may cause inconsistencies in exercise deadlines and attendance tracking.
-  </box>
+</box>
 <br>
 
 ### Exiting the application: `exit`
@@ -772,7 +768,7 @@ they create their account.
 **A**: Yes, LambdaLab allows you to mark any lab from 1-10. However, we recommend marking attendance only for completed
 lab sessions to maintain accurate records.
 
-## Known Issues
+## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the
    primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application
