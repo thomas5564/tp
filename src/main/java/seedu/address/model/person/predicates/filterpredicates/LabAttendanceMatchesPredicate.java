@@ -1,6 +1,4 @@
-package seedu.address.model.person.predicates;
-
-import java.util.function.Predicate;
+package seedu.address.model.person.predicates.filterpredicates;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.helpers.Comparison;
@@ -11,7 +9,7 @@ import seedu.address.model.person.Person;
 /**
  * Tests that a {@code Person}'s {@code Github Username} matches any of the keywords given.
  */
-public class LabAttendanceMatchesPredicate implements Predicate<Person> {
+public class LabAttendanceMatchesPredicate extends FilterPredicate {
     private final double value;
     private final Comparison comparison;
 
@@ -69,4 +67,32 @@ public class LabAttendanceMatchesPredicate implements Predicate<Person> {
                 .add("comparison", comparison)
                 .toString();
     }
+
+    @Override
+    public String successMessage() {
+        return "have attended " + statusToMessage() + (int) value + " percent of labs";
+    }
+
+    /**
+     * Helper method that maps operators to their message phrase.
+     *
+     * @return The phrase corresponding to the operator
+     */
+    public String statusToMessage() {
+        switch(comparison) {
+        case EQ:
+            return "exactly ";
+        case GE:
+            return "more than or equal to ";
+        case LE:
+            return "less than or equal to ";
+        case GT:
+            return "more than ";
+        case LT:
+            return "less than ";
+        default:
+            return "invalid filter ";
+        }
+    }
+
 }
