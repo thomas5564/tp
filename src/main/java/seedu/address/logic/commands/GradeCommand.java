@@ -80,7 +80,7 @@ public class GradeCommand extends MultiIndexCommand {
                 personToGrade.getEmail(),
                 personToGrade.getTags(),
                 personToGrade.getGithubUsername(),
-                personToGrade.getExerciseTracker(),
+                personToGrade.getExerciseList(),
                 personToGrade.getLabAttendanceList(),
                 updatedGradeMap
         );

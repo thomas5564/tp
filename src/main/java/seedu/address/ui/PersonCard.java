@@ -63,13 +63,13 @@ public class PersonCard extends UiPart<Region> {
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
         // Render trackable sections
-        renderTrackable(exerciseStatus, person.getExerciseTracker(), "exercise");
+        renderTrackable(exerciseStatus, person.getExerciseList(), "exercise");
         renderTrackable(labAttendance, person.getLabAttendanceList(), "lab");
         renderTrackable(grades, person.getGradeMap(), "exam");
     }
 
     /**
-     * Renders a generic Trackable object (e.g., ExerciseTracker, LabList, GradeMap)
+     * Renders a generic Trackable object (e.g., ExerciseList, LabList, GradeMap)
      * into the provided FlowPane using its labels and tracker colours.
      */
     private void renderTrackable(FlowPane pane, Trackable trackable, String baseClass) {

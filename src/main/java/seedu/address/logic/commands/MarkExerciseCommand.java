@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.person.ExerciseTracker.NUMBER_OF_EXERCISES;
+import static seedu.address.model.person.ExerciseList.NUMBER_OF_EXERCISES;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.core.index.MultiIndex;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.ExerciseTracker;
+import seedu.address.model.person.ExerciseList;
 import seedu.address.model.person.Person;
 
 /**
@@ -76,9 +76,9 @@ public class MarkExerciseCommand extends MultiIndexCommand {
 
     @Override
     protected Person applyActionToPerson(Model model, Person personToEdit) throws CommandException {
-        ExerciseTracker updatedExerciseTracker = personToEdit.getExerciseTracker().copy();
+        ExerciseList updatedExerciseList = personToEdit.getExerciseList().copy();
         try {
-            updatedExerciseTracker.markExercise(exerciseIndex, isDone);
+            updatedExerciseList.markExercise(exerciseIndex, isDone);
         } catch (IllegalStateException e) {
             alreadyMarkedPersons.add(personToEdit);
             return null;
@@ -91,7 +91,7 @@ public class MarkExerciseCommand extends MultiIndexCommand {
                 personToEdit.getEmail(),
                 personToEdit.getTags(),
                 personToEdit.getGithubUsername(),
-                updatedExerciseTracker,
+                updatedExerciseList,
                 personToEdit.getLabAttendanceList(),
                 personToEdit.getGradeMap()
         );

@@ -102,7 +102,7 @@ public class PersonTest {
                 + ", email=" + ALICE.getEmail()
                 + ", tags=" + ALICE.getTags()
                 + ", github username=" + ALICE.getGithubUsername()
-                + ", exerciseStatuses=" + ALICE.getExerciseTracker()
+                + ", exerciseStatuses=" + ALICE.getExerciseList()
                 + ", lab attendance list=" + ALICE.getLabAttendanceList()
                 + ", gradeMap=" + ALICE.getGradeMap()
                 + "}";

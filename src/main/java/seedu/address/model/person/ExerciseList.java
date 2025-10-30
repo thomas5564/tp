@@ -12,7 +12,7 @@ import seedu.address.commons.core.index.Index;
 /**
  * Represents a Person's address in the address book.
  */
-public class ExerciseTracker implements Comparable<ExerciseTracker>, Trackable {
+public class ExerciseList implements Comparable<ExerciseList>, Trackable {
 
     public static final String MESSAGE_CONSTRAINTS = "Exercise tracker takes in statuses";
     public static final int NUMBER_OF_EXERCISES = 10;
@@ -23,7 +23,7 @@ public class ExerciseTracker implements Comparable<ExerciseTracker>, Trackable {
     /**
      * Initialises statuses to all be not done
      */
-    public ExerciseTracker() {
+    public ExerciseList() {
         for (int i = 0; i < NUMBER_OF_EXERCISES; i++) {
             exercises.add(new Exercise(i, false, currentWeekNumber));
         }
@@ -33,7 +33,7 @@ public class ExerciseTracker implements Comparable<ExerciseTracker>, Trackable {
      * Initializes exercises using a list of statuses.
      * Each index corresponds to an exercise number.
      */
-    public ExerciseTracker(ArrayList<Boolean> isDoneList) {
+    public ExerciseList(ArrayList<Boolean> isDoneList) {
         assert isDoneList != null : "Statuses list must not be null";
         if (isDoneList.size() > NUMBER_OF_EXERCISES) {
             throw new IllegalArgumentException("Too many statuses! Expected at most " + NUMBER_OF_EXERCISES);
@@ -63,10 +63,10 @@ public class ExerciseTracker implements Comparable<ExerciseTracker>, Trackable {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof ExerciseTracker)) {
+        if (!(other instanceof ExerciseList)) {
             return false;
         }
-        ExerciseTracker otherTracker = (ExerciseTracker) other;
+        ExerciseList otherTracker = (ExerciseList) other;
         return exercises.equals(otherTracker.exercises);
     }
 
@@ -109,18 +109,18 @@ public class ExerciseTracker implements Comparable<ExerciseTracker>, Trackable {
     }
 
     @Override
-    public int compareTo(ExerciseTracker other) {
+    public int compareTo(ExerciseList other) {
         return Double.compare(this.calculateProgress(), other.calculateProgress());
     }
 
     /**
      * Returns true if a given string is a valid exercise tracker format.
      */
-    public static boolean isValidExerciseTracker(String exerciseTrackerString) {
-        if (exerciseTrackerString == null) {
+    public static boolean isValidExerciseList(String exerciseListString) {
+        if (exerciseListString == null) {
             return false;
         }
-        String trimmed = exerciseTrackerString.trim();
+        String trimmed = exerciseListString.trim();
         String[] parts = trimmed.split("\\s+");
 
         // Each exercise entry has 3 parts (ex, <index>:, <status>)
@@ -154,12 +154,12 @@ public class ExerciseTracker implements Comparable<ExerciseTracker>, Trackable {
     }
 
     /**
-     * Returns a deep copy of this ExerciseTracker.
-     * @return a new ExerciseTracker with copied data
+     * Returns a deep copy of this ExerciseList.
+     * @return a new ExerciseList with copied data
      */
-    public ExerciseTracker copy() {
+    public ExerciseList copy() {
         ArrayList<Boolean> copiedStatuses = new ArrayList<>(this.getIsDoneList());
-        return new ExerciseTracker(copiedStatuses);
+        return new ExerciseList(copiedStatuses);
     }
 
     public List<Status> getStatuses() {
