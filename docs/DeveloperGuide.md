@@ -530,11 +530,11 @@ Colours and font styles are centrally managed through CSS, ensuring that every t
 
 Each student card displays their current progress in three areas:
 
-| Category | Green Meaning | Grey Meaning | Red Meaning |
-|:----------|:---------------|:--------------|:-------------|
+| Category | Green Meaning | Grey Meaning      | Red Meaning |
+|:----------|:---------------|:------------------|:-------------|
 | **Lab** | Attended | Not conducted yet | Absent |
-| **Exercise** | Completed | Not conducted | Overdue |
-| **Exam** | Passed | Not graded | Failed |
+| **Exercise** | Completed | Not completed     | Overdue |
+| **Exam** | Passed | Not graded        | Failed |
 
 This provides a concise and visual summary of each student’s standing in the course.
 
