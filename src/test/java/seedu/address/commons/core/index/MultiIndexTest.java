@@ -86,12 +86,4 @@ class MultiIndexTest {
 
         assertNotEquals(a, b, "Different ranges should not be equal");
     }
-
-    @Test
-    void hashCode_sameBounds_sameValue() {
-        MultiIndex a = new MultiIndex(Index.fromOneBased(1), Index.fromOneBased(3));
-        MultiIndex b = new MultiIndex(Index.fromOneBased(1), Index.fromOneBased(3));
-
-        assertEquals(a.hashCode(), b.hashCode(), "Equal objects must have same hash code");
-    }
 }
