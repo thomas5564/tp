@@ -30,12 +30,10 @@ spreadsheets or GUI apps.
 - [Delete](#deleting-a-student-delete)
 - [Clear](#clearing-all-entries-clear)
 
-2.1.2. [On lab/exercise/grade](#on-labexercisegrade)
-- [Marka](#mark-a-students-lab-attendance-marka)
-- [Marke](#mark-a-students-exercise-for-completion-marke)
-- [Grade](#mark-a-students-exam-as-passed-or-failed-grade)
-
-
+2.1.2. [On labs, exercises, and examinations](#on-labs-exercises-and-examinations)
+- [Marka](#marking-a-students-lab-attendance-marka)
+- [Marke](#marking-a-students-exercise-for-completion-marke)
+- [Grade](#marking-a-students-exam-as-passed-or-failed-grade)
 
 2.1.3. [On timeslot/consultation](#on-timeslotconsultation)
 - [Block-timeslot](#blocking-a-timeslot-block-timeslot)
@@ -49,22 +47,22 @@ spreadsheets or GUI apps.
 
 <div style="margin-left: 20px; line-height: 1.2;">
 
-2.2.1. [On student data](#on-student-data-1)
+2.2.1. [Of student data](#of-student-data)
 - [List](#listing-students-list)
 - [Find](#finding-students-find)
 - [Filter](#filtering-students-filter)
 - [Sort](#sorting-students-sort)
 
-2.2.2. [On timeslot/consultation](#on-timeslotconsultation-1)
-- [Get-timeslots](#retrieving-merged-timeslot-ranges-get-timeslots)
+2.2.2. [Of timeslot/consultation](#of-timeslotconsultation)
+- [Get-timeslots](#retrieving-timeslot-ranges-get-timeslots)
 - [Get-consultations](#retrieving-consultations-only-get-consultations)
 
 </div>
 
 2.3. [Miscellaneous commands](#miscellaneous-commands)
 - [Help](#opening-the-help-window-help)
-- [Undo](#undo)
-- [Set-week](#set-week)
+- [Undo](#undoing-the-last-command-undo)
+- [Set-week](#setting-current-week-set-week)
 - [Exit](#exiting-the-application-exit)
 
 </div>
@@ -75,7 +73,7 @@ spreadsheets or GUI apps.
 
 3.1. [Frequently asked questions](#frequently-asked-questions)
 
-3.2. [Known Issues](#known-issues)
+3.2. [Known issues](#known-issues)
 
 </div>
 
@@ -102,9 +100,9 @@ spreadsheets or GUI apps.
 >
 > **If Java is not installed or the version is below 17:**
 > * Download and install Java 17 by following the guide:
-    >   * [for Windows users](https://se-education.org/guides/tutorials/javaInstallationWindows.html)
->   * [for Mac users](https://se-education.org/guides/tutorials/javaInstallationMac.html)
->   * [for Linux users](https://se-education.org/guides/tutorials/javaInstallationLinux.html)
+> * [for Windows users](https://se-education.org/guides/tutorials/javaInstallationWindows.html)
+> * [for Mac users](https://se-education.org/guides/tutorials/javaInstallationMac.html)
+> * [for Linux users](https://se-education.org/guides/tutorials/javaInstallationLinux.html)
 > * After installation, restart your terminal and verify the version again
 
 2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-T09-3/tp/releases).
@@ -157,7 +155,7 @@ spreadsheets or GUI apps.
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines 
 as space characters surrounding line-breaks may be omitted when copied over to the application.
 
-* For any command using the `INDEX` parameter, you can mark multiple students at once using a range `X:Y` (inclusive) (e.g., `1:5`).
+* For any command using the `INDEX` parameter, you can mark multiple students at once using a range `X:Y` (inclusive, X <= Y) (e.g., `1:5`).
   Note that this only works for selecting multiple students (`INDEX`), not for multiple exercises (`EXERCISE_INDEX`) or labs (`LAB_INDEX`).
 </box>
 
@@ -178,12 +176,9 @@ add i/STUDENTID n/NAME p/PHONE e/EMAIL g/GITHUB_USERNAME [t/TAG]…​
 ```
 
 **Examples:**
-- `add i/A1234567X n/John Doe p/98765432 e/johnd@example.com g/JohnDoe` — Adds a student with student ID `A1234567X`,
-  name `John Doe`, phone number `98765432`, email `johnd@example.com`, and GitHub username `JohnDoe`.
-- `add i/A1234567X n/John Doe p/98765432 e/johnd@example.com g/JohnDoe t/modelStudent` — Adds the same student but with
-  an optional tag `modelStudent` included.
-- `add g/JohnDoe i/A1234567X p/98765432 t/modelStudent n/John Doe e/johnd@example.com` — Adds the same student with
-  parameters in different order.
+- Adds a student with student ID `A1234567X`, name `John Doe`, phone number `98765432`, email `johnd@example.com`, and GitHub username `JohnDoe`: `add i/A1234567X n/John Doe p/98765432 e/johnd@example.com g/JohnDoe`.
+- Adds the same student but with an optional tag `modelStudent` included: `add i/A1234567X n/John Doe p/98765432 e/johnd@example.com g/JohnDoe t/modelStudent`.
+- Adds the same student with parameters in different order: `add g/JohnDoe i/A1234567X p/98765432 t/modelStudent n/John Doe e/johnd@example.com`.
 
 <box type="tip">
 
@@ -209,8 +204,8 @@ edit INDEX [i/STUDENT ID] [n/NAME] [p/PHONE] [e/EMAIL] [g/GITHUB USERNAME] [t/TA
 ```
 
 **Examples:**
-- `edit 1 p/91234567 e/johndoe@example.com` — Edits the phone number and email address of the 1st student to be `91234567` and `johndoe@example.com` respectively.
-- `edit 2 n/Betsy Crower t/` — Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tags.
+- Edits the phone number and email address of the 1st student to be `91234567` and `johndoe@example.com`: `edit 1 p/91234567 e/johndoe@example.com`.
+- Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tags: `edit 2 n/Betsy Crower t/`.
 
 <box type="tip">
 
@@ -236,8 +231,8 @@ delete INDEX
 ```
 
 **Examples:**
-- `list` followed by `delete 2` — Deletes the 2nd student in the LambdaLab.
-- `find Betsy` followed by `delete 1` — Deletes the 1st student in the results of the `find` command.
+- Deletes the 2nd student in the LambdaLab: `list` followed by `delete 2`.
+- Deletes the 1st student in the results of the `find` command: `find Betsy` followed by `delete 1`.
 
 <box type="tip">
 
@@ -263,7 +258,7 @@ clear
 
 ---
 
-### On Labs, Exercises, and Examinations
+### On labs, exercises, and examinations
 
 Before learning about the specific commands, let’s first familiarise ourselves with the **Trackers** feature.  
 These trackers provide a visual overview of each student’s progress in terms of **lab attendance**,
@@ -284,7 +279,7 @@ For example, a green tracker indicates satisfactory progress, while a red one hi
 
 Now let's get started with the commands!
 
-#### Mark a student's lab attendance: `marka`
+#### Marking a student's lab attendance: `marka`
 
 You can use this command to record whether selected students attended or were absent for a particular lab.
 
@@ -295,8 +290,8 @@ marka INDEX l/LAB_NUMBER s/STATUS
 Here `STATUS` is "y" for attended and "n" for not attended
 
 **Examples:**
-- `marka 1 l/1 s/y` — Marks Lab 1 as *attended* for the 1st student.
-- `marka 1:5 l/1 s/n` — Marks Lab 1 as *not attended* for students 1 through 5.
+- Marks Lab 1 as attended for the 1st student: `marka 1 l/1 s/y`.
+- Marks Lab 1 as not attended for students 1 through 5: `marka 1:5 l/1 s/n`.
 
 <box type="warning">
 
@@ -305,7 +300,7 @@ Here `STATUS` is "y" for attended and "n" for not attended
 
 <br>
 
-#### Mark a student's exercise for completion: `marke`
+#### Marking a student's exercise for completion: `marke`
 
 You can use this command to record or update whether selected students have completed a particular exercise.
 
@@ -316,8 +311,8 @@ marke INDEX ei/EXERCISE_INDEX s/STATUS
 Here, `STATUS` is "y" for completed and "n" for not completed.
 
 **Examples:**
-- `marke 1 ei/1 s/y` — Marks Exercise 1 as *done* for the 1st student.
-- `marke 2:5 ei/3 s/n` — Marks Exercise 3 as *not done* for students 2 through 5.
+- Marks Exercise 1 as done for the 1st student: `marke 1 ei/1 s/y`.
+- Marks Exercise 3 as not done for students 2 through 5: `marke 2:5 ei/3 s/n`.
 
 <box type="warning">
 
@@ -326,7 +321,7 @@ Here, `STATUS` is "y" for completed and "n" for not completed.
 
 <br>
 
-#### Mark a Student’s Exam as Passed or Failed: `grade`
+#### Marking a Student’s Exam as Passed or Failed: `grade`
 The `grade` command allows you to mark one or more students as **passed** or **failed** for a specific exam.  
 It supports **multi-index input**, letting you update multiple students’ grades in a single command.
 
@@ -337,12 +332,12 @@ grade INDEX... en/EXAM_NAME s/STATUS
 Here, `STATUS` is "y" for passed and "n" for failed.
 
 **Examples:**
-- `grade 1 en/Midterm s/y` — Marks the first student as passed for the Midterm exam.
-- `grade 2:4 en/Final s/n` — Marks students 2 through 4 as failed for the Final exam.
+- Marks the first student as passed for the Midterm exam: `grade 1 en/Midterm s/y`.
+- Marks students 2 through 4 as failed for the Final exam: `grade 2:4 en/Final s/n`.
 
 <box type="tip">
 
-If you regrade an exam, the previous pass/fail status will be **overwritten**.
+**Tip:** If you regrade an exam, the previous pass/fail status will be **overwritten**.
 </box>
 
 <box type="warning">
@@ -361,23 +356,11 @@ If you regrade an exam, the previous pass/fail status will be **overwritten**.
 
 ### On timeslot/consultation
 
-This section contains commands for managing unavailable times (blocked timeslots) and consultations. Timeslots can be used to mark regular events (e.g. classes), while consultation timeslots are specifically for CS2030S consultation sessions. These commands are designed to help users schedule and organize their consultation times more effectively.
-
-<box type="tip">
-
-**Tip:** Use `get-timeslots` to see your full schedule and `get-consultations` for an uncluttered view of your consultation schedule.
-
-</box>
-
-<box type="warning">
-Note on overlaps: LambdaLab prevents overlapping timeslots. If you try to add a timeslot that partially or fully overlaps an existing timeslot, the command will be rejected with an error ("A timeslot at the same time already exists."). This safeguard applies to both generic timeslots (block-timeslot) and consultations (add-consultation).
-</box>
-
 <br><br>
-
 #### Blocking a timeslot: `block-timeslot`
 
-You can use this command to add a timeslot to the application's timeslot store.
+You can use this command to add a timeslot to the application's timeslot store. 
+Timeslots can be used to mark regular events (e.g. classes)
 
 **Format:**
 ```
@@ -389,6 +372,11 @@ block-timeslot ts/START_DATETIME te/END_DATETIME
     * `block-timeslot ts/2025-10-04T10:00:00 te/2025-10-04T13:00:00`
     * `block-timeslot ts/4 Oct 2025, 10:00 te/4 Oct 2025, 13:00`
     * `block-timeslot ts/4 Oct 2025 10:00 te/4 Oct 2025 13:00`
+
+<box type="warning">
+
+**Caution:** LambdaLab prevents overlapping timeslots. If you try to add a timeslot that partially or fully overlaps an existing timeslot, the command will be rejected with an error ("A timeslot at the same time already exists."). This safeguard applies to both generic timeslots (`block-timeslot`) and consultations (`add-consultation`).
+</box>
 
 <br><br>
 
@@ -418,7 +406,7 @@ unblock-timeslot ts/START_DATETIME te/END_DATETIME
 
 * If the unblock range is strictly inside a stored timeslot, the stored timeslot is split into two (before and after the unblock range).
 * If the unblock range overlaps one end of a stored timeslot, the stored timeslot is trimmed accordingly.
-  </box>
+</box>
 
 <br>
 
@@ -443,9 +431,10 @@ add-consultation ts/START_DATETIME te/END_DATETIME n/STUDENT_NAME
 
 </box>
 
+
 <box type="warning">
 
-**Caution:** The application prevents overlapping timeslots. If you try to add a timeslot that partially or fully overlaps an existing timeslot, the command will be rejected with an error ("A timeslot at the same time already exists."). This safeguard applies to both generic timeslots (block-timeslot) and consultations (add-consultation).
+**Caution:** NAME parameter in `add-consultation` does not need to match an existing student record. You may enter any attendee name as the command does not validate that the name exists in the database.
 </box>
 
 <br>
@@ -504,10 +493,10 @@ find KEYWORD [MORE_KEYWORDS]... [i/] [n/] [p/] [e/] [g/] [t/]
 ```
 
 **Examples:**
-- `find alex david` — Searches **all fields** for "alex" or "david".
-- `find alice n/` — Searches **names only** for "alice".
-- `find A123 john i/ n/` — Searches **Student ID** or **Name** for "A123" or "john".
-- `find lab1 t/` — Searches **tags only** for "lab1".
+- Searches **all fields** for "alex" or "david": `find alex david`.
+- Searches **names only** for "alice": `find alice n/`.
+- Searches **Student ID** or **Name** for "A123" or "john": `find A123 john i/ n/`.
+- Searches **tags only** for "lab1": `find lab1 t/`.
 
 <box type="tip">
 
@@ -536,11 +525,11 @@ filter [l/LAB_NUMBER s/ATTENDANCE_STATUS]... [ei/EXERCISE_INDEX s/EXERCISE_STATU
 ```
 
 **Examples:**
-- `filter l/7 s/y` — Shows students who attended Lab 7.
-- `filter ei/5 s/y` — Shows students who completed Exercise 5.
-- `filter l/2 s/y ei/4 s/y` — Shows students who attended Lab 2 **and** completed Exercise 4.
-- `filter l/3 s/n l/4 s/n` — Shows students absent for Lab 3 **and** Lab 4.
-- `filter la/>50% la/<70%` — Shows students who attended more than 50% of labs but less than 70% of labs.
+- Shows students who attended Lab 7: `filter l/7 s/y`.
+- Shows students who completed Exercise 5: `filter ei/5 s/y`.
+- Shows students who attended Lab 2 **and** completed Exercise 4: `filter l/2 s/y ei/4 s/y`.
+- Shows students absent for Lab 3 **and** Lab 4: `filter l/3 s/n l/4 s/n`.
+- Shows students who attended more than 50% but less than 70% of labs: `filter la/>50% la/<70%`.
 
 <box type="tip">
 
@@ -566,10 +555,10 @@ sort c/CRITERION
 ```
 
 **Examples:**
-- `sort c/name` — Sorts by name (A to Z).
-- `sort c/id` — Sorts by student ID.
-- `sort c/lab` — Sorts by lab attendance (high to low).
-- `sort c/ex` — Sorts by exercise progress (high to low).
+- Sorts by name (A to Z): `sort c/name`.
+- Sorts by student ID: `sort c/id`.
+- Sorts by lab attendance (high to low): `sort c/lab`.
+- Sorts by exercise progress (high to low): `sort c/ex`.
 
 <box type="tip">
 
@@ -586,7 +575,7 @@ To change the order again, run `sort` with a different criterion.
 
 ### On timeslot/consultation
 
-#### Retrieving merged timeslot ranges: `get-timeslots`
+#### Retrieving timeslot ranges: `get-timeslots`
 
 You can use this command to display all timeslot ranges derived from stored timeslots. This allows the user to keep track of unavailable times for easier scheduling of consultations with students.
 
@@ -597,7 +586,9 @@ get-timeslots
 
 <box type="tip">
 
-**Tip:** The UI can display these timeslot ranges in the Timetable window (when available). Note that the Timetable view only shows timeslots between 08:00 and 23:00.
+**Tip:** Use `get-timeslots` to see your full schedule and `get-consultations` for an uncluttered view of your consultation schedule.
+
+A GUI similar to the below will appear upon entering of the command.
 ![Timetable window](images/timetableWindow.png)
 
 </box>
@@ -645,10 +636,10 @@ undo
 ```
 
 **Examples:**
-- `delete 2` followed by `undo` — Restores the deleted student back to the list.
-- `edit 1 n/Wrong Name` followed by `undo` — Reverts the student's name to its original value.
-- `add i/A1234567X n/John Doe p/12345678 e/john@u.nus.edu g/JohnDoe` followed by `undo` — Removes the newly added student.
-- `delete 2` followed by `list` followed by `undo` — Still restores the deleted student back to the list (non-modifying commands like `list` don't affect undo).
+- Restores the deleted student back to the list: `delete 2` followed by `undo`.
+- Reverts the student's name to its original value: `edit 1 n/Wrong Name` followed by `undo`.
+- Removes the newly added student: `add i/A1234567X n/John Doe p/12345678 e/john@u.nus.edu g/JohnDoe` followed by `undo`.
+- Still restores the deleted student back to the list (non-modifying commands like `list` don't affect undo): `delete 2` followed by `list` followed by `undo`.
 
 <box type="tip">
 
@@ -664,7 +655,7 @@ commands or skip back to earlier changes.
 
 <br>
 
-### Set-week
+### Setting current week: `set-week`
 
 The `set-week` command allows you to update the **current teaching week** in LambdaLab.  
 This helps the system automatically manage time-sensitive features such as **exercise due dates** and **lab attendances**.
@@ -673,8 +664,8 @@ This helps the system automatically manage time-sensitive features such as **exe
 set-week WEEK_NUMBER
 
 **Examples:**
-- `set-week 5` — Sets the current teaching week to Week 5.
-- `set-week 1` — Resets the current week to Week 1 at the start of a new semester.
+- Sets the current teaching week to Week 5: `set-week 5`.
+- Resets the current week to Week 1 at the start of a new semester: `set-week 1`.
 
 <box type="tip">
 
@@ -697,7 +688,7 @@ Similarly, lab attendance is tracked relative to the current week, allowing TAs 
 **Caution:**
 - The week number must be within the valid semester range (e.g., 1–13).
 - Setting the wrong week may cause inconsistencies in exercise deadlines and attendance tracking.
-  </box>
+</box>
 <br>
 
 ### Exiting the application: `exit`
@@ -778,7 +769,7 @@ they create their account.
 **A**: Yes, LambdaLab allows you to mark any lab from 1-10. However, we recommend marking attendance only for completed
 lab sessions to maintain accurate records.
 
-## Known Issues
+## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the
    primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application
@@ -791,7 +782,6 @@ lab sessions to maintain accurate records.
 4. **If your Operating System (OS) is in Chinese or other non-English language**, you may encounter command format errors
    using human-friendly format for datetime parameters. The remedy is to use ISO_LOCAL_DATE_TIME format (e.g. `2023-10-01T09:00:00`
    for 1st Oct, 2023, 9:00AM) only.
-
 ---
 
 # Summary

@@ -371,7 +371,7 @@
 /* GREEN statuses */
 .exercise-green, .lab-green, .exam-green {
     -fx-text-fill: white;
-    -fx-background-color: #2ecc71;
+    -fx-background-color: #1e8449;
 }
 
 /* GREY statuses */
