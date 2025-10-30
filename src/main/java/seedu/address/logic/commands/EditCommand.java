@@ -105,8 +105,8 @@ public class EditCommand extends MultiIndexCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         GithubUsername updatedGithubUsername = editPersonDescriptor.getGithubUsername()
                 .orElse(personToEdit.getGithubUsername());
-        ExerciseList updatedExerciseList = editPersonDescriptor.getExerciseTracker()
-                .orElse(personToEdit.getExerciseTracker());
+        ExerciseList updatedExerciseList = editPersonDescriptor.getExerciseList()
+                .orElse(personToEdit.getExerciseList());
         LabAttendanceList updatedLabAttendanceList = editPersonDescriptor.getLabAttendanceList()
                 .orElse(personToEdit.getLabAttendanceList());
         GradeMap updatedGradeMap = editPersonDescriptor.getGradeMap()
@@ -166,7 +166,7 @@ public class EditCommand extends MultiIndexCommand {
             setEmail(toCopy.email);
             setTags(toCopy.tags);
             setGithubUsername(toCopy.githubUsername);
-            setExerciseTracker(toCopy.exerciseList);
+            setExerciseList(toCopy.exerciseList);
             setLabAttendanceList(toCopy.labAttendanceList);
         }
 
@@ -209,11 +209,11 @@ public class EditCommand extends MultiIndexCommand {
             return Optional.ofNullable(email);
         }
 
-        public void setExerciseTracker(ExerciseList exerciseList) {
+        public void setExerciseList(ExerciseList exerciseList) {
             this.exerciseList = exerciseList;
         }
 
-        public Optional<ExerciseList> getExerciseTracker() {
+        public Optional<ExerciseList> getExerciseList() {
             return Optional.ofNullable(exerciseList);
         }
 
@@ -275,7 +275,7 @@ public class EditCommand extends MultiIndexCommand {
                     .add("email", email)
                     .add("tags", tags)
                     .add("githubUsername", githubUsername)
-                    .add("exerciseTracker", exerciseList)
+                    .add("exerciseList", exerciseList)
                     .add("labAttendanceList", labAttendanceList)
                     .toString();
         }

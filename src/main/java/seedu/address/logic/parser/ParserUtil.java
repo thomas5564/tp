@@ -301,16 +301,16 @@ public class ParserUtil {
         return new LabList(labs);
     }
     /**
-     * Parses a {@code String exerciseTrackerString} into an {@code ExerciseTracker}.
+     * Parses a {@code String exerciseListString} into an {@code ExerciseList}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code exerciseTrackerString} is invalid.
+     * @throws ParseException if the given {@code exerciseListString} is invalid.
      */
-    public static ExerciseList parseExerciseTracker(String exerciseTrackerString) throws ParseException {
-        requireNonNull(exerciseTrackerString);
-        String trimmed = exerciseTrackerString.trim();
+    public static ExerciseList parseExerciseList(String exerciseListString) throws ParseException {
+        requireNonNull(exerciseListString);
+        String trimmed = exerciseListString.trim();
 
-        if (!ExerciseList.isValidExerciseTracker(trimmed)) {
+        if (!ExerciseList.isValidExerciseList(trimmed)) {
             throw new ParseException(ExerciseList.MESSAGE_CONSTRAINTS);
         }
 

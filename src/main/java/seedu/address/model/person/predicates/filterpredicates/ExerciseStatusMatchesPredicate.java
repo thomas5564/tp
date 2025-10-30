@@ -30,7 +30,7 @@ public class ExerciseStatusMatchesPredicate extends FilterPredicate {
 
     @Override
     public boolean test(Person person) {
-        ExerciseList exerciseList = person.getExerciseTracker();
+        ExerciseList exerciseList = person.getExerciseList();
         List<Status> exercises = exerciseList.getStatuses();
         int number = index.getZeroBased();
         return exercises.get(number).equals(status);

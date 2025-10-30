@@ -53,7 +53,7 @@ public class SetWeekCommand extends Command {
         for (Person person : allPersons) {
             LabList oldLabList = (LabList) person.getLabAttendanceList();
             LabList updatedLabList = oldLabList.copy();
-            ExerciseList exerciseList = person.getExerciseTracker();
+            ExerciseList exerciseList = person.getExerciseList();
             ExerciseList updatedExerciseList = exerciseList.copy();
             Person updatedPerson = new Person(
                     person.getStudentId(),

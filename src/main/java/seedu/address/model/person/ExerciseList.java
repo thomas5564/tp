@@ -116,11 +116,11 @@ public class ExerciseList implements Comparable<ExerciseList>, Trackable {
     /**
      * Returns true if a given string is a valid exercise tracker format.
      */
-    public static boolean isValidExerciseTracker(String exerciseTrackerString) {
-        if (exerciseTrackerString == null) {
+    public static boolean isValidExerciseList(String exerciseListString) {
+        if (exerciseListString == null) {
             return false;
         }
-        String trimmed = exerciseTrackerString.trim();
+        String trimmed = exerciseListString.trim();
         String[] parts = trimmed.split("\\s+");
 
         // Each exercise entry has 3 parts (ex, <index>:, <status>)
@@ -154,8 +154,8 @@ public class ExerciseList implements Comparable<ExerciseList>, Trackable {
     }
 
     /**
-     * Returns a deep copy of this ExerciseTracker.
-     * @return a new ExerciseTracker with copied data
+     * Returns a deep copy of this ExerciseList.
+     * @return a new ExerciseList with copied data
      */
     public ExerciseList copy() {
         ArrayList<Boolean> copiedStatuses = new ArrayList<>(this.getIsDoneList());

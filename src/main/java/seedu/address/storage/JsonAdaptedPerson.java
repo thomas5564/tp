@@ -94,7 +94,7 @@ class JsonAdaptedPerson {
                 .map(JsonAdaptedTag::new)
                 .toList());
         exerciseStatuses.addAll(source
-                .getExerciseTracker()
+                .getExerciseList()
                 .getIsDoneList()
                 .stream()
                 .map(x -> x ? "y" : "n")

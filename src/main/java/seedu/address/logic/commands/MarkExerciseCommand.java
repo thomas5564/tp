@@ -76,7 +76,7 @@ public class MarkExerciseCommand extends MultiIndexCommand {
 
     @Override
     protected Person applyActionToPerson(Model model, Person personToEdit) throws CommandException {
-        ExerciseList updatedExerciseList = personToEdit.getExerciseTracker().copy();
+        ExerciseList updatedExerciseList = personToEdit.getExerciseList().copy();
         try {
             updatedExerciseList.markExercise(exerciseIndex, isDone);
         } catch (IllegalStateException e) {

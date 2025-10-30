@@ -67,7 +67,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         tags = new HashSet<>(personToCopy.getTags());
-        exerciseList = personToCopy.getExerciseTracker();
+        exerciseList = personToCopy.getExerciseList();
         githubUsername = personToCopy.getGithubUsername();
         labAttendanceList = personToCopy.getLabAttendanceList();
         gradeMap = personToCopy.getGradeMap();
@@ -134,11 +134,11 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code exerciseTracker} of the {@code Person} that we are building.
+     * Sets the {@code ExerciseList} of the {@code Person} that we are building.
      */
-    public PersonBuilder withExerciseTracker(String exerciseTrackerString) {
+    public PersonBuilder withExerciseList(String exerciseListString) {
         try {
-            exerciseList = ParserUtil.parseExerciseTracker(exerciseTrackerString);
+            exerciseList = ParserUtil.parseExerciseList(exerciseListString);
         } catch (ParseException e) {
             throw new IllegalArgumentException("Invalid Exercise Tracker List format"); // For developers
         }

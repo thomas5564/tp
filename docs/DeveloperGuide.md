@@ -441,12 +441,12 @@ The **Trackable Display** feature enables LambdaLab to visually represent a stud
 This is achieved through the `Trackable` interface, which standardizes how trackable data is exposed to the UI.  
 Each of the following classes implements `Trackable`:
 
-- `ExerciseTracker` – tracks completion status of exercises.
+- `ExerciseList` – tracks completion status of exercises.
 - `LabList` – tracks attendance for lab sessions.
 - `GradeMap` – tracks examination results.
 
 When a `PersonCard` is created, it directly retrieves these three trackers from the `Person` object:
-1. `person.getExerciseTracker()`
+1. `person.getExerciseList()`
 2. `person.getLabAttendanceList()`
 3. `person.getGradeMap()`
 
@@ -507,7 +507,7 @@ and exercise tracking throughout the application.
 3. The `SetWeekCommand` is executed, which:
     - Saves the current state to enable undo functionality
     - Updates the current week in the `Model`
-    - Updates the static current week in `LabList` and `ExerciseTracker` classes
+    - Updates the static current week in `LabList` and `ExerciseList` classes
     - Updates all existing students' lab and exercise tracking data to reflect the new week
 4. The system displays a success message showing the new week number and how many students were updated
 <br>

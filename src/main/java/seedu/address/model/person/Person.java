@@ -95,7 +95,7 @@ public class Person {
         return labAttendanceList;
     }
 
-    public ExerciseList getExerciseTracker() {
+    public ExerciseList getExerciseList() {
         return exerciseList;
     }
 
