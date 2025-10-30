@@ -9,6 +9,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.Week;
 import seedu.address.model.person.ExerciseList;
+import seedu.address.model.person.ExerciseTracker;
 import seedu.address.model.person.LabList;
 import seedu.address.model.person.Person;
 
@@ -53,8 +54,8 @@ public class SetWeekCommand extends Command {
         for (Person person : allPersons) {
             LabList oldLabList = (LabList) person.getLabAttendanceList();
             LabList updatedLabList = oldLabList.copy();
-            ExerciseList exerciseList = person.getExerciseList();
-            ExerciseList updatedExerciseList = exerciseList.copy();
+            ExerciseTracker exerciseTracker = person.getExerciseTracker();
+            ExerciseTracker updatedExerciseTracker = exerciseTracker.copy();
             Person updatedPerson = new Person(
                     person.getStudentId(),
                     person.getName(),
@@ -62,7 +63,7 @@ public class SetWeekCommand extends Command {
                     person.getEmail(),
                     person.getTags(),
                     person.getGithubUsername(),
-                    updatedExerciseList,
+                    updatedExerciseTracker,
                     updatedLabList, // New LabList with updated weeks
                     person.getGradeMap()
             );

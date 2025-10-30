@@ -25,7 +25,7 @@ public class Person {
     private final Set<Tag> tags = new HashSet<>();
     private final GithubUsername githubUsername;
     private final LabAttendanceList labAttendanceList;
-    private final ExerciseList exerciseList;
+    private final ExerciseTracker exerciseTracker;
     private final GradeMap gradeMap;
 
     /**
@@ -39,7 +39,7 @@ public class Person {
         this.phone = phone;
         this.email = email;
         this.tags.addAll(tags);
-        this.exerciseList = new ExerciseList();
+        this.exerciseTracker = new ExerciseList();
         this.githubUsername = githubUsername;
         this.labAttendanceList = new LabList();
         this.gradeMap = new GradeMap();
@@ -49,15 +49,15 @@ public class Person {
      * Initialises a new person object, but with a specific list of exercise statuses
      */
     public Person(StudentId studentId, Name name, Phone phone, Email email, Set<Tag> tags,
-                  GithubUsername githubUsername, ExerciseList exerciseList,
+                  GithubUsername githubUsername, ExerciseTracker exerciseTracker,
                   LabAttendanceList labAttendanceList, GradeMap gradeMap) {
-        requireAllNonNull(name, phone, email, tags, githubUsername, exerciseList, labAttendanceList);
+        requireAllNonNull(name, phone, email, tags, githubUsername, exerciseTracker, labAttendanceList);
         this.studentId = studentId;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.tags.addAll(tags);
-        this.exerciseList = exerciseList;
+        this.exerciseTracker = exerciseTracker;
         this.githubUsername = githubUsername;
         this.labAttendanceList = labAttendanceList;
         this.gradeMap = gradeMap;
@@ -95,8 +95,8 @@ public class Person {
         return labAttendanceList;
     }
 
-    public ExerciseList getExerciseList() {
-        return exerciseList;
+    public ExerciseTracker getExerciseTracker() {
+        return exerciseTracker;
     }
 
     public GradeMap getGradeMap() {
@@ -139,7 +139,7 @@ public class Person {
                 && name.equals(otherPerson.name)
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
-                && exerciseList.equals(otherPerson.exerciseList)
+                && exerciseTracker.equals(otherPerson.exerciseTracker)
                 && tags.equals(otherPerson.tags)
                 && githubUsername.equals(otherPerson.githubUsername)
                 && labAttendanceList.equals(otherPerson.labAttendanceList)
@@ -150,7 +150,7 @@ public class Person {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(studentId, name, phone, email, tags,
-                githubUsername, exerciseList, labAttendanceList, gradeMap);
+                githubUsername, exerciseTracker, labAttendanceList, gradeMap);
     }
 
     @Override
@@ -162,7 +162,7 @@ public class Person {
                 .add("email", email)
                 .add("tags", tags)
                 .add("github username", githubUsername)
-                .add("exerciseStatuses", exerciseList)
+                .add("exerciseStatuses", exerciseTracker)
                 .add("lab attendance list", labAttendanceList)
                 .add("gradeMap", gradeMap)
                 .toString();

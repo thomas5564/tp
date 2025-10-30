@@ -63,7 +63,7 @@ public class PersonCard extends UiPart<Region> {
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
         // Render trackable sections
-        renderTrackable(exerciseStatus, person.getExerciseList(), "exercise");
+        renderTrackable(exerciseStatus, person.getExerciseTracker(), "exercise");
         renderTrackable(labAttendance, person.getLabAttendanceList(), "lab");
         renderTrackable(grades, person.getGradeMap(), "exam");
     }

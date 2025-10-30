@@ -26,6 +26,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Examination;
 import seedu.address.model.person.ExerciseList;
+import seedu.address.model.person.ExerciseTracker;
 import seedu.address.model.person.GithubUsername;
 import seedu.address.model.person.GradeMap;
 import seedu.address.model.person.Lab;
@@ -301,14 +302,14 @@ public class ParserUtil {
         return new LabList(labs);
     }
     /**
-     * Parses a {@code String exerciseListString} into an {@code ExerciseList}.
+     * Parses a {@code String exerciseTrackerString} into an {@code ExerciseTracker}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code exerciseListString} is invalid.
+     * @throws ParseException if the given {@code exerciseTrackerString} is invalid.
      */
-    public static ExerciseList parseExerciseList(String exerciseListString) throws ParseException {
-        requireNonNull(exerciseListString);
-        String trimmed = exerciseListString.trim();
+    public static ExerciseTracker parseExerciseTracker(String exerciseTrackerString) throws ParseException {
+        requireNonNull(exerciseTrackerString);
+        String trimmed = exerciseTrackerString.trim();
 
         if (!ExerciseList.isValidExerciseList(trimmed)) {
             throw new ParseException(ExerciseList.MESSAGE_CONSTRAINTS);
