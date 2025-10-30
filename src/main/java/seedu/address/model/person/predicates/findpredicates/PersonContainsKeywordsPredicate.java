@@ -10,9 +10,9 @@ import seedu.address.model.person.Person;
  */
 public class PersonContainsKeywordsPredicate extends FindPredicate {
 
+    private static final int MAX_PREDICATES = 6;
     private Predicate<Person> combinedPredicate;
     private final List<FindPredicate> predicates;
-    private final int MAX_PREDICATES = 6;
 
 
     /**
