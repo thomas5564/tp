@@ -12,7 +12,7 @@ import seedu.address.model.person.Person;
 /**
  * Tests that a {@code Person}'s {@code Exercise status} matches the status of the lab stated.
  */
-public class LabStatusMatchesPredicate implements Predicate<Person> {
+public class LabStatusMatchesPredicate implements FilterPredicate {
     private String status;
     private Index index;
 
@@ -59,4 +59,23 @@ public class LabStatusMatchesPredicate implements Predicate<Person> {
                 .add("index", index)
                 .toString();
     }
+
+    @Override
+    public String successMessage() {
+        return statusToMessage() + " lab " + index.getOneBased();
+    }
+
+    public String statusToMessage() {
+        switch(status) {
+        case "Y":
+            return "have attended";
+        case "N":
+            return "have not yet attended";
+        case "A":
+            return "were absent for";
+        default:
+            return "invalid filter";
+        }
+    }
+
 }

@@ -8,18 +8,18 @@ import seedu.address.model.person.Person;
 /**
  *  A {@code Predicate} over {@code Person} that AND-combines exercise and lab attendance predicates.
  */
-public class FilterCombinedPredicate implements Predicate<Person> {
+public class FilterCombinedPredicate implements FilterPredicate {
 
-    private Predicate<Person> combinedPredicate;
-    private final List<Predicate<Person>> predicates;
+    private FilterPredicate combinedPredicate;
+    private final List<FilterPredicate> predicates;
 
     /**
-     * Constructs a predicate that matches a {@code Person} if any of the provided predicates match.
+     * Constructs a predicate that matches a {@code Person} if all of the provided predicates match.
      *
      * @param predicates a non-empty list of individual field {@code Predicate}
      *                  targeting different {@code Person} fields.
      */
-    public FilterCombinedPredicate(List<Predicate<Person>> predicates) {
+    public FilterCombinedPredicate(List<FilterPredicate> predicates) {
         this.predicates = predicates;
         combinedPredicate = predicates.get(0);
         for (int i = 1; i < predicates.size(); i++) {
@@ -27,7 +27,7 @@ public class FilterCombinedPredicate implements Predicate<Person> {
         }
     }
 
-    public List<Predicate<Person>> getPredicates() {
+    public List<FilterPredicate> getPredicates() {
         return List.copyOf(predicates);
     }
 
@@ -60,6 +60,16 @@ public class FilterCombinedPredicate implements Predicate<Person> {
             }
         }
         return true;
+    }
+
+    public String successMessage() {
+        StringBuilder success = new StringBuilder();
+        for (int i = 0; i < predicates.size() - 1; i++) {
+            success.append(predicates.get(i).successMessage())
+                    .append(" and ");
+        }
+        success.append(predicates.get(predicates.size() - 1).successMessage());
+        return success.toString();
     }
 
 

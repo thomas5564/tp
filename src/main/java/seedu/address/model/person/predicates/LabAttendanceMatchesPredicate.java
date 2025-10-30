@@ -11,7 +11,7 @@ import seedu.address.model.person.Person;
 /**
  * Tests that a {@code Person}'s {@code Github Username} matches any of the keywords given.
  */
-public class LabAttendanceMatchesPredicate implements Predicate<Person> {
+public class LabAttendanceMatchesPredicate implements FilterPredicate {
     private final double value;
     private final Comparison comparison;
 
@@ -69,4 +69,27 @@ public class LabAttendanceMatchesPredicate implements Predicate<Person> {
                 .add("comparison", comparison)
                 .toString();
     }
+
+    @Override
+    public String successMessage() {
+        return "have attended " + statusToMessage() + value + " percent of labs";
+    }
+
+    public String statusToMessage() {
+        switch(comparison) {
+        case EQ:
+            return "exactly ";
+        case GE:
+            return "more than or equal to ";
+        case LE:
+            return "less than or equal to ";
+        case GT:
+            return "more than ";
+        case LT:
+            return "less than ";
+        default:
+            return "invalid filter ";
+        }
+    }
+
 }
