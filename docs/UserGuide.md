@@ -111,8 +111,12 @@ spreadsheets or GUI apps.
 
 4. Open a command terminal, `cd` into the folder you put the `.jar` file in, and use the `java -jar addressbook.jar` command to run the application.<br>
    A GUI should appear in a few seconds, as shown by the image below. Note that the app contains some sample data and the layout
-   is explained in coloured boxes.<br>
+   is explained in coloured boxes.
+<br>
+<br>
    ![Ui](images/Ui.png)
+<br>
+<br>
 
 5. Type your command in the command box and press Enter to execute it. <br>
    Some example commands you can try:
@@ -160,7 +164,6 @@ as space characters surrounding line-breaks may be omitted when copied over to t
 </box>
 
 <br><br>
-
 
 ## Data-modifying commands
 
@@ -287,7 +290,10 @@ You can use this command to record whether selected students attended or were ab
 ```
 marka INDEX l/LAB_NUMBER s/STATUS
 ```
-Here `STATUS` is "y" for attended and "n" for not attended
+**Status Usage**:
+
+`y` refers to lab attended, `n` refers to lab not attended.
+
 
 **Examples:**
 - Marks Lab 1 as attended for the 1st student: `marka 1 l/1 s/y`.
@@ -308,7 +314,9 @@ You can use this command to record or update whether selected students have comp
 ```
 marke INDEX ei/EXERCISE_INDEX s/STATUS
 ```
-Here, `STATUS` is "y" for completed and "n" for not completed.
+**Status Usage**:
+
+`y` refers to exercise completed, `n` refers to exercise not completed.
 
 **Examples:**
 - Marks Exercise 1 as done for the 1st student: `marke 1 ei/1 s/y`.
@@ -357,6 +365,7 @@ Here, `STATUS` is "y" for passed and "n" for failed.
 ### On timeslot/consultation
 
 <br><br>
+
 #### Blocking a timeslot: `block-timeslot`
 
 You can use this command to add a timeslot to the application's timeslot store. 
@@ -378,7 +387,7 @@ block-timeslot ts/START_DATETIME te/END_DATETIME
 **Caution:** LambdaLab prevents overlapping timeslots. If you try to add a timeslot that partially or fully overlaps an existing timeslot, the command will be rejected with an error ("A timeslot at the same time already exists."). This safeguard applies to both generic timeslots (`block-timeslot`) and consultations (`add-consultation`).
 </box>
 
-<br><br>
+<br>
 
 #### Unblocking a timeslot: `unblock-timeslot`
 
@@ -596,6 +605,8 @@ get-timeslots
 **Tip:** Use `get-timeslots` to see your full schedule and `get-consultations` for an uncluttered view of your consultation schedule.
 
 A GUI similar to the below will appear upon entering of the command.
+<br>
+
 ![Timetable window](images/timetableWindow.png)
 
 </box>
@@ -615,7 +626,7 @@ get-consultations
 
 ## Miscellaneous commands
 
-### Opening the help window: `help`
+#### Opening the help window: `help`
 
 You can use this command to open the Help window,
 which links to the User Guide and also provides brief explanations
@@ -633,7 +644,7 @@ help
 
 <br>
 
-### Undoing the last command: `undo`
+#### Undoing the last command: `undo`
 
 You can use this command to reverse the most recent [data-modifying command](#data-modifying-commands) in LambdaLab.
 
@@ -662,7 +673,7 @@ commands or skip back to earlier changes.
 
 <br>
 
-### Setting current week: `set-week`
+#### Setting current week: `set-week`
 
 The `set-week` command allows you to update the **current teaching week** in LambdaLab.  
 This helps the system automatically manage time-sensitive features such as **exercise due dates** and **lab attendances**.
@@ -698,7 +709,7 @@ Similarly, lab attendance is tracked relative to the current week, allowing TAs 
 </box>
 <br>
 
-### Exiting the application: `exit`
+#### Exiting the application: `exit`
 
 You can use this command to close LambdaLab.
 
