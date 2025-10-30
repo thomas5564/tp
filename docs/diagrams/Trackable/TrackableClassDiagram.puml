@@ -9,23 +9,24 @@ package UI as UIPackage {
 }
 
 package Model as ModelPackage {
-    interface Trackable
-    enum TrackerColour
+    interface Trackable <<interface>>
+    enum TrackerColour <<Enumeration>>
     class Person
     class ExerciseTracker
     class LabList
     class GradeMap
 }
 
-PersonCard --> Person
-PersonCard --> Trackable : <<display>>
+PersonCard *--> Person
+PersonCard --- Trackable : <<display>>
+
 Trackable <|.. ExerciseTracker
 Trackable <|.. LabList
 Trackable <|.. GradeMap
-Person --> ExerciseTracker
-Person --> LabList
-Person --> GradeMap
-Trackable --> TrackerColour
+Person *--> ExerciseTracker
+Person *--> LabList
+Person *--> GradeMap
+Trackable ..> TrackerColour
 
 note right of Trackable
 Represents any data structure
