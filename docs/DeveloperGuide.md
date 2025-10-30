@@ -451,8 +451,6 @@ This allows Teaching Assistants to instantly gauge student performance and ident
 
 #### Implementation
 
-#### Implementation
-
 The **Trackable Display** feature enables LambdaLab to visually represent a student’s **exercises**, **lab attendance**, and **exam results** in a consistent and colour-coded format.
 
 This is achieved through the `Trackable` interface, which standardizes how trackable data is exposed to the UI.  
