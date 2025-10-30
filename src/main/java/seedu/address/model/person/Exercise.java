@@ -10,7 +10,6 @@ public class Exercise {
     private boolean isDone;
     private final int exerciseNumber;
     private boolean isPastWeek;
-    private final int currentWeek;
     /**
      * Creates an exercise object with the following parameters.
      * @param exerciseNumber the exercise number
@@ -20,7 +19,6 @@ public class Exercise {
         assert exerciseNumber >= 0 : "Invalid exercise number";
         this.exerciseNumber = exerciseNumber;
         this.isDone = isDone;
-        this.currentWeek = currentWeek;
         this.isPastWeek = exerciseNumber < (currentWeek - EXERCISE_WEEK_DIFFERENCE);
     }
 

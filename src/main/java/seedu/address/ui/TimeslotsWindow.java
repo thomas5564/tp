@@ -60,11 +60,11 @@ public class TimeslotsWindow {
     private static Stage currentStage = null;
 
     /**
-     * Shows the merged timeslot ranges in a new window laid out as a timetable.
+     * Shows the timeslot ranges in a new window laid out as a timetable.
      * Each entry in {@code mergedRanges} should be a LocalDateTime[2] array: [start, end].
      * Receives the concrete timeslot list so consultations (with student names) can be rendered specially.
      */
-    public static void showMerged(List<LocalDateTime[]> mergedRanges, List<Timeslot> allTimeslots) {
+    public static void showTimetable(List<LocalDateTime[]> mergedRanges, List<Timeslot> allTimeslots) {
         // If a window already exists and is showing, update its contents and bring to front.
         if (currentStage != null && currentStage.isShowing()) {
             Scene scene = currentStage.getScene();

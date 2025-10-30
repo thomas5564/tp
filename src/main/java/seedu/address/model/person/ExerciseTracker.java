@@ -12,7 +12,7 @@ import seedu.address.commons.core.index.Index;
 /**
  * Represents a Person's address in the address book.
  */
-public class ExerciseTracker implements Comparable<ExerciseTracker> {
+public class ExerciseTracker implements Comparable<ExerciseTracker>, Trackable {
 
     public static final String MESSAGE_CONSTRAINTS = "Exercise tracker takes in statuses";
     public static final int NUMBER_OF_EXERCISES = 10;
@@ -164,6 +164,28 @@ public class ExerciseTracker implements Comparable<ExerciseTracker> {
 
     public List<Status> getStatuses() {
         return exercises.stream().map(Exercise::getStatus).toList();
+    }
+
+    @Override
+    public List<TrackerColour> getTrackerColours() {
+        return exercises.stream()
+                .map(exercise -> {
+                    Status status = exercise.getStatus();
+                    return switch (status) {
+                    case DONE -> TrackerColour.GREEN;
+                    case OVERDUE -> TrackerColour.RED;
+                    case NOT_DONE -> TrackerColour.GREY;
+                    };
+                })
+                .collect(Collectors.toList());
+    }
+    @Override
+    public List<String> getLabels() {
+        List<String> labels = new ArrayList<>();
+        for (int i = 0; i < NUMBER_OF_EXERCISES; i++) {
+            labels.add("EX" + (i));
+        }
+        return labels;
     }
 }
 

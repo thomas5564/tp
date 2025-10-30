@@ -165,6 +165,44 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+## Timeslots features
+
+### Implementation overview
+The Timeslots feature is implemented as a set of commands that parse user input into command objects, interact with the Model to read or mutate the stored timeslots, and return a CommandResult. Commands are implemented following the existing Command/Parser pattern used across the codebase (AddressBookParser -> XCommandParser -> XCommand). Some commands are read-only (e.g. get-timeslots) while others modify state (e.g. block-timeslot, unblock-timeslot, add-consultation, clear-timeslots).
+
+### Data model
+- Timeslot: stores start and end LocalDateTime; used for generic blocked timeslots.
+- ConsultationTimeslot: extends Timeslot and includes an associated student name; serialized to JSON with an explicit studentName field.
+- Timeslots are stored in a Timeslots collection inside ModelManager and are persisted by Storage (JsonTimeslotsStorage).
+
+<puml src="diagrams/TimeslotsClassDiagram.puml" width="574" />
+
+### Command flow
+Typical lifecycle for a timeslot command:
+1. User input → AddressBookParser creates the specific CommandParser.
+2. Parser validates prefixes/arguments and constructs a Command instance (e.g., BlockTimeslotCommand).
+3. LogicManager executes the Command (command.execute(model)).
+4. Command manipulates the Model (reads or mutates Timeslots) and returns a CommandResult.
+5. LogicManager persists changes (see Persistence & UI) and returns the CommandResult to the caller/UI.
+
+Sequence diagrams:
+- Block timeslot: <puml src="diagrams/BlockTimeslotSequenceDiagram.puml" width="574" />
+- Unblock timeslot: <puml src="diagrams/UnblockTimeslotSequenceDiagram.puml" width="574" />
+- Clear timeslots: <puml src="diagrams/ClearTimeslotsSequenceDiagram.puml" width="574" />
+- Get timeslots: <puml src="diagrams/GetTimeslotsSequenceDiagram.puml" width="574" />
+
+### Persistence & UI
+- Persistence: LogicManager is responsible for writing persistent files. After a successful command execution, LogicManager saves the address book and, if available, timeslots via StorageManager.saveAddressBook(...) and StorageManager.saveTimeslots(...).
+- UI scheduling: Some commands (e.g., get-timeslots) produce a timeslot ranges payload inside CommandResult. When present, LogicManager schedules the UI update using Platform.runLater(() -> TimeslotsWindow.showTimetable(...)). This call:
+  - Is performed asynchronously on the JavaFX thread to avoid blocking command execution.
+  - Is guarded in LogicManager with a try/catch to ignore IllegalStateException in headless environments (unit tests).
+  - Is only invoked when CommandResult contains non-empty timeslot ranges.
+
+### Validation and error handling
+- Argument parsing: CommandParsers validate required prefixes (ts/ and te/) and perform flexible datetime parsing (ISO and human-friendly formats). Parsers throw ParseException with user-facing messages on invalid format.
+- Command execution: Commands validate business rules (e.g., no overlapping timeslots, consultations with duplicate student/time). On violation a CommandException is thrown with a clear message.
+- Persistence errors: LogicManager translates IO or permission errors (IOException, AccessDeniedException) from Storage into CommandException so callers can surface the error to users.
+
 ### Undo feature
 
 #### Implementation
@@ -358,7 +396,10 @@ By introducing **multi-index inputs**, LambdaLab allows a single command to effi
 
 #### Implementation
 
-The `MultiIndex` class represents either:
+## MultiIndex
+The `MultiIndex` class represents a list of one or more indices that is written as the syntax as shown here:
+
+# MultiIndex syntax
 - A **single index** (e.g., `1` → only the first student), or
 - A **range of indices** (e.g., `1:5` → students 1 through 5, inclusive).
 
@@ -366,34 +407,37 @@ It exposes methods such as:
 - `isSingle()` — checks if the command applies to one student only.
 - `toIndexList()` — returns a list of all `Index` objects represented by the multi-index input.
 
-Commands that use this feature extend the abstract class `MultiIndexCommand`, which defines a **template for bulk updates**.
+## MultiIndexCommand
+Commands that use this feature extend the abstract class `MultiIndexCommand`,
+which defines a template for commands that support updates for multiple students at once using the 
+[MultiIndex syntax](#multiindex-syntax).
 
 Each subclass:
 1. Implements `applyActionToPerson(Model model, Person person)` — defining how each student is modified.
 2. Optionally overrides `buildResult(List<Person> updatedPersons)` to customize the final success message.
 
-**Example subclasses:**
-- `MarkAttendanceCommand` (`marka`) — marks lab attendance.
-- `MarkExerciseCommand` (`marke`) — marks exercise completion.
-- `GradeCommand` (`grade`) — marks exams as passed or failed.
+**Subclasses that extend `MultiIndexCommand` :**
+
+| Command Class           | Command Word | Description                              |
+|--------------------------|---------------|------------------------------------------|
+| `MarkAttendanceCommand`  | `marka`       | Marks lab attendances.                   |
+| `MarkExerciseCommand`    | `marke`       | Marks exercises for completion.          |
+| `GradeCommand`           | `grade`       | Marks exams as passed or failed.         |
+| `DeleteCommand`          | `delete`      | Deletes students from LambdaLab.           |
+| `EditCommand`            | `edit`        | Edits students in LambdaLab.               |
 
 ---
 
 #### Example Usage
 
 **Example 1: Single Index**
-grade 1 en/midterm s/y
-Marks the *Midterm* exam as *passed* for student 1.
-
-<puml src="diagrams/GradeSequenceDiagram.puml" width="550" />
+marka 5 l/3 s/n - Marks Lab 3 as *absent* for the student at the (one-based) index of 5 of the student list.
 
 **Example 2: Range of Indices**
-marka 1:5 l/3 s/n
-Marks Lab 3 as *absent* for students 1 through 5.
+grade 1:3 en/midterm s/y  - Marks the *Midterm* exam as *passed* for student 1.
+A sequence diagram for the execution of this command is shown over here:
 
-**Example 3: Mixed Command Type**
-marke 2:4 ei/5 s/y
-Marks Exercise 5 as *done* for students 2 to 4.
+<puml src="diagrams/GradeCommand/GradeSequenceDiagram.puml" width="800" />
 
 ---
 
@@ -404,7 +448,8 @@ The iteration and validation logic for applying an action to multiple students i
 This ensures consistent behavior across all commands that support bulk modification.
 
 **Aspect: Robustness**  
-If any index in the provided range is invalid (e.g., out of bounds), the command throws a `CommandException` before making any modifications — ensuring **atomicity** (all-or-nothing updates).
+If any index in the provided range is invalid (e.g., out of bounds), the command throws a `CommandException` before making any modifications.
+>
 
 **Aspect: Extensibility**  
 Future commands that require multi-student operations (e.g., adding group tags or resetting student progress) can easily extend `MultiIndexCommand` without duplicating logic.
@@ -419,13 +464,122 @@ Future commands that require multi-student operations (e.g., adding group tags o
 * **Parallel Execution:**  
   For large datasets, multi-index operations could be processed concurrently for improved performance.
 
+### **Feature: Displaying Trackable Data**
+
+#### Overview
+
+LambdaLab displays each student’s academic progress using **trackable components**, which visually represent data such as **exercise completion**, **lab attendance**, and **exam performance**.  
+This feature leverages the `Trackable` interface and its implementing classes to unify how progress information is retrieved and displayed within the UI.
+
+Each trackable component defines both:
+- The **status colours** (e.g., green, red, grey) that indicate the current state.
+- The **labels** (e.g., EX1, L5, MIDTERM) used to identify individual tracked items.
+
+---
+
+#### Motivation
+
+Previously, progress indicators for labs, exercises, and exams existed only as stored data, without any visual representation on the student card.  
+Teaching Assistants had to rely on manual inspection or individual commands to check each student’s record, which was slow and error-prone.
+
+The **Display Trackable** feature introduces a clear and intuitive visualization of progress through coloured labels.  
+This allows Teaching Assistants to instantly gauge student performance and identify those who are struggling — directly from the main student list.
+
+---
+
+#### Implementation
+
+#### Implementation
+
+The **Trackable Display** feature enables LambdaLab to visually represent a student’s **exercises**, **lab attendance**, and **exam results** in a consistent and colour-coded format.
+
+This is achieved through the `Trackable` interface, which standardizes how trackable data is exposed to the UI.  
+Each of the following classes implements `Trackable`:
+- `ExerciseTracker` – tracks completion status of exercises.
+- `LabList` – tracks attendance for lab sessions.
+- `GradeMap` – tracks examination results.
+
+When a `PersonCard` is created, it directly retrieves these three trackers from the `Person` object:
+1. `person.getExerciseTracker()`
+2. `person.getLabAttendanceList()`
+3. `person.getGradeMap()`
+
+For each tracker, the `PersonCard`:
+- Calls `getLabels()` to obtain display names (e.g., **EX1**, **L3**, **MIDTERM**).
+- Calls `getTrackerColours()` to obtain their corresponding colour codes (`GREEN`, `GREY`, or `RED`).
+- Dynamically generates a label for each item and applies the appropriate CSS class based on its colour.
+
+This design cleanly separates **model data** from **UI rendering**, ensuring that any future updates to how data is displayed require no changes to the model logic.
+
+<puml src="diagrams/Trackable/TrackableClassDiagram.puml" width="800" />
+
+#### Design Considerations
+
+**Aspect: Reusability**  
+The abstraction of the `Trackable` interface allows all progress-tracking components to share the same rendering logic, reducing code duplication and simplifying maintenance.
+
+**Aspect: Extensibility**  
+Future features such as project submissions or participation tracking can easily be integrated by implementing the same interface.
+
+**Aspect: Visual Consistency**  
+Colours and font styles are centrally managed through CSS, ensuring that every type of status indicator follows the same visual pattern.
+
+---
+
+#### Example
+
+Each student card displays their current progress in three areas:
+
+| Category | Green Meaning | Grey Meaning | Red Meaning |
+|:----------|:---------------|:--------------|:-------------|
+| **Lab** | Attended | Not conducted yet | Absent |
+| **Exercise** | Completed | Not conducted | Overdue |
+| **Exam** | Passed | Not graded | Failed |
+
+This provides a concise and visual summary of each student’s standing in the course.
+
+---
+
+#### Future Enhancements
+
+* **Dynamic Updates:**  
+  Allow trackable status colours to update in real time when a record changes, without requiring a full refresh.
+
+* **Tooltips:**  
+  Provide contextual information (e.g., submission dates or marks) when hovering over each label.
+
+* **Custom Colour Themes:**  
+  Allow instructors to customize the colour scheme for accessibility or course preferences.
+
 ### \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_
 
 ### Find Feature:
 
-<puml src="diagrams/findCommand/find.puml" width="250" />
+#### Current Implementation
+The `find` mechanism performs a multi-keyword search over student records with **presence-only selectors** to restrict which fields are searched.
+Keywords are taken from the preamble (e.g., `find alice bob`), while empty selectors (e.g., `n/`, `g/`) 
+act as flags to limit the searched fields. If no selectors are provided, all supported fields are searched.
+
+Each selector creates a separate `Predicate` with the `keywords` then they are combined into a combined `PersonContainsKeywordPredicate`
+and passed to a `FindCommand`. The command then updates the model’s filtered list in one step.
+
+The sequence diagram below illustrates the key interactions for `execute("find <KEYWORD> [selectors]")`.
+
+<puml src="diagrams/findCommand/find.puml" width="574" />
+
+#### Parsing & Validation
+- `FindCommandParser` tokenises input into a preamble and selectors.
+- It rejects inputs with **no keywords** or **non-empty selectors** (e.g., `n/Alice`) to enforce presence-only flags.
+- Selected fields are determined from which selectors appear; otherwise all fields are chosen.
+- Per-field predicates are OR-combined into a single `PersonContainsKeywordPredicate`
+that matches when **any** keyword is a case-insensitive **substring** of **any** selected field.
+
+#### Model Update
+- `FindCommand#execute(Model)` calls `model.updateFilteredPersonList(predicate)` once.
+- The UI observes the filtered list and refreshes automatically.
+
 
 
 --------------------------------------------------------------------------------------------------------------------

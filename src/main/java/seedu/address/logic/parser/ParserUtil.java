@@ -407,7 +407,7 @@ public class ParserUtil {
                 ArgumentTokenizer.tokenize(exerciseIndexString, PREFIX_STATUS);
         Optional<String> statusString = exerciseMultimap.getValue(PREFIX_STATUS);
 
-        Index exerciseNumber = parseLabIndex(exerciseMultimap.getPreamble());
+        Index exerciseNumber = parseExerciseIndex(exerciseMultimap.getPreamble());
         if (statusString.isEmpty()) {
             throw new ParseException(MESSAGE_MISSING_EXERCISE_STATUS);
         }
