@@ -161,11 +161,11 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Noteworthy details on features**
+## Noteworthy details on features
 
 This section describes some noteworthy details on how certain features are implemented.
 
-## Feature: Storing, Adding And Managing Timeslots
+### Feature: Storing, Adding And Managing Timeslots
 
 ### Implementation overview
 The Timeslots feature is implemented as a set of commands that parse user input into command objects, interact with the Model to read or mutate the stored timeslots, and return a CommandResult. Commands are implemented following the existing Command/Parser pattern used across the codebase (AddressBookParser -> XCommandParser -> XCommand). Some commands are read-only (e.g. get-timeslots) while others modify state (e.g. block-timeslot, unblock-timeslot, add-consultation, clear-timeslots).
