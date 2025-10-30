@@ -109,22 +109,24 @@ public class GradeMap implements Trackable {
      */
     public GradeMap copy() {
         GradeMap newGradeMap = new GradeMap();
-
         for (String examName : VALID_EXAM_NAMES) {
             Examination original = this.examMap.get(examName);
             Examination copied = newGradeMap.examMap.get(examName);
-
-            if (original.isPassed().isPresent()) {
-                if (original.isPassed().get()) {
-                    copied.markPassed();
-                } else {
-                    copied.markFailed();
-                }
+            // Skip exams that have no pass/fail status
+            if (original.isPassed().isEmpty()) {
+                continue;
+            }
+            // Copy pass/fail state directly
+            boolean isPassed = original.isPassed().get();
+            if (isPassed) {
+                copied.markPassed();
+            } else {
+                copied.markFailed();
             }
         }
-
         return newGradeMap;
     }
+
 
     @Override
     public List<TrackerColour> getTrackerColours() {

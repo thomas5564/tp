@@ -63,10 +63,9 @@ public class ExerciseList implements ExerciseTracker {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof ExerciseList)) {
+        if (!(other instanceof ExerciseList otherTracker)) {
             return false;
         }
-        ExerciseList otherTracker = (ExerciseList) other;
         return exercises.equals(otherTracker.exercises);
     }
 

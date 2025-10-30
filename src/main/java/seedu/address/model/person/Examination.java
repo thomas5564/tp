@@ -60,11 +60,9 @@ public class Examination {
             return true;
         }
 
-        if (!(obj instanceof Examination)) {
+        if (!(obj instanceof Examination other)) {
             return false;
         }
-
-        Examination other = (Examination) obj;
 
         if (!this.name.equals(other.name)) {
             return false;
