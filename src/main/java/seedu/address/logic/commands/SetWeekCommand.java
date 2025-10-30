@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 
@@ -70,8 +69,6 @@ public class SetWeekCommand extends Command {
             model.setPerson(person, updatedPerson);
             updatedCount++;
         }
-
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, currentWeekNumber, updatedCount));
     }
