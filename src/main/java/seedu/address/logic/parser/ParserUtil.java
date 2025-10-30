@@ -346,25 +346,30 @@ public class ParserUtil {
             String name = parts[0].trim().toLowerCase();
             String resultStr = parts[1].trim().toLowerCase();
 
-            Examination exam = new Examination(name);
-
-            if (!resultStr.equals("na")) {
-                if (resultStr.equals("passed")) {
-                    exam.markPassed();
-                } else if (resultStr.equals("failed")) {
-                    exam.markFailed();
-                } else {
-                    throw new ParseException(
-                            String.format("Invalid exam result '%s' for '%s'. Must be 'Passed', 'Failed', or 'NA'.",
-                                    resultStr, name)
-                    );
-                }
-            }
+            Examination exam = getExamination(name, resultStr);
 
             gradeMap.putExam(name, exam);
         }
 
         return gradeMap;
+    }
+
+    private static Examination getExamination(String name, String resultStr) throws ParseException {
+        Examination exam = new Examination(name);
+
+        if (!resultStr.equals("na")) {
+            if (resultStr.equals("passed")) {
+                exam.markPassed();
+            } else if (resultStr.equals("failed")) {
+                exam.markFailed();
+            } else {
+                throw new ParseException(
+                        String.format("Invalid exam result '%s' for '%s'. Must be 'Passed', 'Failed', or 'NA'.",
+                                resultStr, name)
+                );
+            }
+        }
+        return exam;
     }
 
 
