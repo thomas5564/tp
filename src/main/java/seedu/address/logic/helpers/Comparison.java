@@ -2,12 +2,12 @@ package seedu.address.logic.helpers;
 
 /**
  * Comparison operators for simple numeric checks.
- * EQ (=), GE (>=), LE (<=), GT (>), LT (<).
+ * EQUAL (==), GREATER THAN OR EQUAL (>=), LESS THAN OR EQUAL (<=), GREATER THAN (>), LESS THAN (<).
  */
 public enum Comparison {
-    EQ, // equal to
-    GE, // greater than or equal to
-    LE, // less than or equal to
-    GT, // greater than
-    LT // less than
+    EQUAL, // equal to
+    GREATER_THAN_OR_EQUAL, // greater than or equal to
+    LESS_THAN_OR_EQUAL, // less than or equal to
+    GREATER_THAN, // greater than
+    LESS_THAN // less than
 }

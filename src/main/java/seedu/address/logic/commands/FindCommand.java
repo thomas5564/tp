@@ -33,6 +33,7 @@ public class FindCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
+        // Include a human-readable summary of which fields were searched.
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW
                         + "\nSearching for " + predicate.successMessage(), model.getFilteredPersonList().size()));

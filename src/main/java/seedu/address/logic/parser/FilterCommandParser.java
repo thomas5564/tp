@@ -47,6 +47,7 @@ public class FilterCommandParser implements Parser<FilterCommand> {
         return new FilterCommand(new FilterCombinedPredicate(predicates));
     }
 
+    //Collects the predicates to be AND combined into a list
     private List<FilterPredicate> getSelectedPredicates(ArgumentMultimap argMultimap) throws ParseException {
         List<String> exerciseIndexes = argMultimap.getAllValues(PREFIX_EXERCISE_INDEX);
         List<String> labNumbers = argMultimap.getAllValues(PREFIX_LAB_NUMBER);

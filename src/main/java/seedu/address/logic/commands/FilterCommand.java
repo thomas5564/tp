@@ -42,10 +42,12 @@ public class FilterCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
+        // Include a human-readable summary of the filter conditions.
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW
                         + "\nFiltering for students who "
-                        + predicate.successMessage(), model.getFilteredPersonList().size()));
+                        + predicate.successMessage()
+                        + ".", model.getFilteredPersonList().size()));
     }
 
     @Override
