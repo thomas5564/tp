@@ -579,8 +579,11 @@ sort c/CRITERION
 
 <box type="warning">
 
-**Caution:** Sorting does not change any data and cannot be undone with `undo`.
+**Caution:** 
+- Sorting does not change any data and cannot be undone with `undo`.
 To change the order again, run `sort` with a different criterion.
+- Sorting is unstable, meaning students with the same value for the 
+chosen criterion might not stay in their original order.
 </box>
 
 ---
