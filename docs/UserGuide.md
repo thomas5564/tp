@@ -521,8 +521,15 @@ number of labs. Multiple conditions can be filtered at once.
 
 **Format:**
 ```
-filter [l/LAB_NUMBER s/ATTENDANCE_STATUS]... [ei/EXERCISE_INDEX s/EXERCISE_STATUS]... [la/COMPARISON]
+filter [l/LAB_NUMBER s/STATUS]... [ei/EXERCISE_INDEX s/STATUS]... [la/COMPARISON]
 ```
+
+**Status Usage**:
+
+| **Use Case**                    | **Valid Inputs**                                              |
+|---------------------------------|---------------------------------------------------------------|
+| **Marking Lab Attendance**      | `y` - attended <br>`n` - not attended <br> `a` - absent <br>  |
+| **Marking Exercise Completion** | `y` - attended <br>`n` - not attended <br> `o` - overdue <br> |
 
 **Examples:**
 - Shows students who attended Lab 7: `filter l/7 s/y`.
@@ -814,17 +821,17 @@ Action     | Format, Examples
 
 ## Parameter Summary
 
-| **Parameter**        | **Description**                                           | **Prefix**                                      | **Constraint**                                                                                                            | **Used in**                                             |
-|----------------------|-----------------------------------------------------------|-------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------|
-| **INDEX**            | Index of student in the displayed list                   | *(no prefix — written before other parameters)* | Must be a positive integer between 1 and maximum number of students in the list.                                          | `edit`, `delete`, `marka`, `marke`, `grade`             |
-| **STUDENTID**        | Student's matriculation number                            | `i/`                                            | Must follow NUS Student ID format (e.g., A1234567X)                                                                       | `add`, `edit`                                           |
-| **NAME**             | Student's full name                                       | `n/`                                            | Can contain letters and spaces                                                                                            | `add`, `edit`, `add-consultation`                       |
-| **PHONE**            | Student's phone number                                    | `p/`                                            | Must be a valid phone number                                                                                              | `add`, `edit`                                           |
-| **EMAIL**            | Student's email address                                   | `e/`                                            | Must be a valid email format                                                                                              | `add`, `edit`                                           |
-| **GITHUB_USERNAME**  | Student's GitHub username                                 | `g/`                                            | Must be a valid GitHub username                                                                                           | `add`, `edit`                                           |
-| **TAG**              | Optional label(s) for categorizing students               | `t/`                                            | Must be alphanumeric with no spaces or special characters; can have multiple tags                                         | `add`, `edit`                                           |
-| **LAB_NUMBER**       | Specific lab session to mark attendance for               | `l/`                                            | Must be an integer between 1–10 (inclusive)                                                                               | `marka`, `filter`                                       |
-| **ATTENDANCESTATUS** | Attendance status for lab                                 | `s/` (after `l/`)                               | Must be one of `y` (attended) or `n` (not attended) — case-insensitive                                                    |`marka`, `filter`                                        |
+| **Parameter**       | **Description**                             | **Prefix**                                      | **Constraint**                                                                    | **Used in**                                 |
+|---------------------|---------------------------------------------|-------------------------------------------------|-----------------------------------------------------------------------------------|---------------------------------------------|
+| **INDEX**           | Index of student in the displayed list      | *(no prefix — written before other parameters)* | Must be a positive integer between 1 and maximum number of students in the list.  | `edit`, `delete`, `marka`, `marke`, `grade` |
+| **STUDENTID**       | Student's matriculation number              | `i/`                                            | Must follow NUS Student ID format (e.g., A1234567X)                               | `add`, `edit`                               |
+| **NAME**            | Student's full name                         | `n/`                                            | Can contain letters and spaces                                                    | `add`, `edit`, `add-consultation`           |
+| **PHONE**           | Student's phone number                      | `p/`                                            | Must be a valid phone number                                                      | `add`, `edit`                               |
+| **EMAIL**           | Student's email address                     | `e/`                                            | Must be a valid email format                                                      | `add`, `edit`                               |
+| **GITHUB_USERNAME** | Student's GitHub username                   | `g/`                                            | Must be a valid GitHub username                                                   | `add`, `edit`                               |
+| **TAG**             | Optional label(s) for categorizing students | `t/`                                            | Must be alphanumeric with no spaces or special characters; can have multiple tags | `add`, `edit`                               |
+| **LAB_NUMBER**      | Specific lab session to mark attendance for | `l/`                                            | Must be an integer between 1–10 (inclusive)                                       | `marka`, `filter`                           |
+
 | **EXERCISENUMBER**   | Specific exercise number to mark                          | `ei/`                                           | Must be an integer between 0–9 (inclusive)                                                                                | `marke`, `filter`                                       |
 | **EXERCISESTATUS**   | Exercise completion status                                | `s/` (after `ei/`)                              | Must be one of `y` (done) or `n` (not done) — case-insensitive                                                            | `marke`, `filter`                                       |
 | **WEEKNUMBER**       | Current week of the semester                              | *(no prefix — written directly after command)*  | Must be an integer between 0–13 (inclusive)                                                                               | `set-week`                                              |
