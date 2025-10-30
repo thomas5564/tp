@@ -162,7 +162,7 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Implementation**
+## **Noteworthy details on features**
 
 This section describes some noteworthy details on how certain features are implemented.
 ## Timeslots features
@@ -383,20 +383,9 @@ This feature is powered by the `MultiIndex` and `MultiIndexCommand` classes, whi
 
 This enables bulk operations such as grading, marking attendance, or updating exercises — all in one concise command.
 
----
-
-#### Motivation
-
-Before introducing this feature, commands like `marka`, `marke`, and `grade` could only operate on **one student** at a time.  
-This was inefficient for Teaching Assistants managing large classes, as they frequently needed to update the same record (e.g., lab attendance or exam results) for an entire group.
-
-By introducing **multi-index inputs**, LambdaLab allows a single command to efficiently modify multiple students’ data, improving usability and productivity during busy grading or lab sessions.
-
----
-
 #### Implementation
 
-## MultiIndex
+##### MultiIndex
 The `MultiIndex` class represents a list of one or more indices that is written as the syntax as shown here:
 
 # MultiIndex syntax
@@ -407,7 +396,7 @@ It exposes methods such as:
 - `isSingle()` — checks if the command applies to one student only.
 - `toIndexList()` — returns a list of all `Index` objects represented by the multi-index input.
 
-## MultiIndexCommand
+##### MultiIndexCommand
 Commands that use this feature extend the abstract class `MultiIndexCommand`,
 which defines a template for commands that support updates for multiple students at once using the 
 [MultiIndex syntax](#multiindex-syntax).
@@ -475,18 +464,6 @@ Each trackable component defines both:
 - The **status colours** (e.g., green, red, grey) that indicate the current state.
 - The **labels** (e.g., EX1, L5, MIDTERM) used to identify individual tracked items.
 
----
-
-#### Motivation
-
-Previously, progress indicators for labs, exercises, and exams existed only as stored data, without any visual representation on the student card.  
-Teaching Assistants had to rely on manual inspection or individual commands to check each student’s record, which was slow and error-prone.
-
-The **Display Trackable** feature introduces a clear and intuitive visualization of progress through coloured labels.  
-This allows Teaching Assistants to instantly gauge student performance and identify those who are struggling — directly from the main student list.
-
----
-
 #### Implementation
 
 The **Trackable Display** feature enables LambdaLab to visually represent a student’s **exercises**, **lab attendance**, and **exam results** in a consistent and colour-coded format.
@@ -537,17 +514,6 @@ Each student card displays their current progress in three areas:
 This provides a concise and visual summary of each student’s standing in the course.
 
 ---
-
-#### Future Enhancements
-
-* **Dynamic Updates:**  
-  Allow trackable status colours to update in real time when a record changes, without requiring a full refresh.
-
-* **Tooltips:**  
-  Provide contextual information (e.g., submission dates or marks) when hovering over each label.
-
-* **Custom Colour Themes:**  
-  Allow instructors to customize the colour scheme for accessibility or course preferences.
 
 ### \[Proposed\] Data archiving
 
