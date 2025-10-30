@@ -614,28 +614,28 @@ that matches when **any** keyword is a case-insensitive **substring** of **any**
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                   | I want to …​                                           | So that I can…​                                               |
-|----------|-------------------------------------------|--------------------------------------------------------|---------------------------------------------------------------|
-| `* * *`  | CS2030S TA                                | add a GitHub username to the student                   | track their exercises easily (auto-link)                      |
-| `* * *`  | Grader                                    | mark student's exercise as graded after grading it     | know which students' exercises are graded / not graded yet    |
-| `* * *`  | New user                                  | receive help from the app                              | learn how to use it quickly                                   |
-| `* * *`  | TA                                        | search for students based on their name                | easily find the student im looking for                        |
-| `* * *`  | TA                                        | delete student's information                           | remove false information                                      |
-| `* * *`  | TA conducting labs                        | mark students attendance                               | know which students attended the lab and which students didnt |
-| `* * *`  | TA with many students                     | add, update students data                              | have their accurate information in LambdaLabs                 |
-| `* *`    | Grader                                    | tag my student based on their exercise performance     | know how much effort I would need to help each student        |
-| `* *`    | New user                                  | undo my mistakes                                       | recover from them quickly                                     |
-| `* *`    | TA                                        | search for students based on their student ID          | easily find the student im looking for                        |
-| `* *`    | TA                                        | sort based on alphabetical order                       | easily look for a student and his/her data by his/her name    |
-| `* *`    | TA                                        | sort based on student's grades                         | see who is underperforming and needs help                     |
-| `* *`    | TA                                        | sort students by exercise progress                     | better visualise the class's progress on exercises            |
-| `* *`    | TA                                        | sort based on students' attendance rate                | see who is missing the most classes                           |
-| `* *`    | TA                                        | add a tag to signal I need to follow up with a student | ensure all students are well taught                           |
-| `* *`    | TA                                        | filter based on specific exercise submissions          | check who did which exercise                                  |
-| `* *`    | TA accepting consultations                | get my available time slots                            | schedule consultations easily                                 |
-| `* *`    | TA accepting consultations                | get my current consultation time slots                 | schedule consultations easily                                 |
-| `* *`    | TA accepting consultations                | block out timeslots by inputting manually              | use the scheduling feature                                    |
-| `* *`    | TA marking for attendance                 | filter students based on lab attendance                | accurately grade my students' attendance                      |
+| Priority | As a …​                    | I want to …​                                           | So that I can…​                                               |
+|----------|----------------------------|--------------------------------------------------------|---------------------------------------------------------------|
+| `* * *`  | CS2030S TA                 | add a GitHub username to the student                   | track their exercises easily                                  |
+| `* * *`  | Grader                     | mark student's exercise as graded after grading it     | know which students' exercises are graded / not graded yet    |
+| `* * *`  | New user                   | receive help from the app                              | learn how to use it quickly                                   |
+| `* * *`  | TA                         | search for students based on their name                | easily find the student I'm looking for                       |
+| `* * *`  | TA                         | delete students                                        | remove false information                                      |
+| `* * *`  | TA conducting labs         | mark students attendance                               | know which students attended the lab and which students didnt |
+| `* * *`  | TA with many students      | add, update students data                              | have their accurate information in LambdaLabs                 |
+| `* *`    | TA                         | tag my student based on their exercise performance     | know how much effort I would need to help each student        |
+| `* *`    | New user                   | undo my mistakes                                       | recover from them quickly                                     |
+| `* *`    | TA                         | search for students based on their student ID          | easily find the student I'm looking for                       |
+| `* *`    | TA                         | sort based on alphabetical order                       | easily look for a student and his/her data by his/her name    |
+| `* *`    | TA                         | sort based on student's grades                         | see who is underperforming and needs help                     |
+| `* *`    | TA                         | sort students by exercise progress                     | better visualise the class's progress on exercises            |
+| `* *`    | TA                         | sort based on students' attendance rate                | see who is missing the most classes                           |
+| `* *`    | TA                         | add a tag to signal I need to follow up with a student | ensure all students are well taught                           |
+| `* *`    | TA                         | filter based on specific exercise submissions          | check who did which exercise                                  |
+| `* *`    | TA accepting consultations | get my available time slots                            | schedule consultations easily                                 |
+| `* *`    | TA accepting consultations | get my current consultation time slots                 | schedule consultations easily                                 |
+| `* *`    | TA accepting consultations | block out timeslots by inputting manually              | schedule consultations easily                                 |
+| `* *`    | TA marking for attendance  | filter students based on lab attendance                | accurately grade my students' attendance                      |
 
 
 ### Use cases
@@ -675,7 +675,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 1. User views all the periods of available time he has
 2. User adds a desired consultation time slot
-3. Timeslot is saved into his schedule
+3. Timeslot is saved into his/her schedule
 
 **Extensions**
 * 2a. User inputs an invalid consultation slot (e.g. start time before end time)
@@ -713,7 +713,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Use case: Filter students by exercise**
 
-**Precondition: LambdaLab contains student records and exercise indices (0–9) are known**
+**Precondition: LambdaLab contains student records**
 
 **MSS**
 1. User wants to filter by exercise completion, enters exercise index and status using command format
@@ -762,6 +762,8 @@ Use case ends.
 ### Glossary
 
 * **Exercise**: Weekly coding homework that is submitted through GitHub
+* **Lab**: Weekly lab sessions for CS2030S
+* **Week**: The week number within the NUS semester academic calendar
 * **Consultation**: Scheduled meeting between a TA and student
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
 * **Students' performance**: Grades that students receive for their weekly exercises and labs
