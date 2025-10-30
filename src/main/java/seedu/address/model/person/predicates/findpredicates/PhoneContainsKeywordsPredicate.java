@@ -1,4 +1,4 @@
-package seedu.address.model.person.predicates;
+package seedu.address.model.person.predicates.findpredicates;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -8,21 +8,21 @@ import seedu.address.model.person.Person;
 
 
 /**
- * Tests that a {@code Person}'s {@code StudentId} matches any of the keywords given.
+ * Tests that a {@code Person}'s {@code Phone Number} matches any of the keywords given.
  */
-public class StudentIdContainsKeywordsPredicate implements Predicate<Person> {
+public class PhoneContainsKeywordsPredicate extends FindPredicate {
     private final List<String> keywords;
 
-    public StudentIdContainsKeywordsPredicate(List<String> keywords) {
+    public PhoneContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
     @Override
     public boolean test(Person person) {
-        String id = person.getStudentId().toString().toLowerCase();
+        String phone = person.getPhone().toString();
         return keywords.stream()
                 .map(String::toLowerCase)
-                .anyMatch(id::contains);
+                .anyMatch(phone::contains);
     }
 
     @Override
@@ -32,12 +32,22 @@ public class StudentIdContainsKeywordsPredicate implements Predicate<Person> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof StudentIdContainsKeywordsPredicate)) {
+        if (!(other instanceof PhoneContainsKeywordsPredicate)) {
             return false;
         }
 
-        StudentIdContainsKeywordsPredicate otherPredicate = (StudentIdContainsKeywordsPredicate) other;
+        PhoneContainsKeywordsPredicate otherPredicate = (PhoneContainsKeywordsPredicate) other;
         return keywords.equals(otherPredicate.keywords);
+    }
+
+    @Override
+    public List<String> getKeywords() {
+        return keywords;
+    }
+
+    @Override
+    public String successMessage() {
+        return " phone number";
     }
 
     @Override

@@ -1,4 +1,4 @@
-package seedu.address.model.person.predicates;
+package seedu.address.model.person.predicates.findpredicates;
 
 import java.util.List;
 import java.util.Set;
@@ -12,7 +12,7 @@ import seedu.address.model.tag.Tag;
 /**
  * Tests that a {@code Person}'s {@code StudentId} matches any of the keywords given.
  */
-public class TagContainsKeywordsPredicate implements Predicate<Person> {
+public class TagContainsKeywordsPredicate extends FindPredicate {
     private final List<String> keywords;
 
     public TagContainsKeywordsPredicate(List<String> keywords) {
@@ -44,6 +44,16 @@ public class TagContainsKeywordsPredicate implements Predicate<Person> {
 
         TagContainsKeywordsPredicate otherPredicate = (TagContainsKeywordsPredicate) other;
         return keywords.equals(otherPredicate.keywords);
+    }
+
+    @Override
+    public List<String> getKeywords() {
+        return keywords;
+    }
+
+    @Override
+    public String successMessage() {
+        return " tags";
     }
 
     @Override

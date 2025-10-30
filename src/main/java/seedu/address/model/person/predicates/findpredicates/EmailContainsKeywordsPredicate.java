@@ -1,4 +1,4 @@
-package seedu.address.model.person.predicates;
+package seedu.address.model.person.predicates.findpredicates;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -11,7 +11,7 @@ import seedu.address.model.person.Person;
 /**
  * Tests that a {@code Person}'s {@code Email} matches any of the keywords given.
  */
-public class EmailContainsKeywordsPredicate implements Predicate<Person> {
+public class EmailContainsKeywordsPredicate extends FindPredicate {
     private final List<String> keywords;
 
     public EmailContainsKeywordsPredicate(List<String> keywords) {
@@ -39,6 +39,16 @@ public class EmailContainsKeywordsPredicate implements Predicate<Person> {
 
         EmailContainsKeywordsPredicate otherPredicate = (EmailContainsKeywordsPredicate) other;
         return keywords.equals(otherPredicate.keywords);
+    }
+
+    @Override
+    public List<String> getKeywords() {
+        return keywords;
+    }
+
+    @Override
+    public String successMessage() {
+        return " email";
     }
 
     @Override

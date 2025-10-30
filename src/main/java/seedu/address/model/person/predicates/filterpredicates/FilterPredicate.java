@@ -1,4 +1,4 @@
-package seedu.address.model.person.predicates;
+package seedu.address.model.person.predicates.filterpredicates;
 
 import java.util.function.Predicate;
 
@@ -7,14 +7,14 @@ import seedu.address.model.person.Person;
 /**
  * Implements Person Predicate while providing a human-readable success message.
  */
-public interface FilterPredicate extends Predicate<Person> {
-    String successMessage();
+public abstract class FilterPredicate implements Predicate<Person> {
+    public abstract String successMessage();
 
     /**
      * Returns a new FilterPredicate that is the logical AND of this predicate and the other.
      * It is based on Predicates implementation of and
      */
-    default FilterPredicate and(FilterPredicate other) {
+    public FilterPredicate and(FilterPredicate other) {
         assert(other != null);
         FilterPredicate self = this;
 

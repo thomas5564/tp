@@ -15,11 +15,11 @@ import seedu.address.logic.helpers.LabAttendanceComparison;
 import seedu.address.logic.helpers.LabIndexStatus;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Status;
-import seedu.address.model.person.predicates.ExerciseStatusMatchesPredicate;
-import seedu.address.model.person.predicates.FilterCombinedPredicate;
-import seedu.address.model.person.predicates.FilterPredicate;
-import seedu.address.model.person.predicates.LabAttendanceMatchesPredicate;
-import seedu.address.model.person.predicates.LabStatusMatchesPredicate;
+import seedu.address.model.person.predicates.filterpredicates.ExerciseStatusMatchesPredicate;
+import seedu.address.model.person.predicates.filterpredicates.FilterCombinedPredicate;
+import seedu.address.model.person.predicates.filterpredicates.FilterPredicate;
+import seedu.address.model.person.predicates.filterpredicates.LabAttendanceMatchesPredicate;
+import seedu.address.model.person.predicates.filterpredicates.LabStatusMatchesPredicate;
 
 /**
  * Parses input arguments and creates a new FilterCommand object

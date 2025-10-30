@@ -1,4 +1,4 @@
-package seedu.address.model.person.predicates;
+package seedu.address.model.person.predicates.filterpredicates;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
@@ -10,9 +10,9 @@ import seedu.address.model.person.Person;
 /**
  * Tests that a {@code Person}'s {@code Exercise status} matches the status of the lab stated.
  */
-public class LabStatusMatchesPredicate implements FilterPredicate {
-    private String status;
-    private Index index;
+public class LabStatusMatchesPredicate extends FilterPredicate {
+    private final String status;
+    private final Index index;
 
     /**
      * Constructs a predicate that matches a {@code Person} if their {@code Lab} status

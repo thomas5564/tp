@@ -1,4 +1,4 @@
-package seedu.address.model.person.predicates;
+package seedu.address.model.person.predicates.filterpredicates;
 
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.helpers.Comparison;
@@ -9,7 +9,7 @@ import seedu.address.model.person.Person;
 /**
  * Tests that a {@code Person}'s {@code Github Username} matches any of the keywords given.
  */
-public class LabAttendanceMatchesPredicate implements FilterPredicate {
+public class LabAttendanceMatchesPredicate extends FilterPredicate {
     private final double value;
     private final Comparison comparison;
 

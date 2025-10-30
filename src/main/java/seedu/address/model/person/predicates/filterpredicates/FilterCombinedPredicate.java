@@ -1,4 +1,4 @@
-package seedu.address.model.person.predicates;
+package seedu.address.model.person.predicates.filterpredicates;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import seedu.address.model.person.Person;
 /**
  *  A {@code Predicate} over {@code Person} that AND-combines exercise and lab attendance predicates.
  */
-public class FilterCombinedPredicate implements FilterPredicate {
+public class FilterCombinedPredicate extends FilterPredicate {
 
     private FilterPredicate combinedPredicate;
     private final List<FilterPredicate> predicates;

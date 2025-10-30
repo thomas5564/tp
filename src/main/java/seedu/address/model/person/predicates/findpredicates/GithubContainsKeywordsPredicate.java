@@ -1,4 +1,4 @@
-package seedu.address.model.person.predicates;
+package seedu.address.model.person.predicates.findpredicates;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -10,7 +10,7 @@ import seedu.address.model.person.Person;
 /**
  * Tests that a {@code Person}'s {@code Github Username} matches any of the keywords given.
  */
-public class GithubContainsKeywordsPredicate implements Predicate<Person> {
+public class GithubContainsKeywordsPredicate extends FindPredicate {
     private final List<String> keywords;
 
     public GithubContainsKeywordsPredicate(List<String> keywords) {
@@ -38,6 +38,16 @@ public class GithubContainsKeywordsPredicate implements Predicate<Person> {
 
         GithubContainsKeywordsPredicate otherPredicate = (GithubContainsKeywordsPredicate) other;
         return keywords.equals(otherPredicate.keywords);
+    }
+
+    @Override
+    public List<String> getKeywords() {
+        return keywords;
+    }
+
+    @Override
+    public String successMessage() {
+        return " github username";
     }
 
     @Override

@@ -1,4 +1,4 @@
-package seedu.address.model.person.predicates;
+package seedu.address.model.person.predicates.filterpredicates;
 
 import java.util.List;
 
@@ -12,9 +12,9 @@ import seedu.address.model.person.Status;
 /**
  * Tests that a {@code Person}'s {@code Exercise status} matches the status of the exercise stated.
  */
-public class ExerciseStatusMatchesPredicate implements FilterPredicate {
-    private Status status;
-    private Index index;
+public class ExerciseStatusMatchesPredicate extends FilterPredicate {
+    private final Status status;
+    private final Index index;
 
     /**
      * Constructs a predicate that matches a {@code Person} if their {@code Exericse} status
