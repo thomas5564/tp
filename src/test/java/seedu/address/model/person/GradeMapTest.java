@@ -19,29 +19,26 @@ class GradeMapTest {
 
     @Test
     void markExamPassed_validExam_marksAsPassed() throws InvalidExamNameException {
-        // Given
         String validExamName = "pe1";
 
-        // When
         gradeMap.markExamPassed(validExamName);
 
-        // Then
         Examination exam = gradeMap.getExamMap().get(validExamName);
+        // check that status is set
         assertTrue(exam.isPassed().isPresent(), "Exam should have a pass/fail status");
+        // check that exam is marked passed
         assertTrue(exam.isPassed().get(), "Exam should be marked as passed");
     }
 
     @Test
     void markExamPassed_invalidExam_throwsInvalidExamNameException() {
-        // Given
         String invalidExamName = "quiz1";
-
-        // When + Then
+        // verify that invalid exam name throws exception
         InvalidExamNameException exception = assertThrows(
                 InvalidExamNameException.class, ()
                         -> gradeMap.markExamPassed(invalidExamName)
         );
-
+        // check that exception message is correct
         assertTrue(
                 exception.getMessage().contains("Exam name is invalid!"),
                 "Exception message should indicate invalid exam name"
