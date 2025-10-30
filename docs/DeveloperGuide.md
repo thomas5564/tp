@@ -687,8 +687,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     * 2a2. User re-enters a valid timeslot
 
       Use case resumes at Step 3
-* 3a.
-    * 3a1. User requests to reschedule or delete the consultation.
+* 3a. User wants to modify the saved consultation
+    * 3a1. User requests to edit or delete the consultation.
     * 3a2. System allows modification or cancellation
 
       Use case ends.
