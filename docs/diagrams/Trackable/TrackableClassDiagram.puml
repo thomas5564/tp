@@ -19,7 +19,7 @@ package Model as ModelPackage {
 }
 
 PersonCard *--> Person
-PersonCard --- Trackable : <<display>>
+PersonCard --- Trackable:displays
 
 Trackable <|.. ExerciseTracker
 Trackable <|.. LabList
