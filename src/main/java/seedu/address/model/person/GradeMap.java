@@ -4,6 +4,7 @@ import static seedu.address.logic.parser.GradeCommandParser.MESSAGE_INVALID_EXAM
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -14,7 +15,7 @@ import seedu.address.model.person.exceptions.InvalidExamNameException;
 /**
  * Wraps a HashMap with String keys and Examination values.
  */
-public class GradeMap {
+public class GradeMap implements Trackable {
     public static final String[] VALID_EXAM_NAMES = {"pe1", "midterm", "pe2", "final"};
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
     private final HashMap<String, Examination> examMap;
@@ -125,5 +126,24 @@ public class GradeMap {
         }
 
         return newGradeMap;
+    }
+
+    @Override
+    public List<TrackerColour> getTrackerColours() {
+        return Arrays.stream(VALID_EXAM_NAMES)
+                .map(examName -> {
+                    Examination exam = examMap.get(examName);
+                    if (exam.isPassed().isEmpty()) {
+                        return TrackerColour.GREY; // Not graded yet
+                    }
+                    return exam.isPassed().get() ? TrackerColour.GREEN : TrackerColour.RED;
+                })
+                .collect(Collectors.toList());
+    }
+    @Override
+    public List<String> getLabels() {
+        return Arrays.stream(VALID_EXAM_NAMES)
+                .map(String::toUpperCase)
+                .toList();
     }
 }
