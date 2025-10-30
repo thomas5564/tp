@@ -690,13 +690,13 @@ The current week determines the following:
 
 3. For example:
 Let's say **Exercise 0** is due on **Week 2** and it is not done. 
-<br><br>
+<br>
+
 ![not-done-exercise.png](images/not-done-exercise.png)
-<br><br>
+
 Now, if you set the current week to **Week 3**, **Exercise 0** will automatically be marked as **overdue**
-<br><br>
+
 ![overdue-exercise.png](images/overdue-exercise.png)
-<br><br>
 
 Similarly, lab attendance is tracked relative to the current week, allowing TAs to manage which students have missed sessions.
 
