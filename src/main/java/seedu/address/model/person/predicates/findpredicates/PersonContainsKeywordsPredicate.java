@@ -3,6 +3,7 @@ package seedu.address.model.person.predicates.findpredicates;
 import java.util.List;
 import java.util.function.Predicate;
 
+import seedu.address.logic.parser.FindCommandParser;
 import seedu.address.model.person.Person;
 
 /**
@@ -10,7 +11,10 @@ import seedu.address.model.person.Person;
  */
 public class PersonContainsKeywordsPredicate extends FindPredicate {
 
-    private static final int MAX_PREDICATES = 6;
+    private static final int MAX_PREDICATES = FindCommandParser
+            .PrefixPredicateContainer
+            .getAllPrefixPredicate()
+            .size();
     private Predicate<Person> combinedPredicate;
     private final List<FindPredicate> predicates;
 
@@ -67,7 +71,7 @@ public class PersonContainsKeywordsPredicate extends FindPredicate {
     @Override
     public String successMessage() {
 
-        List<String> keywords = predicates.get(0).getKeywords();
+        List<String> keywords = getKeywords();
         StringBuilder success = new StringBuilder();
         StringBuilder keywordsString = new StringBuilder();
         for (int i = 0; i < keywords.size() - 1; i++) {
@@ -94,7 +98,7 @@ public class PersonContainsKeywordsPredicate extends FindPredicate {
 
     @Override
     public List<String> getKeywords() {
-        return List.of();
+        return predicates.get(0).getKeywords();
     }
 
 }
