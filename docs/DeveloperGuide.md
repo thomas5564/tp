@@ -52,7 +52,7 @@ The bulk of the app's work is done by the following four components:
 
 The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
 
-<puml src="diagrams/ArchitectureSequenceDiagram.puml" width="574" />
+<puml src="diagrams/ArchitectureSequenceDiagram.puml" width="820" />
 
 Each of the four main components (also shown in the diagram above),
 
@@ -92,7 +92,7 @@ Here's a (partial) class diagram of the `Logic` component:
 
 The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
 
-<puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
+<puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" width="820"/>
 
 <box type="info" seamless>
 
@@ -118,7 +118,7 @@ How the parsing works:
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<puml src="diagrams/ModelClassDiagram.puml" width="450" />
+<puml src="diagrams/ModelClassDiagram.puml" width="820" />
 
 
 The `Model` component,
@@ -162,7 +162,7 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Implementation**
+## **Noteworthy details on features**
 
 This section describes some noteworthy details on how certain features are implemented.
 ## Timeslots features
@@ -383,20 +383,9 @@ This feature is powered by the `MultiIndex` and `MultiIndexCommand` classes, whi
 
 This enables bulk operations such as grading, marking attendance, or updating exercises — all in one concise command.
 
----
-
-#### Motivation
-
-Before introducing this feature, commands like `marka`, `marke`, and `grade` could only operate on **one student** at a time.  
-This was inefficient for Teaching Assistants managing large classes, as they frequently needed to update the same record (e.g., lab attendance or exam results) for an entire group.
-
-By introducing **multi-index inputs**, LambdaLab allows a single command to efficiently modify multiple students’ data, improving usability and productivity during busy grading or lab sessions.
-
----
-
 #### Implementation
 
-## MultiIndex
+##### MultiIndex
 The `MultiIndex` class represents a list of one or more indices that is written as the syntax as shown here:
 
 # MultiIndex syntax
@@ -407,7 +396,7 @@ It exposes methods such as:
 - `isSingle()` — checks if the command applies to one student only.
 - `toIndexList()` — returns a list of all `Index` objects represented by the multi-index input.
 
-## MultiIndexCommand
+##### MultiIndexCommand
 Commands that use this feature extend the abstract class `MultiIndexCommand`,
 which defines a template for commands that support updates for multiple students at once using the 
 [MultiIndex syntax](#multiindex-syntax).
@@ -437,7 +426,7 @@ marka 5 l/3 s/n - Marks Lab 3 as *absent* for the student at the (one-based) ind
 grade 1:3 en/midterm s/y  - Marks the *Midterm* exam as *passed* for student 1.
 A sequence diagram for the execution of this command is shown over here:
 
-<puml src="diagrams/GradeCommand/GradeSequenceDiagram.puml" width="800" />
+<puml src="diagrams/GradeCommand/GradeSequenceDiagram.puml" width="820" />
 
 ---
 
@@ -474,18 +463,6 @@ This feature leverages the `Trackable` interface and its implementing classes to
 Each trackable component defines both:
 - The **status colours** (e.g., green, red, grey) that indicate the current state.
 - The **labels** (e.g., EX1, L5, MIDTERM) used to identify individual tracked items.
-
----
-
-#### Motivation
-
-Previously, progress indicators for labs, exercises, and exams existed only as stored data, without any visual representation on the student card.  
-Teaching Assistants had to rely on manual inspection or individual commands to check each student’s record, which was slow and error-prone.
-
-The **Display Trackable** feature introduces a clear and intuitive visualization of progress through coloured labels.  
-This allows Teaching Assistants to instantly gauge student performance and identify those who are struggling — directly from the main student list.
-
----
 
 #### Implementation
 
@@ -538,17 +515,6 @@ This provides a concise and visual summary of each student’s standing in the c
 
 ---
 
-#### Future Enhancements
-
-* **Dynamic Updates:**  
-  Allow trackable status colours to update in real time when a record changes, without requiring a full refresh.
-
-* **Tooltips:**  
-  Provide contextual information (e.g., submission dates or marks) when hovering over each label.
-
-* **Custom Colour Themes:**  
-  Allow instructors to customize the colour scheme for accessibility or course preferences.
-
 ### \[Proposed\] Data archiving
 
 _{Explain here how the data archiving feature will be implemented}_
@@ -565,7 +531,7 @@ and passed to a `FindCommand`. The command then updates the model’s filtered l
 
 The sequence diagram below illustrates the key interactions for `execute("find <KEYWORD> [selectors]")`.
 
-<puml src="diagrams/findCommand/find.puml" width="574" />
+<puml src="diagrams/findCommand/find.puml" width="820" />
 
 #### Parsing & Validation
 - `FindCommandParser` tokenises input into a preamble and selectors.
@@ -596,7 +562,7 @@ and exercise tracking throughout the application.
     - Updates all existing students' lab and exercise tracking data to reflect the new week
 4. The system displays a success message showing the new week number and how many students were updated
 <br>
-<puml src="diagrams/set-week/SetWeekSequenceDiagram.puml" width="550" />
+<puml src="diagrams/set-week/SetWeekSequenceDiagram.puml" width="820" />
 
 --------------------------------------------------------------------------------------------------------------------
 
