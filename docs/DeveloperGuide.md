@@ -654,7 +654,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. User provides an an invalid index
+* 1a. User provides an invalid index
     * 1a1. System displays error message
     * 1a2. User re-enters a valid index
 
