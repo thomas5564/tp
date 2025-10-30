@@ -168,6 +168,7 @@ public class EditCommand extends MultiIndexCommand {
             setGithubUsername(toCopy.githubUsername);
             setExerciseTracker(toCopy.exerciseTracker);
             setLabAttendanceList(toCopy.labAttendanceList);
+            setGradeMap(toCopy.gradeMap);
         }
 
         /**
@@ -219,6 +220,10 @@ public class EditCommand extends MultiIndexCommand {
 
         public void setLabAttendanceList(LabAttendanceList labAttendanceList) {
             this.labAttendanceList = labAttendanceList;
+        }
+
+        public void setGradeMap(GradeMap gradeMap) {
+            this.gradeMap = gradeMap;
         }
 
         public Optional<LabAttendanceList> getLabAttendanceList() {
