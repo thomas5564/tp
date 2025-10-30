@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.SortCommand;
 import seedu.address.model.person.sortcriterion.NameSortCriterion;
+import seedu.address.model.person.sortcriterion.SortCriterion;
 import seedu.address.model.person.sortcriterion.StudentIdSortCriterion;
 
 public class SortCommandParserTest {
@@ -39,7 +40,7 @@ public class SortCommandParserTest {
 
     @Test
     public void parse_invalidSortCriterion_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE);
+        String expectedMessage = SortCriterion.MESSAGE_CONSTRAINTS;
 
         // Invalid criterion keyword
         assertParseFailure(parser, " " + PREFIX_SORT_CRITERION + "email", expectedMessage);
@@ -57,6 +58,6 @@ public class SortCommandParserTest {
         assertParseFailure(parser, "     ", expectedMessage);
 
         // Missing criterion value (empty after prefix)
-        assertParseFailure(parser, " " + PREFIX_SORT_CRITERION, expectedMessage);
+        assertParseFailure(parser, " " + PREFIX_SORT_CRITERION, SortCriterion.MESSAGE_CONSTRAINTS);
     }
 }
