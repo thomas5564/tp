@@ -741,7 +741,7 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `add i/A0309024L n/Shawn Lee p/98765432 e/shawn@gmail.com g/shawnlee2 t/modelStudent` <br>
       Expected: Shawn lee is added to the end of the student list with the specified details.
    
-   2. Test case: `add n/Kai Hong i/A0309024L p/99983721 e/kh@gmail.com g/kaihong551 t/consultation t/struggling` <br>
+   2. Test case: `add n/Kai Hong i/A0309124L p/99983721 e/kh@gmail.com g/kaihong551 t/consultation t/struggling` <br>
       Expected: Kai Hong is added with multiple tags.
 
 2. Adding a student with missing required fields
@@ -792,7 +792,7 @@ testers are expected to do more *exploratory* testing.
 3. Editing with no fields specified
 
     1. Test case: `edit 1`<br>
-       Expected: Error message indicating invalid command format.
+       Expected: Error message indicating at least one field needs to be provided.
 
 
 ### Deleting a student
@@ -970,7 +970,7 @@ testers are expected to do more *exploratory* testing.
 4. Missing required fields
 
     1. Test case: `grade 1 en/midterm`<br>
-       Expected: Error message indicating invalid `Status`.
+       Expected: Error message indicating invalid command format.
 
     2. Test case: `grade 1 s/y`<br>
        Expected: Error message indicating invalid command format.
@@ -1078,7 +1078,7 @@ testers are expected to do more *exploratory* testing.
        Expected: Error message indicating invalid command format.
 
     2. Test case: `sort c/strength`<br>
-       Expected: Error message indicating invalid command format.
+       Expected: Error message indicating invalid `Criterion`.
 
     3. Test case: `sort name`<br>
        Expected: Error message indicating invalid command format.
