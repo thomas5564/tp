@@ -24,7 +24,7 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.ExerciseTracker;
 import seedu.address.model.person.GithubUsername;
-import seedu.address.model.person.GradeMap;
+import seedu.address.model.person.GradeTracker;
 import seedu.address.model.person.LabAttendanceList;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -109,10 +109,11 @@ public class EditCommand extends MultiIndexCommand {
                 .orElse(personToEdit.getExerciseTracker());
         LabAttendanceList updatedLabAttendanceList = editPersonDescriptor.getLabAttendanceList()
                 .orElse(personToEdit.getLabAttendanceList());
-        GradeMap updatedGradeMap = editPersonDescriptor.getGradeMap()
-                .orElse(personToEdit.getGradeMap());
+        GradeTracker updatedGradeTracker = editPersonDescriptor.getGradeTracker()
+                .orElse(personToEdit.getGradeTracker());
         return new Person(updatedStudentId, updatedName, updatedPhone, updatedEmail,
-                updatedTags, updatedGithubUsername, updatedExerciseTracker, updatedLabAttendanceList, updatedGradeMap);
+                updatedTags, updatedGithubUsername,
+                updatedExerciseTracker, updatedLabAttendanceList, updatedGradeTracker);
     }
 
     @Override
@@ -151,7 +152,7 @@ public class EditCommand extends MultiIndexCommand {
         private GithubUsername githubUsername;
         private ExerciseTracker exerciseTracker;
         private LabAttendanceList labAttendanceList;
-        private GradeMap gradeMap;
+        private GradeTracker gradeTracker;
 
         public EditPersonDescriptor() {}
 
@@ -168,7 +169,7 @@ public class EditCommand extends MultiIndexCommand {
             setGithubUsername(toCopy.githubUsername);
             setExerciseTracker(toCopy.exerciseTracker);
             setLabAttendanceList(toCopy.labAttendanceList);
-            setGradeMap(toCopy.gradeMap);
+            setGradeTracker(toCopy.gradeTracker);
         }
 
         /**
@@ -222,16 +223,16 @@ public class EditCommand extends MultiIndexCommand {
             this.labAttendanceList = labAttendanceList;
         }
 
-        public void setGradeMap(GradeMap gradeMap) {
-            this.gradeMap = gradeMap;
+        public void setGradeTracker(GradeTracker gradeTracker) {
+            this.gradeTracker = gradeTracker;
         }
 
         public Optional<LabAttendanceList> getLabAttendanceList() {
             return Optional.ofNullable(labAttendanceList);
         }
 
-        public Optional<GradeMap> getGradeMap() {
-            return Optional.ofNullable(gradeMap);
+        public Optional<GradeTracker> getGradeTracker() {
+            return Optional.ofNullable(gradeTracker);
         }
 
         public void setTags(Set<Tag> tags) {

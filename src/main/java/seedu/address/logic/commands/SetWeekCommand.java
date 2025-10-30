@@ -65,7 +65,7 @@ public class SetWeekCommand extends Command {
                     person.getGithubUsername(),
                     updatedExerciseTracker,
                     updatedLabList, // New LabList with updated weeks
-                    person.getGradeMap()
+                    person.getGradeTracker()
             );
             model.setPerson(person, updatedPerson);
             updatedCount++;

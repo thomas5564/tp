@@ -67,7 +67,7 @@ public class PersonCard extends UiPart<Region> {
         // Render trackable sections
         renderTrackable(exerciseStatus, person.getExerciseTracker(), "exercise");
         renderTrackable(labAttendance, person.getLabAttendanceList(), "lab");
-        renderTrackable(grades, person.getGradeMap(), "exam");
+        renderTrackable(grades, person.getGradeTracker(), "exam");
     }
 
     /**

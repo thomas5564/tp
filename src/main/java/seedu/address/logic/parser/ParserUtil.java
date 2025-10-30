@@ -29,6 +29,7 @@ import seedu.address.model.person.ExerciseList;
 import seedu.address.model.person.ExerciseTracker;
 import seedu.address.model.person.GithubUsername;
 import seedu.address.model.person.GradeMap;
+import seedu.address.model.person.GradeTracker;
 import seedu.address.model.person.Lab;
 import seedu.address.model.person.LabAttendance;
 import seedu.address.model.person.LabAttendanceList;
@@ -327,15 +328,14 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code gradeMapString} into a {@code GradeMap}.
+     * Parses a {@code GradeTrackerString} into a {@code GradeTracker}.
      * Expected format: "pe1: Passed, midterm: Failed, pe2: NA"
      *
-     * @throws ParseException if the given {@code gradeMapString} is invalid.
+     * @throws ParseException if the given {@code GradeTrackerString} is invalid.
      */
-    public static GradeMap parseGradeMap(String input) throws ParseException {
+    public static GradeTracker parseGradeTracker(String input) throws ParseException {
         requireNonNull(input);
-        GradeMap gradeMap = new GradeMap();
-
+        GradeTracker gradeTracker = new GradeMap();
         for (String entry : input.split(",")) {
             String[] parts = entry.trim().split(":");
 
@@ -348,10 +348,10 @@ public class ParserUtil {
 
             Examination exam = getExamination(name, resultStr);
 
-            gradeMap.putExam(name, exam);
+            gradeTracker.putExam(name, exam);
         }
 
-        return gradeMap;
+        return gradeTracker;
     }
 
     private static Examination getExamination(String name, String resultStr) throws ParseException {

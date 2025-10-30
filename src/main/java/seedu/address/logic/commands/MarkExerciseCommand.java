@@ -92,7 +92,7 @@ public class MarkExerciseCommand extends MultiIndexCommand {
                 personToEdit.getGithubUsername(),
                 updatedExerciseTracker,
                 personToEdit.getLabAttendanceList(),
-                personToEdit.getGradeMap()
+                personToEdit.getGradeTracker()
         );
 
         model.setPerson(personToEdit, updatedPerson); // update model

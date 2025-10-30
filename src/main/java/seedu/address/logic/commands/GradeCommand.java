@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import seedu.address.commons.core.index.MultiIndex;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.GradeMap;
+import seedu.address.model.person.GradeTracker;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.InvalidExamNameException;
 
@@ -55,16 +55,16 @@ public class GradeCommand extends MultiIndexCommand {
 
     @Override
     protected Person applyActionToPerson(Model model, Person personToGrade) throws CommandException {
-        GradeMap updatedGradeMap = personToGrade.getGradeMap().copy();
+        GradeTracker updatedGradeTracker = personToGrade.getGradeTracker().copy();
 
         try {
             if (isPassed) {
-                updatedGradeMap.markExamPassed(examName);
+                updatedGradeTracker.markExamPassed(examName);
             } else {
-                updatedGradeMap.markExamFailed(examName);
+                updatedGradeTracker.markExamFailed(examName);
             }
-            if (updatedGradeMap.getExamMap().get(examName) == null) {
-                throw new AssertionError("Updated GradeMap should contain the graded exam");
+            if (updatedGradeTracker.getExamMap().get(examName) == null) {
+                throw new AssertionError("Updated GradeTracker should contain the graded exam");
             }
         } catch (InvalidExamNameException e) {
             throw new CommandException(String.format(
@@ -82,7 +82,7 @@ public class GradeCommand extends MultiIndexCommand {
                 personToGrade.getGithubUsername(),
                 personToGrade.getExerciseTracker(),
                 personToGrade.getLabAttendanceList(),
-                updatedGradeMap
+                updatedGradeTracker
         );
 
         model.setPerson(personToGrade, gradedPerson);
