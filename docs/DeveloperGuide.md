@@ -383,54 +383,66 @@ This feature is powered by the `MultiIndex` and `MultiIndexCommand` classes, whi
 
 This enables bulk operations such as grading, marking attendance, or updating exercises — all in one concise command.
 
+---
+
 #### Implementation
 
-##### MultiIndex
-The `MultiIndex` class represents a list of one or more indices that is written as the syntax as shown here:
+**MultiIndex**
 
-# MultiIndex syntax
-- A **single index** (e.g., `1` → only the first student), or
-- A **range of indices** (e.g., `1:5` → students 1 through 5, inclusive).
+The `MultiIndex` class represents a list of one or more indices that can be written using the following syntax:
+
+**MultiIndex Syntax**
+- A **single index** (e.g., `1` → only the first student)
+- A **range of indices** (e.g., `1:5` → students 1 through 5, inclusive)
 
 It exposes methods such as:
 - `isSingle()` — checks if the command applies to one student only.
 - `toIndexList()` — returns a list of all `Index` objects represented by the multi-index input.
 
-##### MultiIndexCommand
-Commands that use this feature extend the abstract class `MultiIndexCommand`,
-which defines a template for commands that support updates for multiple students at once using the 
-[MultiIndex syntax](#multiindex-syntax).
+**MultiIndexCommand**
+
+Commands that use this feature extend the abstract class `MultiIndexCommand`,  
+which defines a template for commands that support updates for multiple students at once using the [MultiIndex syntax](#multiindex-syntax).
 
 Each subclass:
 1. Implements `applyActionToPerson(Model model, Person person)` — defining how each student is modified.
 2. Optionally overrides `buildResult(List<Person> updatedPersons)` to customize the final success message.
 
-**Subclasses that extend `MultiIndexCommand` :**
+**Subclasses that extend `MultiIndexCommand`:**
 
 | Command Class           | Command Word | Description                              |
 |--------------------------|---------------|------------------------------------------|
 | `MarkAttendanceCommand`  | `marka`       | Marks lab attendances.                   |
 | `MarkExerciseCommand`    | `marke`       | Marks exercises for completion.          |
 | `GradeCommand`           | `grade`       | Marks exams as passed or failed.         |
-| `DeleteCommand`          | `delete`      | Deletes students from LambdaLab.           |
-| `EditCommand`            | `edit`        | Edits students in LambdaLab.               |
+| `DeleteCommand`          | `delete`      | Deletes students from LambdaLab.         |
+| `EditCommand`            | `edit`        | Edits students in LambdaLab.             |
 
 ---
 
 #### Example Usage
 
 **Example 1: Single Index**
-marka 5 l/3 s/n - Marks Lab 3 as *absent* for the student at the (one-based) index of 5 of the student list.
+```
+marka 5 l/3 s/n
+```
+Marks Lab 3 as *absent* for the student at index `5` of the student list.
 
 **Example 2: Range of Indices**
-grade 1:3 en/midterm s/y  - Marks the *Midterm* exam as *passed* for student 1.
-A sequence diagram for the execution of this command is shown over here:
+
+```
+grade 1:3 en/midterm s/y
+```
+
+Marks the *Midterm* exam as *passed* for students 1 through 3.
+
+A sequence diagram for this command is shown below:
 
 <puml src="diagrams/GradeCommand/GradeSequenceDiagram.puml" width="820" />
 
 ---
 
-#### Design Considerations
+### **Design Considerations**
 
 **Aspect: Code Reuse**  
 The iteration and validation logic for applying an action to multiple students is centralized within `MultiIndexCommand`.  
@@ -438,20 +450,21 @@ This ensures consistent behavior across all commands that support bulk modificat
 
 **Aspect: Robustness**  
 If any index in the provided range is invalid (e.g., out of bounds), the command throws a `CommandException` before making any modifications.
->
 
 **Aspect: Extensibility**  
 Future commands that require multi-student operations (e.g., adding group tags or resetting student progress) can easily extend `MultiIndexCommand` without duplicating logic.
 
 ---
 
-#### Future Enhancements
+### **Future Enhancements**
 
-* **Partial Execution Reports:**  
+- **Partial Execution Reports:**  
   Allow commands to apply valid operations even if some indices fail, returning a summary report of successes and failures.
 
-* **Parallel Execution:**  
+- **Parallel Execution:**  
   For large datasets, multi-index operations could be processed concurrently for improved performance.
+
+---
 
 ### **Feature: Displaying Trackable Data**
 
@@ -464,12 +477,15 @@ Each trackable component defines both:
 - The **status colours** (e.g., green, red, grey) that indicate the current state.
 - The **labels** (e.g., EX1, L5, MIDTERM) used to identify individual tracked items.
 
+---
+
 #### Implementation
 
 The **Trackable Display** feature enables LambdaLab to visually represent a student’s **exercises**, **lab attendance**, and **exam results** in a consistent and colour-coded format.
 
 This is achieved through the `Trackable` interface, which standardizes how trackable data is exposed to the UI.  
 Each of the following classes implements `Trackable`:
+
 - `ExerciseTracker` – tracks completion status of exercises.
 - `LabList` – tracks attendance for lab sessions.
 - `GradeMap` – tracks examination results.
@@ -488,7 +504,9 @@ This design cleanly separates **model data** from **UI rendering**, ensuring tha
 
 <puml src="diagrams/Trackable/TrackableClassDiagram.puml" width="800" />
 
-#### Design Considerations
+---
+
+### **Design Considerations**
 
 **Aspect: Reusability**  
 The abstraction of the `Trackable` interface allows all progress-tracking components to share the same rendering logic, reducing code duplication and simplifying maintenance.
@@ -501,15 +519,15 @@ Colours and font styles are centrally managed through CSS, ensuring that every t
 
 ---
 
-#### Example
+### **Example**
 
 Each student card displays their current progress in three areas:
 
-| Category | Green Meaning | Grey Meaning      | Red Meaning |
-|:----------|:---------------|:------------------|:-------------|
+| Category | Green Meaning | Grey Meaning | Red Meaning |
+|:----------|:---------------|:-------------|:-------------|
 | **Lab** | Attended | Not conducted yet | Absent |
-| **Exercise** | Completed | Not completed     | Overdue |
-| **Exam** | Passed | Not graded        | Failed |
+| **Exercise** | Completed | Not completed | Overdue |
+| **Exam** | Passed | Not graded | Failed |
 
 This provides a concise and visual summary of each student’s standing in the course.
 
