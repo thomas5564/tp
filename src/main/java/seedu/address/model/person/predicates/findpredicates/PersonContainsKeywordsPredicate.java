@@ -77,7 +77,7 @@ public class PersonContainsKeywordsPredicate extends FindPredicate {
         keywordsString.append(keywords.get(keywords.size() - 1));
         StringBuilder fieldsString = new StringBuilder();
         if (predicates.size() == MAX_PREDICATES) {
-            fieldsString.append("all");
+            fieldsString.append(" all");
         } else {
             for (int i = 0; i < predicates.size() - 1; i++) {
                 fieldsString.append(predicates.get(i).successMessage())
@@ -85,7 +85,7 @@ public class PersonContainsKeywordsPredicate extends FindPredicate {
             }
             fieldsString.append(predicates.get(predicates.size() - 1).successMessage());
         }
-        success.append(keywordsString).append(" within ").append(fieldsString).append(" fields.");
+        success.append(keywordsString).append(" within").append(fieldsString).append(" fields.");
 
 
 
