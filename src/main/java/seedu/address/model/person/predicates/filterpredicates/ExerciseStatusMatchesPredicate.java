@@ -4,7 +4,7 @@ import java.util.List;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.person.ExerciseTracker;
+import seedu.address.model.person.ExerciseList;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Status;
 
@@ -30,8 +30,8 @@ public class ExerciseStatusMatchesPredicate extends FilterPredicate {
 
     @Override
     public boolean test(Person person) {
-        ExerciseTracker exerciseTracker = person.getExerciseTracker();
-        List<Status> exercises = exerciseTracker.getStatuses();
+        ExerciseList exerciseList = person.getExerciseTracker();
+        List<Status> exercises = exerciseList.getStatuses();
         int number = index.getZeroBased();
         return exercises.get(number).equals(status);
     }

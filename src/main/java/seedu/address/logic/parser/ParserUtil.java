@@ -25,7 +25,7 @@ import seedu.address.logic.helpers.LabIndexStatus;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Examination;
-import seedu.address.model.person.ExerciseTracker;
+import seedu.address.model.person.ExerciseList;
 import seedu.address.model.person.GithubUsername;
 import seedu.address.model.person.GradeMap;
 import seedu.address.model.person.Lab;
@@ -52,7 +52,7 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_STATUS = "Status input must be Y or N";
     private static final String MESSAGE_INVALID_EXERCISE_INDEX =
             "Exercise index is invalid! It must be between 0 and "
-                    + (ExerciseTracker.NUMBER_OF_EXERCISES - 1) + " (inclusive).";
+                    + (ExerciseList.NUMBER_OF_EXERCISES - 1) + " (inclusive).";
     private static final String MESSAGE_INVALID_LAB_INDEX =
             "Lab index is invalid! It must be between 1 and " + LabList.NUMBER_OF_LABS + " (inclusive).";
     private static final String MESSAGE_INVALID_FILTER_EXERCISE_STATUS =
@@ -149,7 +149,7 @@ public class ParserUtil {
             throw new InvalidIndexException(MESSAGE_INVALID_EXERCISE_INDEX);
         }
         int zeroBased = Integer.parseInt(trimmedIndex);
-        if (zeroBased >= ExerciseTracker.NUMBER_OF_EXERCISES) {
+        if (zeroBased >= ExerciseList.NUMBER_OF_EXERCISES) {
             throw new InvalidIndexException(MESSAGE_INVALID_EXERCISE_INDEX);
         }
         return Index.fromZeroBased(zeroBased);
@@ -306,23 +306,23 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code exerciseTrackerString} is invalid.
      */
-    public static ExerciseTracker parseExerciseTracker(String exerciseTrackerString) throws ParseException {
+    public static ExerciseList parseExerciseTracker(String exerciseTrackerString) throws ParseException {
         requireNonNull(exerciseTrackerString);
         String trimmed = exerciseTrackerString.trim();
 
-        if (!ExerciseTracker.isValidExerciseTracker(trimmed)) {
-            throw new ParseException(ExerciseTracker.MESSAGE_CONSTRAINTS);
+        if (!ExerciseList.isValidExerciseTracker(trimmed)) {
+            throw new ParseException(ExerciseList.MESSAGE_CONSTRAINTS);
         }
 
-        Boolean[] statuses = new Boolean[ExerciseTracker.NUMBER_OF_EXERCISES];
+        Boolean[] statuses = new Boolean[ExerciseList.NUMBER_OF_EXERCISES];
         String[] parts = trimmed.split("\\s+");
 
-        for (int i = 0; i < ExerciseTracker.NUMBER_OF_EXERCISES; i++) {
+        for (int i = 0; i < ExerciseList.NUMBER_OF_EXERCISES; i++) {
             String statusString = parts[i * 3 + 2];
             statuses[i] = parseStatus(statusString);
         }
 
-        return new ExerciseTracker(new ArrayList<>(Arrays.asList(statuses)));
+        return new ExerciseList(new ArrayList<>(Arrays.asList(statuses)));
     }
 
     /**

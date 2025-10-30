@@ -22,7 +22,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.ExerciseTracker;
+import seedu.address.model.person.ExerciseList;
 import seedu.address.model.person.GithubUsername;
 import seedu.address.model.person.GradeMap;
 import seedu.address.model.person.LabAttendanceList;
@@ -105,14 +105,14 @@ public class EditCommand extends MultiIndexCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         GithubUsername updatedGithubUsername = editPersonDescriptor.getGithubUsername()
                 .orElse(personToEdit.getGithubUsername());
-        ExerciseTracker updatedExerciseTracker = editPersonDescriptor.getExerciseTracker()
+        ExerciseList updatedExerciseList = editPersonDescriptor.getExerciseTracker()
                 .orElse(personToEdit.getExerciseTracker());
         LabAttendanceList updatedLabAttendanceList = editPersonDescriptor.getLabAttendanceList()
                 .orElse(personToEdit.getLabAttendanceList());
         GradeMap updatedGradeMap = editPersonDescriptor.getGradeMap()
                 .orElse(personToEdit.getGradeMap());
         return new Person(updatedStudentId, updatedName, updatedPhone, updatedEmail,
-                updatedTags, updatedGithubUsername, updatedExerciseTracker, updatedLabAttendanceList, updatedGradeMap);
+                updatedTags, updatedGithubUsername, updatedExerciseList, updatedLabAttendanceList, updatedGradeMap);
     }
 
     @Override
@@ -149,7 +149,7 @@ public class EditCommand extends MultiIndexCommand {
         private Email email;
         private Set<Tag> tags;
         private GithubUsername githubUsername;
-        private ExerciseTracker exerciseTracker;
+        private ExerciseList exerciseList;
         private LabAttendanceList labAttendanceList;
         private GradeMap gradeMap;
 
@@ -166,7 +166,7 @@ public class EditCommand extends MultiIndexCommand {
             setEmail(toCopy.email);
             setTags(toCopy.tags);
             setGithubUsername(toCopy.githubUsername);
-            setExerciseTracker(toCopy.exerciseTracker);
+            setExerciseTracker(toCopy.exerciseList);
             setLabAttendanceList(toCopy.labAttendanceList);
         }
 
@@ -209,12 +209,12 @@ public class EditCommand extends MultiIndexCommand {
             return Optional.ofNullable(email);
         }
 
-        public void setExerciseTracker(ExerciseTracker exerciseTracker) {
-            this.exerciseTracker = exerciseTracker;
+        public void setExerciseTracker(ExerciseList exerciseList) {
+            this.exerciseList = exerciseList;
         }
 
-        public Optional<ExerciseTracker> getExerciseTracker() {
-            return Optional.ofNullable(exerciseTracker);
+        public Optional<ExerciseList> getExerciseTracker() {
+            return Optional.ofNullable(exerciseList);
         }
 
         public void setLabAttendanceList(LabAttendanceList labAttendanceList) {
@@ -262,7 +262,7 @@ public class EditCommand extends MultiIndexCommand {
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags)
                     && Objects.equals(githubUsername, otherEditPersonDescriptor.githubUsername)
-                    && Objects.equals(exerciseTracker, otherEditPersonDescriptor.exerciseTracker)
+                    && Objects.equals(exerciseList, otherEditPersonDescriptor.exerciseList)
                     && Objects.equals(labAttendanceList, otherEditPersonDescriptor.labAttendanceList);
         }
 
@@ -275,7 +275,7 @@ public class EditCommand extends MultiIndexCommand {
                     .add("email", email)
                     .add("tags", tags)
                     .add("githubUsername", githubUsername)
-                    .add("exerciseTracker", exerciseTracker)
+                    .add("exerciseTracker", exerciseList)
                     .add("labAttendanceList", labAttendanceList)
                     .toString();
         }
