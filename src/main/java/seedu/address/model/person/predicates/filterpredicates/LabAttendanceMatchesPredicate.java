@@ -29,15 +29,15 @@ public class LabAttendanceMatchesPredicate extends FilterPredicate {
         LabAttendanceList attendaceList = person.getLabAttendanceList();
         double labAttendance = attendaceList.calculateLabAttendance();
         switch (comparison) {
-        case EQ:
+        case EQUAL:
             return labAttendance == value;
-        case GE:
+        case GREATER_THAN_OR_EQUAL:
             return labAttendance >= value;
-        case LE:
+        case LESS_THAN_OR_EQUAL:
             return labAttendance <= value;
-        case GT:
+        case GREATER_THAN:
             return labAttendance > value;
-        case LT:
+        case LESS_THAN:
             return labAttendance < value;
         default:
             return false;
@@ -80,15 +80,15 @@ public class LabAttendanceMatchesPredicate extends FilterPredicate {
      */
     public String statusToMessage() {
         switch(comparison) {
-        case EQ:
+        case EQUAL:
             return "exactly ";
-        case GE:
+        case GREATER_THAN_OR_EQUAL:
             return "more than or equal to ";
-        case LE:
+        case LESS_THAN_OR_EQUAL:
             return "less than or equal to ";
-        case GT:
+        case GREATER_THAN:
             return "more than ";
-        case LT:
+        case LESS_THAN:
             return "less than ";
         default:
             return "invalid filter ";

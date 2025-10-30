@@ -51,10 +51,12 @@ public class FindCommandParser implements Parser<FindCommand> {
         return new FindCommand(new PersonContainsKeywordsPredicate(predicates));
     }
 
+
     private List<String> getKeywords(ArgumentMultimap argMultimap) throws ParseException {
         String[] preamble = argMultimap.getPreamble().trim().split("\\s+");
         List<String> keywords = Arrays.asList(preamble);
 
+        // Require at least one keyword in the preamble
         if (keywords.isEmpty() || keywords.get(0).isBlank()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));

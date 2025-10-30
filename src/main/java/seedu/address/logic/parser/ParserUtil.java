@@ -480,7 +480,9 @@ public class ParserUtil {
         assert(attendanceComparison != null);
         String s = attendanceComparison.trim().replaceAll("\\s+", "");
 
-        // Accept: ==70, >=60, <=85, >40, <25, 75, and any of those with a trailing %
+        // Accepts: ==70, >=60, <=85, >40, <25, 75, and any of those with a trailing %
+        // Group 1 operator: ==, >=, <=, >, < or empty,
+        // group 2 value: 1–3 digits checks if negative, optional trailing '%'.
         Matcher m = Pattern
                 .compile("^(?:([<>]=?|==?|))?(-?\\d{1,3})(?:%)?$")
                 .matcher(s);
@@ -497,19 +499,19 @@ public class ParserUtil {
         Comparison comparison;
         switch (operator) {
         case "==":
-            comparison = Comparison.EQ;
+            comparison = Comparison.EQUAL;
             break;
         case ">=":
-            comparison = Comparison.GE;
+            comparison = Comparison.GREATER_THAN_OR_EQUAL;
             break;
         case "<=":
-            comparison = Comparison.LE;
+            comparison = Comparison.LESS_THAN_OR_EQUAL;
             break;
         case ">":
-            comparison = Comparison.GT;
+            comparison = Comparison.GREATER_THAN;
             break;
         case "<":
-            comparison = Comparison.LT;
+            comparison = Comparison.LESS_THAN;
             break;
         default:
             throw new ParseException(MESSAGE_MISSING_OPERATOR);

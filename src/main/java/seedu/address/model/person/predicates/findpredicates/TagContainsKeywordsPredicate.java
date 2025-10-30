@@ -9,7 +9,7 @@ import seedu.address.model.tag.Tag;
 
 
 /**
- * Tests that a {@code Person}'s {@code StudentId} matches any of the keywords given.
+ * Tests that a {@code Person}'s {@code Tags} matches any of the keywords given.
  */
 public class TagContainsKeywordsPredicate extends FindPredicate {
     private final List<String> keywords;
