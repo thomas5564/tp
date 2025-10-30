@@ -144,6 +144,7 @@ Each tracker uses colour indicators to represent a student’s current status in
 This system allows Teaching Assistants to quickly assess how students are performing at a glance.  
 For example, a green tracker indicates satisfactory progress, while a red one highlights areas needing attention 
 — such as missed labs, overdue exercises, or failed exams.
+
 ---
 # Features
 
@@ -177,7 +178,7 @@ as space characters surrounding line-breaks may be omitted when copied over to t
   Note that this only works for selecting multiple students (`INDEX`), not for multiple exercises (`EXERCISE_INDEX`) or labs (`LAB_INDEX`).
 </box>
 
-<br><br>
+---
 
 ## Data-modifying commands
 
@@ -358,8 +359,6 @@ Here, `STATUS` is "y" for passed and "n" for failed.
 ---
 
 ### On timeslot/consultation
-
-<br><br>
 
 #### Blocking a timeslot: `block-timeslot`
 
@@ -786,6 +785,8 @@ they create their account.
 **A**: Yes, LambdaLab allows you to mark any lab from 1-10. However, we recommend marking attendance only for completed
 lab sessions to maintain accurate records.
 
+---
+
 ## Known issues
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the
@@ -828,6 +829,8 @@ Action     | Format, Examples
 **Undo** | `undo`
 **Set Week** | `set-week WEEKNUMBER` <br> e.g. `set-week 5`
 **Exit**   | `exit`
+
+---
 
 ## Parameter Summary
 
