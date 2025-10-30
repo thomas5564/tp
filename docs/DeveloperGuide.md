@@ -52,7 +52,7 @@ The bulk of the app's work is done by the following four components:
 
 The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
 
-<puml src="diagrams/ArchitectureSequenceDiagram.puml" width="574" />
+<puml src="diagrams/ArchitectureSequenceDiagram.puml" width="820" />
 
 Each of the four main components (also shown in the diagram above),
 
@@ -92,7 +92,7 @@ Here's a (partial) class diagram of the `Logic` component:
 
 The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
 
-<puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" />
+<puml src="diagrams/DeleteSequenceDiagram.puml" alt="Interactions Inside the Logic Component for the `delete 1` Command" width="820"/>
 
 <box type="info" seamless>
 
@@ -118,7 +118,7 @@ How the parsing works:
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
 
-<puml src="diagrams/ModelClassDiagram.puml" width="450" />
+<puml src="diagrams/ModelClassDiagram.puml" width="820" />
 
 
 The `Model` component,
@@ -437,7 +437,7 @@ marka 5 l/3 s/n - Marks Lab 3 as *absent* for the student at the (one-based) ind
 grade 1:3 en/midterm s/y  - Marks the *Midterm* exam as *passed* for student 1.
 A sequence diagram for the execution of this command is shown over here:
 
-<puml src="diagrams/GradeCommand/GradeSequenceDiagram.puml" width="800" />
+<puml src="diagrams/GradeCommand/GradeSequenceDiagram.puml" width="820" />
 
 ---
 
@@ -565,7 +565,7 @@ and passed to a `FindCommand`. The command then updates the model’s filtered l
 
 The sequence diagram below illustrates the key interactions for `execute("find <KEYWORD> [selectors]")`.
 
-<puml src="diagrams/findCommand/find.puml" width="574" />
+<puml src="diagrams/findCommand/find.puml" width="820" />
 
 #### Parsing & Validation
 - `FindCommandParser` tokenises input into a preamble and selectors.
@@ -596,7 +596,7 @@ and exercise tracking throughout the application.
     - Updates all existing students' lab and exercise tracking data to reflect the new week
 4. The system displays a success message showing the new week number and how many students were updated
 <br>
-<puml src="diagrams/set-week/SetWeekSequenceDiagram.puml" width="550" />
+<puml src="diagrams/set-week/SetWeekSequenceDiagram.puml" width="820" />
 
 --------------------------------------------------------------------------------------------------------------------
 
