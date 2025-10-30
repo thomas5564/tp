@@ -654,14 +654,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-* 1a. User provides an invalid index
+* 1a. User provides an invalid index/lab number
     * 1a1. System displays error message
-    * 1a2. User re-enters a valid index
+    * 1a2. User re-enters a valid index/lab number
 
-      Use case resumes at Step 2
-* 1b. User provides an invalid lab number (non-numeric, zero, negative, or out-of-range)
-    * 1b1. System displays error message
-    * 1b2. User re-enters a valid lab number
 
       Use case resumes at Step 2
 * 3a. Attendance for the student in that lab number has already been marked
@@ -693,7 +689,61 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case ends.
 
-*{More to be added}*
+**Use case: Add a student**
+
+**Precondition: The user has the student's details**
+
+**MSS**
+1. User wants to add student, enters required fields (student ID, name, phone, email, GitHub username) using the command format
+2. System validates the required fields
+3. System adds the new student
+4. System displays a confirmation message with the added student's summary.
+
+**Extensions**
+* 2a. Required field missing or invalid
+  * 2a1. System displays error message
+  * 2a2. User adds in missing field or re-enters a valid field
+
+  Use case resumes at Step 3
+* 2b. Duplicate student ID
+  * 2b1. System returns error message to show student already exists
+  * 2b2. User re-enters a valid student ID
+
+    Use case resumes at Step 3
+
+**Use case: Filter students by exercise**
+
+**Precondition: LambdaLab contains student records and exercise indices (0–9) are known**
+
+**MSS**
+1. User wants to filter by exercise completion, enters exercise index and status using command format
+2. System validates the exercise index and status
+3. System displays the filtered list
+
+Use case ends.
+
+**Extensions**
+
+* 1a. User provides an invalid exercise index/status
+    * 1a1. System displays error message
+    * 1a2. User re-enters a valid exercise index/status
+
+      Use case resumes at Step 2
+
+**Use case: Sort students by lab attendance**
+
+**Precondition: LambdaLab contains student records**
+**MSS**
+1. User wants to sort by lab attendance, enters lab attendance as sort criterion in command format
+2. System displays the sorted list
+
+**Extensions**
+* 1a. Unsupported or misspelled criterion
+  * 1a1. System returns an error describing acceptable criteria 
+  * 1a2. User re-enters a valid criterion
+
+  Use case resumes at Step 2
+
 
 ### Non-Functional Requirements
 
