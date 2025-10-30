@@ -446,7 +446,7 @@ Each of the following classes implements `Trackable`:
 - `GradeMap` – tracks examination results.
 
 When a `PersonCard` is created, it directly retrieves these three trackers from the `Person` object:
-1. `person.getExerciseList()`
+1. `person.getExerciseTracker()`
 2. `person.getLabAttendanceList()`
 3. `person.getGradeMap()`
 

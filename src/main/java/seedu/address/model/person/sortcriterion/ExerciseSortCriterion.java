@@ -12,7 +12,7 @@ public class ExerciseSortCriterion extends SortCriterion {
 
     @Override
     public Comparator<Person> getComparator() {
-        return Comparator.comparing(Person::getExerciseList, Comparator.reverseOrder());
+        return Comparator.comparing(Person::getExerciseTracker, Comparator.reverseOrder());
     }
 
     @Override

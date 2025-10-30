@@ -17,6 +17,7 @@ Package Model as ModelPackage <<Rectangle>> {
   Class StudentId
   Class GithubUsername
   Class ExerciseList
+  Class "<<interface>>\nExerciseTracker" as ExerciseTracker
   Class "<<interface>>\nLabAttendanceList" as LabAttendanceList
   Class LabList
   Class GradeMap
@@ -49,6 +50,7 @@ AddressBook *--> "1" UniquePersonList
 UniquePersonList --> "~* all" Person
 
 LabList .up.|> LabAttendanceList
+ExerciseList .up.|> ExerciseTracker
 Lab .up.|> LabAttendance
 Examination .up.|> Gradeable
 
@@ -58,7 +60,7 @@ Person *--> "1" Name
 Person *--> "1" Phone
 Person *--> "1" Email
 Person *--> "1" GithubUsername
-Person *--> "1" ExerciseList
+Person *--> "1" ExerciseTracker
 Person *--> "1" LabAttendanceList
 Person *--> "1" GradeMap
 Person *--> "*" Tag

@@ -12,7 +12,7 @@ import seedu.address.commons.core.index.Index;
 /**
  * Represents a Person's address in the address book.
  */
-public class ExerciseList implements Comparable<ExerciseList>, Trackable {
+public class ExerciseList implements ExerciseTracker {
 
     public static final String MESSAGE_CONSTRAINTS = "Exercise tracker takes in statuses";
     public static final int NUMBER_OF_EXERCISES = 10;
@@ -109,7 +109,7 @@ public class ExerciseList implements Comparable<ExerciseList>, Trackable {
     }
 
     @Override
-    public int compareTo(ExerciseList other) {
+    public int compareTo(ExerciseTracker other) {
         return Double.compare(this.calculateProgress(), other.calculateProgress());
     }
 
