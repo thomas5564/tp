@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXAM_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
-import static seedu.address.logic.parser.ParserUtil.validateFields;
 
 import seedu.address.commons.core.index.MultiIndex;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -31,8 +30,6 @@ public class GradeCommandParser implements Parser<GradeCommand> {
         MultiIndex studentIndex;
         String examName;
         boolean isPassed;
-        //ensure all the prefixes are present
-        validateFields(argumentMultimap, GradeCommand.MESSAGE_USAGE, PREFIX_EXAM_NAME, PREFIX_STATUS);
         // Parse the "status" field (s/)
         isPassed = ParserUtil.parseStatus(argumentMultimap.getValue(PREFIX_STATUS).orElseThrow(()
                 -> new ParseException(
