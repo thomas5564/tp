@@ -1,4 +1,4 @@
-package seedu.address.model.person;
+package seedu.address.model.person.predicates.findpredicates;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.person.predicates.findpredicates.NameContainsKeywordsPredicate;
 import seedu.address.testutil.PersonBuilder;
 
 public class NameContainsKeywordsPredicateTest {
@@ -39,6 +38,7 @@ public class NameContainsKeywordsPredicateTest {
         // different person -> returns false
         assertFalse(firstPredicate.equals(secondPredicate));
     }
+
 
     @Test
     public void test_nameContainsKeywords_returnsTrue() {
@@ -73,6 +73,46 @@ public class NameContainsKeywordsPredicateTest {
         predicate = new NameContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
                 .withEmail("alice@email.com").build()));
+    }
+
+
+    @Test
+    public void test_returnTrueIfSubstring() {
+        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Arrays.asList("ab"));
+
+        // Exact Match
+        assertTrue(predicate.test(new PersonBuilder().withName("ab").build()));
+
+        // Keyword is at the start of name
+        assertTrue(predicate.test(new PersonBuilder().withName("abcdefg").build()));
+
+        // Keyword is in the middle of name
+        assertTrue(predicate.test(new PersonBuilder().withName("cdeabfg").build()));
+
+        // Keyword is split up in the name returns false
+        assertFalse(predicate.test(new PersonBuilder().withName("acdebfg").build()));
+
+        // Substring of keyword is in name returns false
+        assertFalse(predicate.test(new PersonBuilder().withName("a").build()));
+
+        // Substring of keyword is in name returns false
+        assertFalse(predicate.test(new PersonBuilder().withName("b").build()));
+    }
+
+    @Test
+    public void getKeywords_returnsOriginalList() {
+        List<String> list = Arrays.asList("alice", "bob");
+        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(list);
+
+        // Same contents
+        assertEquals(list, predicate.getKeywords());
+    }
+
+    @Test
+    public void successMessage_returnsExpected() {
+        NameContainsKeywordsPredicate predicate =
+                new NameContainsKeywordsPredicate(Collections.singletonList("alice"));
+        assertEquals(" name", predicate.successMessage());
     }
 
     @Test
