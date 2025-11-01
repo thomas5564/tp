@@ -1,5 +1,6 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_DUPLICATE_FIELDS;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SORT_CRITERION;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -59,5 +60,14 @@ public class SortCommandParserTest {
 
         // Missing criterion value (empty after prefix)
         assertParseFailure(parser, " " + PREFIX_SORT_CRITERION, SortCriterion.MESSAGE_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_duplicateFields_failure() {
+        String expectedMessage = MESSAGE_DUPLICATE_FIELDS + PREFIX_SORT_CRITERION;
+
+        // Double criterion parameter
+        assertParseFailure(parser, " " + PREFIX_SORT_CRITERION + "id" + " " + PREFIX_SORT_CRITERION + "name" , expectedMessage);
+        assertParseFailure(parser, " " + PREFIX_SORT_CRITERION + "name" + " " + PREFIX_SORT_CRITERION + "lab", expectedMessage);
     }
 }
