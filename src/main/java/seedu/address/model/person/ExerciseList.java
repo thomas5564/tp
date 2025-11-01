@@ -119,6 +119,7 @@ public class ExerciseList implements ExerciseTracker {
         if (exerciseListString == null) {
             return false;
         }
+        System.out.println(String.format(exerciseListString));
         String trimmed = exerciseListString.trim();
         String[] parts = trimmed.split("\\s+");
 
