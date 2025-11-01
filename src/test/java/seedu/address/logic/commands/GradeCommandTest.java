@@ -65,6 +65,44 @@ public class GradeCommandTest {
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
+    @Test
+    public void execute_markExamPassedForMultipleStudents_success() {
+        // Use range 1:3 (first, second, and third persons)
+        MultiIndex multiIndex = new MultiIndex(INDEX_FIRST_PERSON, seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON);
+
+        // Create a GradeCommand to mark "pe1" as passed for all three
+        GradeCommand command = new GradeCommand(multiIndex, "pe1", true);
+
+        // Copy model and update all three persons
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        StringBuilder affectedNames = new StringBuilder();
+
+        for (int i = 0; i < 3; i++) {
+            Person person = model.getFilteredPersonList().get(i);
+            GradeTracker updatedGradeMap = person.getGradeTracker().copy();
+            updatedGradeMap.markExamPassed("pe1");
+            Person gradedPerson = new PersonBuilder(person)
+                    .withGradeMap(updatedGradeMap.toString())
+                    .build();
+
+            expectedModel.setPerson(person, gradedPerson);
+
+            affectedNames.append(person.getNameAndID());
+            if (i < 2) {
+                affectedNames.append(", ");
+            }
+        }
+
+        String expectedMessage = String.format(
+                GradeCommand.MESSAGE_GRADE_SUCCESS,
+                "pe1",
+                "passed",
+                affectedNames.toString()
+        );
+
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+    }
+
 
     // -------------------------------------------------------------------------
     // Invalid person index
