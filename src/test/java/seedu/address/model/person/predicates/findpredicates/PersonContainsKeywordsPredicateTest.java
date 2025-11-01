@@ -4,6 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static seedu.address.testutil.TestConstants.KEYWORD_ALI;
+import static seedu.address.testutil.TestConstants.KEYWORD_ALICE;
+import static seedu.address.testutil.TestConstants.KEYWORD_BOB;
+import static seedu.address.testutil.TestConstants.KEYWORD_GHUSER;
+import static seedu.address.testutil.TestConstants.KEYWORD_NUS;
+import static seedu.address.testutil.TestConstants.NAME_ALICE;
+import static seedu.address.testutil.TestConstants.PHONE_98765432;
+import static seedu.address.testutil.TestConstants.TAG_KEYWORD_LAB;
 
 import java.util.List;
 
@@ -17,14 +25,14 @@ public class PersonContainsKeywordsPredicateTest {
     @Test
     public void equals() {
         // Inner predicates
-        NameContainsKeywordsPredicate nameA = new NameContainsKeywordsPredicate(List.of("alice"));
+        NameContainsKeywordsPredicate nameA = new NameContainsKeywordsPredicate(List.of(KEYWORD_ALICE));
         EmailContainsKeywordsPredicate emailNus = new EmailContainsKeywordsPredicate(List.of("nus.edu"));
-        GithubContainsKeywordsPredicate ghName = new GithubContainsKeywordsPredicate(List.of("ghuser"));
+        GithubContainsKeywordsPredicate ghName = new GithubContainsKeywordsPredicate(List.of(KEYWORD_GHUSER));
 
         PersonContainsKeywordsPredicate a =
                 new PersonContainsKeywordsPredicate(List.of(nameA, emailNus));
         PersonContainsKeywordsPredicate aCopy =
-                new PersonContainsKeywordsPredicate(List.of(new NameContainsKeywordsPredicate(List.of("alice")),
+                new PersonContainsKeywordsPredicate(List.of(new NameContainsKeywordsPredicate(List.of(KEYWORD_ALICE)),
                         new EmailContainsKeywordsPredicate(List.of("nus.edu"))));
         PersonContainsKeywordsPredicate b =
                 new PersonContainsKeywordsPredicate(List.of(ghName));
@@ -45,13 +53,13 @@ public class PersonContainsKeywordsPredicateTest {
     public void equals_sameElementsDifferentOrder_returnsFalse() {
         PersonContainsKeywordsPredicate firstThenSecond =
                 new PersonContainsKeywordsPredicate(List.of(
-                        new NameContainsKeywordsPredicate(List.of("alice")),
+                        new NameContainsKeywordsPredicate(List.of(KEYWORD_ALICE)),
                         new EmailContainsKeywordsPredicate(List.of("nus.edu"))
                 ));
         PersonContainsKeywordsPredicate secondThenFirst =
                 new PersonContainsKeywordsPredicate(List.of(
                         new EmailContainsKeywordsPredicate(List.of("nus.edu")),
-                        new NameContainsKeywordsPredicate(List.of("alice"))
+                        new NameContainsKeywordsPredicate(List.of(KEYWORD_ALICE))
                 ));
         // Order matters
         assertNotEquals(firstThenSecond, secondThenFirst);
@@ -60,17 +68,17 @@ public class PersonContainsKeywordsPredicateTest {
 
     @Test
     public void test_orAcrossFieldsWithOneMatch_returnsTrue() {
-        // Person with name match other fields default, all individual predicates already ttested
+        // Person with name match other fields default, all individual predicates already tested
         Person person = new PersonBuilder()
-                .withName("Alice Tan")
+                .withName(NAME_ALICE)
                 .build();
 
         NameContainsKeywordsPredicate nameMatch =
-                new NameContainsKeywordsPredicate(List.of("ali")); // matches
+                new NameContainsKeywordsPredicate(List.of(KEYWORD_ALI)); // matches
         EmailContainsKeywordsPredicate emailNo =
-                new EmailContainsKeywordsPredicate(List.of("nus")); // default email "amy@gmail.com" no match
+                new EmailContainsKeywordsPredicate(List.of(KEYWORD_NUS)); // default email "amy@gmail.com" no match
         GithubContainsKeywordsPredicate ghNo =
-                new GithubContainsKeywordsPredicate(List.of("ghuser")); // default gh "TestUsername" no match
+                new GithubContainsKeywordsPredicate(List.of(KEYWORD_GHUSER)); // default gh "TestUsername" no match
 
         PersonContainsKeywordsPredicate combined =
                 new PersonContainsKeywordsPredicate(List.of(nameMatch, emailNo, ghNo));
@@ -82,17 +90,17 @@ public class PersonContainsKeywordsPredicateTest {
     public void test_orAcrossFieldsWithNoMatch_returnsFalse() {
         // Person with name match; other fields default
         Person person = new PersonBuilder()
-                .withName("Alice Tan")
+                .withName(NAME_ALICE)
                 .build();
 
         NameContainsKeywordsPredicate nameNo =
-                new NameContainsKeywordsPredicate(List.of("bob")); // no match with Alice Tan
+                new NameContainsKeywordsPredicate(List.of(KEYWORD_BOB)); // no match with Alice Tan
         EmailContainsKeywordsPredicate emailNo =
-                new EmailContainsKeywordsPredicate(List.of("nus")); // default email "amy@gmail.com" no match
+                new EmailContainsKeywordsPredicate(List.of(KEYWORD_NUS)); // default email "amy@gmail.com" no match
         GithubContainsKeywordsPredicate ghNo =
-                new GithubContainsKeywordsPredicate(List.of("ghuser")); // default gh "TestUsername" no match
+                new GithubContainsKeywordsPredicate(List.of(KEYWORD_GHUSER)); // default gh "TestUsername" no match
         PhoneContainsKeywordsPredicate phNo =
-                new PhoneContainsKeywordsPredicate(List.of("98765432")); // default ph "85355255" no match
+                new PhoneContainsKeywordsPredicate(List.of(PHONE_98765432)); // default ph "85355255" no match
 
         PersonContainsKeywordsPredicate combined =
                 new PersonContainsKeywordsPredicate(List.of(nameNo, emailNo, ghNo, phNo));
@@ -103,7 +111,7 @@ public class PersonContainsKeywordsPredicateTest {
     @Test
     public void successMessage_withThreeFields_includesRelevantFieldLabels() {
         // Build with name + email + tag predicates
-        String[] search = {"alice", "nus", "lab"};
+        String[] search = {KEYWORD_ALICE, KEYWORD_NUS, TAG_KEYWORD_LAB};
         NameContainsKeywordsPredicate namePred = new NameContainsKeywordsPredicate(List.of(search));
         EmailContainsKeywordsPredicate emailPred = new EmailContainsKeywordsPredicate(List.of(search));
         TagContainsKeywordsPredicate tagPred = new TagContainsKeywordsPredicate(List.of(search));
@@ -118,26 +126,26 @@ public class PersonContainsKeywordsPredicateTest {
         assertTrue(msg.toLowerCase().contains("tag"));
 
         // Contains the keywords
-        assertTrue(msg.toLowerCase().contains("alice"));
-        assertTrue(msg.toLowerCase().contains("nus"));
-        assertTrue(msg.toLowerCase().contains("lab"));
+        assertTrue(msg.toLowerCase().contains(KEYWORD_ALICE));
+        assertTrue(msg.toLowerCase().contains(KEYWORD_NUS));
+        assertTrue(msg.toLowerCase().contains(TAG_KEYWORD_LAB));
     }
 
     @Test
     public void successMessage_allFields_success() {
         // Build all predicates
         NameContainsKeywordsPredicate namePred =
-                new NameContainsKeywordsPredicate(List.of("alice"));
+                new NameContainsKeywordsPredicate(List.of(KEYWORD_ALICE));
         StudentIdContainsKeywordsPredicate sidPred =
-                new StudentIdContainsKeywordsPredicate(List.of("alice"));
+                new StudentIdContainsKeywordsPredicate(List.of(KEYWORD_ALICE));
         PhoneContainsKeywordsPredicate phonePred =
-                new PhoneContainsKeywordsPredicate(List.of("alice"));
+                new PhoneContainsKeywordsPredicate(List.of(KEYWORD_ALICE));
         EmailContainsKeywordsPredicate emailPred =
-                new EmailContainsKeywordsPredicate(List.of("alice"));
+                new EmailContainsKeywordsPredicate(List.of(KEYWORD_ALICE));
         GithubContainsKeywordsPredicate ghPred =
-                new GithubContainsKeywordsPredicate(List.of("alice"));
+                new GithubContainsKeywordsPredicate(List.of(KEYWORD_ALICE));
         TagContainsKeywordsPredicate tagPred =
-                new TagContainsKeywordsPredicate(List.of("alice"));
+                new TagContainsKeywordsPredicate(List.of(KEYWORD_ALICE));
 
         PersonContainsKeywordsPredicate combined =
                 new PersonContainsKeywordsPredicate(
@@ -147,15 +155,15 @@ public class PersonContainsKeywordsPredicateTest {
 
         assertTrue(msg.contains(" within all fields."));
         // Also contains the keywords:
-        assertTrue(msg.toLowerCase().contains("alice"));
+        assertTrue(msg.toLowerCase().contains(KEYWORD_ALICE));
     }
 
     @Test
     public void successMessage_selectedFields_listsFieldNames() {
         NameContainsKeywordsPredicate namePred =
-                new NameContainsKeywordsPredicate(List.of("bob"));
+                new NameContainsKeywordsPredicate(List.of(KEYWORD_BOB));
         EmailContainsKeywordsPredicate emailPred =
-                new EmailContainsKeywordsPredicate(List.of("bob"));
+                new EmailContainsKeywordsPredicate(List.of(KEYWORD_BOB));
 
         PersonContainsKeywordsPredicate combined =
                 new PersonContainsKeywordsPredicate(List.of(namePred, emailPred));
@@ -165,8 +173,6 @@ public class PersonContainsKeywordsPredicateTest {
         assertTrue(msg.toLowerCase().contains(" within")); // has “within … fields.”
         assertTrue(msg.toLowerCase().contains(" name")); // field labels come from child successMessage()
         assertTrue(msg.toLowerCase().contains(" email"));
-        assertTrue(msg.toLowerCase().contains("bob")); // shows keywords
+        assertTrue(msg.toLowerCase().contains(KEYWORD_BOB)); // shows keywords
     }
-
-
 }
