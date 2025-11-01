@@ -573,7 +573,7 @@ public class ParserUtil {
         }
 
         if (!unwantedPrefixes.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_PREFIX,  String.join(", ", unwantedPrefixes)));
+            throw new ParseException(String.format(MESSAGE_INVALID_PREFIX, String.join(", ", unwantedPrefixes)));
         }
     }
 }

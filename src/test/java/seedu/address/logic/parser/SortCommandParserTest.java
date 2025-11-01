@@ -68,8 +68,11 @@ public class SortCommandParserTest {
         String expectedMessage = MESSAGE_DUPLICATE_FIELDS + PREFIX_SORT_CRITERION;
 
         // Double criterion parameter
-        assertParseFailure(parser, " " + PREFIX_SORT_CRITERION + "id" + " " + PREFIX_SORT_CRITERION + "name" , expectedMessage);
-        assertParseFailure(parser, " " + PREFIX_SORT_CRITERION + "name" + " " + PREFIX_SORT_CRITERION + "lab", expectedMessage);
-        assertParseFailure(parser, " " + PREFIX_SORT_CRITERION + "name" + " " + PREFIX_STATUS + "lab", "Invalid prefix(s) found: s/");
+        assertParseFailure(parser, " " + PREFIX_SORT_CRITERION + "id" + " " + PREFIX_SORT_CRITERION + "name" ,
+                expectedMessage);
+        assertParseFailure(parser, " " + PREFIX_SORT_CRITERION + "name" + " " + PREFIX_SORT_CRITERION + "lab",
+                expectedMessage);
+        assertParseFailure(parser, " " + PREFIX_SORT_CRITERION + "name" + " " + PREFIX_STATUS + "lab",
+                "Invalid prefix(s) found: s/");
     }
 }
