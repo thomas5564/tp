@@ -23,6 +23,7 @@ public class SortCommandParser implements Parser<SortCommand> {
     @Override
     public SortCommand parse(String args) throws ParseException {
         requireNonNull(args);
+        ParserUtil.verifyNoUnwantedPrefixes(args, PREFIX_SORT_CRITERION);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_SORT_CRITERION);
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_SORT_CRITERION);

@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.logic.Messages.MESSAGE_DUPLICATE_FIELDS;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SORT_CRITERION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -69,5 +70,6 @@ public class SortCommandParserTest {
         // Double criterion parameter
         assertParseFailure(parser, " " + PREFIX_SORT_CRITERION + "id" + " " + PREFIX_SORT_CRITERION + "name" , expectedMessage);
         assertParseFailure(parser, " " + PREFIX_SORT_CRITERION + "name" + " " + PREFIX_SORT_CRITERION + "lab", expectedMessage);
+        assertParseFailure(parser, " " + PREFIX_SORT_CRITERION + "name" + " " + PREFIX_STATUS + "lab", "Invalid prefix(s) found: s/");
     }
 }
