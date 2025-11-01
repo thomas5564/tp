@@ -24,6 +24,9 @@ public class MarkAttendanceCommandParser implements Parser<MarkAttendanceCommand
     @Override
     public MarkAttendanceCommand parse(String args) throws ParseException {
         requireNonNull(args);
+
+        ParserUtil.verifyNoUnwantedPrefixes(args, PREFIX_LAB_NUMBER, PREFIX_STATUS);
+
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
                 PREFIX_LAB_NUMBER, PREFIX_STATUS);
 

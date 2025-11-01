@@ -72,6 +72,7 @@ public class ParserUtil {
             "Missing appropriate operator for comparison, one of ==, >=, <=, >, < should follow la/";
     private static final String MESSAGE_INVALID_PERCENTAGE =
             "Attendance percentage must be an integer between 0 and 100.";
+    private static final String MESSAGE_INVALID_PREFIX = "Invalid prefix(s) found: %s";
 
     /**
      * @param input a string that is either in the "X:Y" or "X" form
@@ -546,6 +547,36 @@ public class ParserUtil {
             if (argumentMultimap.getValue(prefix).isEmpty()) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, usageMessage));
             }
+        }
+    }
+
+    /**
+     * Checks if the args string contains any prefix-like patterns (e.g., "x/") that are not in the allowed list.
+     *
+     * @param args The raw argument string to check
+     * @param allowedPrefixes The prefixes that are allowed for this command
+     * @throws ParseException if unwanted prefixes are detected
+     */
+    public static void verifyNoUnwantedPrefixes(String args, Prefix... allowedPrefixes) throws ParseException {
+        Set<String> allowedPrefixStrings = new HashSet<>();
+        for (Prefix prefix : allowedPrefixes) {
+            allowedPrefixStrings.add(prefix.getPrefix());
+        }
+
+        // Pattern to match any prefix-like structure: space followed by one or more word chars and a forward slash
+        Pattern prefixPattern = Pattern.compile("\\s+(\\w+/)");
+        Matcher matcher = prefixPattern.matcher(args);
+
+        Set<String> unwantedPrefixes = new HashSet<>();
+        while (matcher.find()) {
+            String foundPrefix = matcher.group(1);
+            if (!allowedPrefixStrings.contains(foundPrefix)) {
+                unwantedPrefixes.add(foundPrefix);
+            }
+        }
+
+        if (!unwantedPrefixes.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_PREFIX, String.join(", ", unwantedPrefixes)));
         }
     }
 }
