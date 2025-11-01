@@ -1,13 +1,16 @@
 package seedu.address.model.person.predicates.findpredicates;
 
-import org.junit.jupiter.api.Test;
-import seedu.address.model.person.Person;
-import seedu.address.testutil.PersonBuilder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+import seedu.address.model.person.Person;
+import seedu.address.testutil.PersonBuilder;
 
 public class PersonContainsKeywordsPredicateTest {
 
@@ -63,9 +66,9 @@ public class PersonContainsKeywordsPredicateTest {
                 .build();
 
         NameContainsKeywordsPredicate nameMatch =
-                new NameContainsKeywordsPredicate(List.of("ali"));   // matches
+                new NameContainsKeywordsPredicate(List.of("ali")); // matches
         EmailContainsKeywordsPredicate emailNo =
-                new EmailContainsKeywordsPredicate(List.of("nus"));  // default email "amy@gmail.com" no match
+                new EmailContainsKeywordsPredicate(List.of("nus")); // default email "amy@gmail.com" no match
         GithubContainsKeywordsPredicate ghNo =
                 new GithubContainsKeywordsPredicate(List.of("ghuser")); // default gh "TestUsername" no match
 
@@ -83,9 +86,9 @@ public class PersonContainsKeywordsPredicateTest {
                 .build();
 
         NameContainsKeywordsPredicate nameNo =
-                new NameContainsKeywordsPredicate(List.of("bob"));   // no match with Alice Tan
+                new NameContainsKeywordsPredicate(List.of("bob")); // no match with Alice Tan
         EmailContainsKeywordsPredicate emailNo =
-                new EmailContainsKeywordsPredicate(List.of("nus"));  // default email "amy@gmail.com" no match
+                new EmailContainsKeywordsPredicate(List.of("nus")); // default email "amy@gmail.com" no match
         GithubContainsKeywordsPredicate ghNo =
                 new GithubContainsKeywordsPredicate(List.of("ghuser")); // default gh "TestUsername" no match
         PhoneContainsKeywordsPredicate phNo =
@@ -122,7 +125,7 @@ public class PersonContainsKeywordsPredicateTest {
 
     @Test
     public void successMessage_allFields_success() {
-       // Build all predicates
+        // Build all predicates
         NameContainsKeywordsPredicate namePred =
                 new NameContainsKeywordsPredicate(List.of("alice"));
         StudentIdContainsKeywordsPredicate sidPred =
@@ -158,11 +161,11 @@ public class PersonContainsKeywordsPredicateTest {
                 new PersonContainsKeywordsPredicate(List.of(namePred, emailPred));
 
         String msg = combined.successMessage();
-        assertFalse(msg.contains(" within all fields."));   // not all
-        assertTrue(msg.toLowerCase().contains(" within"));  // has “within … fields.”
-        assertTrue(msg.toLowerCase().contains(" name"));    // field labels come from child successMessage()
+        assertFalse(msg.contains(" within all fields.")); // not all
+        assertTrue(msg.toLowerCase().contains(" within")); // has “within … fields.”
+        assertTrue(msg.toLowerCase().contains(" name")); // field labels come from child successMessage()
         assertTrue(msg.toLowerCase().contains(" email"));
-        assertTrue(msg.toLowerCase().contains("bob"));      // shows keywords
+        assertTrue(msg.toLowerCase().contains("bob")); // shows keywords
     }
 
 

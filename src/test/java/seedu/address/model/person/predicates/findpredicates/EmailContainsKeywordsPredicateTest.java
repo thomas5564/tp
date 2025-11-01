@@ -1,15 +1,16 @@
 package seedu.address.model.person.predicates.findpredicates;
 
-import org.junit.jupiter.api.Test;
-import seedu.address.testutil.PersonBuilder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+
+import seedu.address.testutil.PersonBuilder;
 
 public class EmailContainsKeywordsPredicateTest {
 
@@ -48,7 +49,7 @@ public class EmailContainsKeywordsPredicateTest {
         // Multiple keywords
         predicate = new EmailContainsKeywordsPredicate(Arrays.asList("gmail", "alice"));
         assertTrue(predicate.test(new PersonBuilder().withEmail("alice@school.org").build())); // "alice" matches
-        assertTrue(predicate.test(new PersonBuilder().withEmail("x@gmail.com").build()));      // "gmail" matches
+        assertTrue(predicate.test(new PersonBuilder().withEmail("x@gmail.com").build())); // "gmail" matches
 
     }
 
@@ -78,12 +79,12 @@ public class EmailContainsKeywordsPredicateTest {
                 new EmailContainsKeywordsPredicate(Collections.singletonList("edu.sg"));
 
         // Present return true, different positions
-        assertTrue(predicate.test(new PersonBuilder().withEmail("alice@nus.edu.sg").build()));   // end
-        assertTrue(predicate.test(new PersonBuilder().withEmail("edu.sg@domain.com").build()));  // start
+        assertTrue(predicate.test(new PersonBuilder().withEmail("alice@nus.edu.sg").build())); // end
+        assertTrue(predicate.test(new PersonBuilder().withEmail("edu.sg@domain.com").build())); // start
         assertTrue(predicate.test(new PersonBuilder().withEmail("x@my-edu.sg-domain.com").build())); // middle
 
         // Not present as contiguous substring return false
-        assertFalse(predicate.test(new PersonBuilder().withEmail("alice@edusg.com").build()));   // missing dot
+        assertFalse(predicate.test(new PersonBuilder().withEmail("alice@edusg.com").build())); // missing dot
     }
 
     @Test

@@ -1,15 +1,17 @@
 package seedu.address.model.person.predicates.findpredicates;
 
-import org.junit.jupiter.api.Test;
-import seedu.address.testutil.PersonBuilder;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+
+import seedu.address.testutil.PersonBuilder;
 
 public class PhoneContainsKeywordsPredicateTest {
     @Test
@@ -79,15 +81,15 @@ public class PhoneContainsKeywordsPredicateTest {
                 new PhoneContainsKeywordsPredicate(Arrays.asList("1234"));
 
         // Present return true, different positions
-        assertTrue(predicate.test(new PersonBuilder().withPhone("1234").build()));        // exact equality
-        assertTrue(predicate.test(new PersonBuilder().withPhone("123456").build()));     // start
-        assertTrue(predicate.test(new PersonBuilder().withPhone("90123490").build()));    // middle
-        assertTrue(predicate.test(new PersonBuilder().withPhone("991234").build()));       // end
+        assertTrue(predicate.test(new PersonBuilder().withPhone("1234").build())); // exact match
+        assertTrue(predicate.test(new PersonBuilder().withPhone("123456").build())); // start
+        assertTrue(predicate.test(new PersonBuilder().withPhone("90123490").build())); // middle
+        assertTrue(predicate.test(new PersonBuilder().withPhone("991234").build())); // end
 
         // Not present as contiguous substring return false
-        assertFalse(predicate.test(new PersonBuilder().withPhone("1020304").build()));    // non-contiguous
-        assertFalse(predicate.test(new PersonBuilder().withPhone("123").build()));         // partial of keyword
-        assertFalse(predicate.test(new PersonBuilder().withPhone("234").build()));         // partial of keyword
+        assertFalse(predicate.test(new PersonBuilder().withPhone("1020304").build())); // non-contiguous
+        assertFalse(predicate.test(new PersonBuilder().withPhone("123").build())); // partial of keyword
+        assertFalse(predicate.test(new PersonBuilder().withPhone("234").build())); // partial of keyword
     }
 
     @Test

@@ -1,15 +1,16 @@
 package seedu.address.model.person.predicates.findpredicates;
 
-import org.junit.jupiter.api.Test;
-import seedu.address.testutil.PersonBuilder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+
+import seedu.address.testutil.PersonBuilder;
 
 public class GithubContainsKeywordsPredicateTest {
 
@@ -81,14 +82,14 @@ public class GithubContainsKeywordsPredicateTest {
                 new GithubContainsKeywordsPredicate(Collections.singletonList("git"));
 
         // Present return true, different positions
-        assertTrue(predicate.test(new PersonBuilder().withGithubUsername("gitname").build()));     // start
+        assertTrue(predicate.test(new PersonBuilder().withGithubUsername("gitname").build())); // start
         assertTrue(predicate.test(new PersonBuilder().withGithubUsername("mygitname").build())); // middle
-        assertTrue(predicate.test(new PersonBuilder().withGithubUsername("iamusinggit").build()));  // end
+        assertTrue(predicate.test(new PersonBuilder().withGithubUsername("iamusinggit").build())); // end
 
         // Not present as contiguous substring return false
-        assertFalse(predicate.test(new PersonBuilder().withGithubUsername("gikt").build()));      // non-contiguous
-        assertFalse(predicate.test(new PersonBuilder().withGithubUsername("gi").build()));        // partial
-        assertFalse(predicate.test(new PersonBuilder().withGithubUsername("it").build()));        // partial
+        assertFalse(predicate.test(new PersonBuilder().withGithubUsername("gikt").build())); // non-contiguous
+        assertFalse(predicate.test(new PersonBuilder().withGithubUsername("gi").build())); // partial
+        assertFalse(predicate.test(new PersonBuilder().withGithubUsername("it").build())); // partial
     }
 
     @Test

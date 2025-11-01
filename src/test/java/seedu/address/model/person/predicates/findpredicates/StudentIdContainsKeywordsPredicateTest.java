@@ -1,15 +1,17 @@
 package seedu.address.model.person.predicates.findpredicates;
 
-import org.junit.jupiter.api.Test;
-import seedu.address.testutil.PersonBuilder;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+
+import seedu.address.testutil.PersonBuilder;
 
 public class StudentIdContainsKeywordsPredicateTest {
 
@@ -47,8 +49,8 @@ public class StudentIdContainsKeywordsPredicateTest {
 
         // Multiple keywords
         predicate = new StudentIdContainsKeywordsPredicate(Arrays.asList("a765", "9x"));
-        assertTrue(predicate.test(new PersonBuilder().withStudentId("A7654321Z").build())); // "b765" matches
-        assertTrue(predicate.test(new PersonBuilder().withStudentId("A1231239X").build()));       // "x9" matches
+        assertTrue(predicate.test(new PersonBuilder().withStudentId("A7654321Z").build()));
+        assertTrue(predicate.test(new PersonBuilder().withStudentId("A1231239X").build()));
 
         // Digits-only substring
         predicate = new StudentIdContainsKeywordsPredicate(Collections.singletonList("3456"));
@@ -81,19 +83,19 @@ public class StudentIdContainsKeywordsPredicateTest {
                 new StudentIdContainsKeywordsPredicate(Collections.singletonList("A1234"));
 
         // Present return true, different positions
-        assertTrue(predicate.test(new PersonBuilder().withStudentId("A1234567X").build()));        // start
+        assertTrue(predicate.test(new PersonBuilder().withStudentId("A1234567X").build())); // start
 
         predicate = new StudentIdContainsKeywordsPredicate(Collections.singletonList("7123"));
 
-        assertTrue(predicate.test(new PersonBuilder().withStudentId("A5671234X").build()));       // middle
+        assertTrue(predicate.test(new PersonBuilder().withStudentId("A5671234X").build())); // middle
 
         predicate = new StudentIdContainsKeywordsPredicate(Collections.singletonList("340F"));
 
-        assertTrue(predicate.test(new PersonBuilder().withStudentId("A0012340F").build()));      // end
+        assertTrue(predicate.test(new PersonBuilder().withStudentId("A0012340F").build())); // end
 
         // Not present as contiguous substring return false
-        assertFalse(predicate.test(new PersonBuilder().withStudentId("A3041021F").build()));      // non-contiguous
-        assertFalse(predicate.test(new PersonBuilder().withStudentId("A1234056B").build()));         // partial of keyword
+        assertFalse(predicate.test(new PersonBuilder().withStudentId("A3041021F").build())); // non-contiguous
+        assertFalse(predicate.test(new PersonBuilder().withStudentId("A1234056B").build())); // partial of keyword
     }
 
     @Test

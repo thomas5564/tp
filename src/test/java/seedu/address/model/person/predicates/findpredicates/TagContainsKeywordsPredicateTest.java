@@ -1,15 +1,16 @@
 package seedu.address.model.person.predicates.findpredicates;
 
-import org.junit.jupiter.api.Test;
-import seedu.address.testutil.PersonBuilder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
+
+import seedu.address.testutil.PersonBuilder;
 
 public class TagContainsKeywordsPredicateTest {
 
@@ -47,8 +48,8 @@ public class TagContainsKeywordsPredicateTest {
 
         // Multiple keywords
         predicate = new TagContainsKeywordsPredicate(Arrays.asList("project", "groupA"));
-        assertTrue(predicate.test(new PersonBuilder().withTags("groupA").build()));          // matches "groupA"
-        assertTrue(predicate.test(new PersonBuilder().withTags("projectX").build()));        // matches "project"
+        assertTrue(predicate.test(new PersonBuilder().withTags("groupA").build())); // matches "groupA"
+        assertTrue(predicate.test(new PersonBuilder().withTags("projectX").build())); // matches "project"
 
         // Substring within a tag
         predicate = new TagContainsKeywordsPredicate(Collections.singletonList("group"));
