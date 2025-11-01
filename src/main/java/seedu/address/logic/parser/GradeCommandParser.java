@@ -3,7 +3,6 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXAM_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_LAB_NUMBER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import seedu.address.commons.core.index.MultiIndex;
@@ -26,10 +25,10 @@ public class GradeCommandParser implements Parser<GradeCommand> {
     @Override
     public GradeCommand parse(String userInput) throws ParseException {
         requireNonNull(userInput);
-        ParserUtil.verifyNoUnwantedPrefixes(userInput, PREFIX_LAB_NUMBER, PREFIX_STATUS);
+        ParserUtil.verifyNoUnwantedPrefixes(userInput, PREFIX_EXAM_NAME, PREFIX_STATUS);
 
         ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(userInput,
-                PREFIX_LAB_NUMBER, PREFIX_STATUS);
+                PREFIX_EXAM_NAME, PREFIX_STATUS);
 
         // Parse exception directly goes to AddressBook Parser
         argumentMultimap.verifyNoDuplicatePrefixesFor(PREFIX_EXAM_NAME, PREFIX_STATUS);
