@@ -9,11 +9,12 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailur
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.jupiter.api.Test;
+
 import seedu.address.logic.commands.SetWeekCommand;
 import seedu.address.model.Week;
 
 public class SetWeekCommandParserTest {
-    SetWeekCommandParser parser = new SetWeekCommandParser();
+    private final SetWeekCommandParser parser = new SetWeekCommandParser();
 
     @Test
     public void parse_validInput_success() {
@@ -22,7 +23,7 @@ public class SetWeekCommandParserTest {
 
     @Test
     public void parse_invalidInput_success() {
-        String invalidCommandFormat =  String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetWeekCommand.MESSAGE_USAGE);
+        String invalidCommandFormat = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetWeekCommand.MESSAGE_USAGE);
         String invalidWeekNumber = Week.MESSAGE_CONSTRAINTS;
 
         // Week Number is not a number
