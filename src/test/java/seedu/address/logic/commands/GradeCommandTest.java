@@ -68,7 +68,8 @@ public class GradeCommandTest {
     @Test
     public void execute_markExamPassedForMultipleStudents_success() {
         // Use range 1:3 (first, second, and third persons)
-        MultiIndex multiIndex = new MultiIndex(INDEX_FIRST_PERSON, seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON);
+        MultiIndex multiIndex = new MultiIndex(INDEX_FIRST_PERSON,
+                seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON);
 
         // Create a GradeCommand to mark "pe1" as passed for all three
         GradeCommand command = new GradeCommand(multiIndex, "pe1", true);
