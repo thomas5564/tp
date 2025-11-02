@@ -25,7 +25,7 @@ public class SetWeekCommand extends Command {
             + "Example: " + COMMAND_WORD + " 7";
 
     public static final String MESSAGE_SUCCESS = "Current week set to: Week %1$d\n"
-            + "Updated lab statuses for %2$d students.";
+            + "Updated lab exercise statuses for %2$d students.";
 
     private final Week currentWeek;
 
