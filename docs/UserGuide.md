@@ -130,7 +130,13 @@ spreadsheets or GUI apps.
 ![Ui.png](images/Ui.png)
 
 ## Trackers  
+<<<<<<< Updated upstream
 These trackers provide a visual overview of each student’s progress in terms of **lab attendance**,
+=======
+![Trackers.png](images/Trackers.png)
+
+These are trackers that provides a visual overview of each student’s progress in terms of **lab attendance**,
+>>>>>>> Stashed changes
 **exercise completion**, and **examination performance (on a pass/fail basis)**.
 
 Each tracker uses colour indicators to represent a student’s current status in a clear and intuitive way:
@@ -194,9 +200,9 @@ add i/STUDENT_ID n/NAME p/PHONE e/EMAIL g/GITHUB_USERNAME [t/TAG]…​
 ```
 
 **Examples:**
-- Adds a student with student ID `A1234567X`, name `John Doe`, phone number `98765432`, email `johnd@example.com`, and GitHub username `JohnDoe`: `add i/A1234567X n/John Doe p/98765432 e/johnd@example.com g/JohnDoe`.
-- Adds the same student but with an optional tag `modelStudent` included: `add i/A1234567X n/John Doe p/98765432 e/johnd@example.com g/JohnDoe t/modelStudent`.
-- Adds the same student with parameters in different order: `add g/JohnDoe i/A1234567X p/98765432 t/modelStudent n/John Doe e/johnd@example.com`.
+- Adding a student with student ID `A1234567X`, name `John Doe`, phone number `98765432`, email `johnd@example.com`, and GitHub username `JohnDoe`: `add i/A1234567X n/John Doe p/98765432 e/johnd@example.com g/JohnDoe`.
+- Adding the same student but with an optional tag `modelStudent` included: `add i/A1234567X n/John Doe p/98765432 e/johnd@example.com g/JohnDoe t/modelStudent`.
+- Adding the same student with parameters in different order: `add g/JohnDoe i/A1234567X p/98765432 t/modelStudent n/John Doe e/johnd@example.com`.
 
 <box type="tip">
 
@@ -222,8 +228,8 @@ edit INDEX [i/STUDENT ID] [n/NAME] [p/PHONE] [e/EMAIL] [g/GITHUB USERNAME] [t/TA
 ```
 
 **Examples:**
-- Edits the phone number and email address of the 1st student to be `91234567` and `johndoe@example.com`: `edit 1 p/91234567 e/johndoe@example.com`.
-- Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tags: `edit 2 n/Betsy Crower t/`.
+- Editing the phone number and email address of the 1st student to be `91234567` and `johndoe@example.com`: `edit 1 p/91234567 e/johndoe@example.com`.
+- Editing the name of the 2nd student to be `Betsy Crower` and clears all existing tags: `edit 2 n/Betsy Crower t/`.
 
 <box type="tip">
 
@@ -249,8 +255,8 @@ delete INDEX
 ```
 
 **Examples:**
-- Deletes the 2nd student in the LambdaLab: `list` followed by `delete 2`.
-- Deletes the 1st student in the results of the `find` command: `find Betsy` followed by `delete 1`.
+- Deleting the 2nd student in the LambdaLab: `list` followed by `delete 2`.
+- Deleting the 1st student in the results of the `find` command: `find Betsy` followed by `delete 1`.
 
 <box type="tip">
 
@@ -292,8 +298,8 @@ marka INDEX l/LAB_NUMBER s/STATUS
 
 
 **Examples:**
-- Marks Lab 1 as attended for the 1st student: `marka 1 l/1 s/y`.
-- Marks Lab 1 as not attended for students 1 through 5: `marka 1:5 l/1 s/n`.
+- Marking Lab 1 as attended for the 1st student: `marka 1 l/1 s/y`.
+- Marking Lab 1 as not attended for students 1 through 5: `marka 1:5 l/1 s/n`.
 
 <box type="warning">
 
@@ -315,8 +321,8 @@ marke INDEX ei/EXERCISE_INDEX s/STATUS
 `y` refers to exercise completed, `n` refers to exercise not completed.
 
 **Examples:**
-- Marks Exercise 1 as done for the 1st student: `marke 1 ei/1 s/y`.
-- Marks Exercise 3 as not done for students 2 through 5: `marke 2:5 ei/3 s/n`.
+- Marking Exercise 1 as done for the 1st student: `marke 1 ei/1 s/y`.
+- Marking Exercise 3 as not done for students 2 through 5: `marke 2:5 ei/3 s/n`.
 
 <box type="warning">
 
@@ -338,8 +344,8 @@ grade INDEX... en/EXAM_NAME s/STATUS
 `y` refers to a passing grade, `n` refers to a failing grade.
 
 **Examples:**
-- Marks the first student as passed for the Midterm exam: `grade 1 en/Midterm s/y`.
-- Marks students 2 through 4 as failed for the Final exam: `grade 2:4 en/Final s/n`.
+- Marking the first student as passed for the Midterm exam: `grade 1 en/Midterm s/y`.
+- Marking students 2 through 4 as failed for the Final exam: `grade 2:4 en/Final s/n`.
 
 <box type="tip">
 
@@ -499,10 +505,10 @@ find KEYWORD [MORE_KEYWORDS]... [i/] [n/] [p/] [e/] [g/] [t/]
 ```
 
 **Examples:**
-- Searches **all fields** for "alex" or "david": `find alex david`.
-- Searches **names only** for "alice": `find alice n/`.
-- Searches **Student ID** or **Name** for "A123" or "john": `find A123 john i/ n/`.
-- Searches **tags only** for "lab1": `find lab1 t/`.
+- Searching **all fields** for "alex" or "david": `find alex david`.
+- Searching **names only** for "alice": `find alice n/`.
+- Searching **Student ID** or **Name** for "A123" or "john": `find A123 john i/ n/`.
+- Searching **tags only** for "lab1": `find lab1 t/`.
 
 <box type="tip">
 
@@ -538,11 +544,11 @@ filter [l/LAB_NUMBER s/STATUS]... [ei/EXERCISE_INDEX s/STATUS]... [la/COMPARISON
 | **Filtering by exercise completion** | `y` - completed <br>`n` - not completed <br> `o` - overdue <br> |
 
 **Examples:**
-- Shows students who attended Lab 7: `filter l/7 s/y`.
-- Shows students who completed Exercise 5: `filter ei/5 s/y`.
-- Shows students who attended Lab 2 **and** completed Exercise 4: `filter l/2 s/y ei/4 s/y`.
-- Shows students absent for Lab 3 **and** Lab 4: `filter l/3 s/n l/4 s/n`.
-- Shows students who attended more than 50% but less than 70% of labs: `filter la/>50% la/<70%`.
+- Displaying students who attended Lab 7: `filter l/7 s/y`.
+- Displaying students who completed Exercise 5: `filter ei/5 s/y`.
+- Displaying students who attended Lab 2 **and** completed Exercise 4: `filter l/2 s/y ei/4 s/y`.
+- Displaying students absent for Lab 3 **and** Lab 4: `filter l/3 s/n l/4 s/n`.
+- Displaying students who attended more than 50% but less than 70% of labs: `filter la/>50% la/<70%`.
 
 <box type="tip">
 
@@ -568,10 +574,10 @@ sort c/CRITERION
 ```
 
 **Examples:**
-- Sorts by name (A to Z): `sort c/name`.
-- Sorts by student ID: `sort c/id`.
-- Sorts by lab attendance (high to low): `sort c/lab`.
-- Sorts by exercise progress (high to low): `sort c/ex`.
+- Sorting by name (A to Z): `sort c/name`.
+- Sorting by student ID: `sort c/id`.
+- Sorting by lab attendance (high to low): `sort c/lab`.
+- Sorting by exercise progress (high to low): `sort c/ex`.
 
 <box type="tip">
 
